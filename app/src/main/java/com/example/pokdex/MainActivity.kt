@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.pokdex.Models.Pokemon
-import okhttp3.internal.Util
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,12 +15,14 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity()
 {
 
-
+    lateinit var pokemonImageview : ImageView
+    lateinit var pokemonNameTextview : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        pokemonImageview = findViewById(R.id.pokemon_image)
+        pokemonNameTextview = findViewById(R.id.pokemon_name)
 
         val request = ServiceBuilder.buildService(PokemonService::class.java)
         val call = request.getDitto()
@@ -34,7 +36,8 @@ class MainActivity : AppCompatActivity()
                     response.body()
                     val pokemon : Pokemon? = response.body()
                     if (pokemon != null) {
-                        findViewById<ImageView>(R.id.poke_sprite).setImageBitmap(Utility.toBitmap(pokemon.sprites.other.official_artwork.front_default))
+                        Picasso.get().load(pokemon.getOfficialArtworkFrontDefault()).into(pokemonImageview)
+                        pokemonNameTextview.text = pokemon.name
                     }
 
 
