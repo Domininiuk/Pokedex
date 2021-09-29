@@ -3,9 +3,9 @@ package com.example.pokdex.Models
 
 import com.google.gson.annotations.SerializedName
 
-data class Pokemon(val name : String,
-                   val weight : String,
-                   val sprites : PokemonSprites)
+data class PokemonModel(val name : String,
+                           val weight : String,
+                           val sprites : PokemonSprites)
 {
 
     fun getOfficialArtworkFrontDefault() : String
@@ -44,3 +44,8 @@ val front_shiny_female : String, val other: PokemonOther)
     }
 }
 //ADD A MODEL CLASS FOR EVERY WJSON LEVEL
+
+data class PokemonSpecies(val count : Int)
+{
+    
+}
