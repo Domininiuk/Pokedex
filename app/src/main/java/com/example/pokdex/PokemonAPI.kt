@@ -5,6 +5,7 @@ import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.Models.PokemonSpecies
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface  PokemonAPI
 {
@@ -15,9 +16,15 @@ interface  PokemonAPI
 
     // Get the pokemon with the given id
     @GET("pokemon/{id}")
-    fun getPokemon(id : Int) : Call<PokemonModel>
+    fun getPokemon(@Path ("id") id : Int) : Call<PokemonModel>
 
+    // Get the pokemon with the given string
+    @GET("pokemon-species/")
+    fun getPokemon(name : String) : Call<PokemonSpecies>
     // Create model class forthis
     @GET("pokemon-species/?limit=0")
     fun getPokemonCount() : Call<PokemonSpecies>
+
+    @GET("pokemon-species/{id}")
+    fun getPokemonSpecies(id : Int) : Call<PokemonSpecies>
 }
