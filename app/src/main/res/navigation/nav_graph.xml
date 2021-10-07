@@ -12,19 +12,17 @@
 
         >
         <action
-            android:id="@+id/action_mainFragment_to_randomPokemonFragment"
-            app:destination="@id/randomPokemonFragment" >
-            <argument
-                android:name = "id"
-                app:argType="integer"
-                />
+            android:id="@+id/action_mainFragment_to_displayPokemonFragment"
+            app:destination="@id/displayPokemonFragment" >
+            <argument app:argType="integer"
+                android:name="id"/>
         </action>
     </fragment>
     <fragment
-        tools:layout="@layout/fragment_random_pokemon"
-        android:id="@+id/randomPokemonFragment"
-        android:name="com.example.pokdex.Fragments.RandomPokemonFragment"
-        android:label="RandomPokemonFragment" >
+        tools:layout="@layout/fragment_display_pokemon"
+        android:id="@+id/displayPokemonFragment"
+        android:name="com.example.pokdex.Fragments.DisplayPokemonFragment"
+        android:label="DisplayPokemonFragment" >
         <argument
             android:name="id"
             app:argType="integer" />

@@ -5,19 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.ViewModel.RandomPokemonViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_random_pokemon.*
 import androidx.lifecycle.Observer
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.fragment_display_pokemon.*
 
-class RandomPokemonFragment : Fragment() {
+class DisplayPokemonFragment : Fragment() {
 
-   // val args : RandomPokemonFragmentArgs
+    val args : DisplayPokemonFragmentArgs by navArgs()
     private lateinit var pokemon : PokemonModel
     private lateinit var randomPokemonVM : RandomPokemonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +27,13 @@ class RandomPokemonFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_random_pokemon, container, false)
+        return inflater.inflate(R.layout.fragment_display_pokemon, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         initializeMemberVariables()
-        getAndDisplayRandomPokemon()
+        getAndDisplayPokemon(args.id)
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -45,7 +43,7 @@ class RandomPokemonFragment : Fragment() {
         randomPokemonVM = RandomPokemonViewModel()
         pokemon = PokemonModel()
     }
-    private fun getAndDisplayRandomPokemon()
+    private fun getAndDisplayPokemon(id : Int)
     {
         animationView.playAnimation()
         pokemon = randomPokemonVM.getRandomPokemon().value!!
@@ -62,8 +60,8 @@ class RandomPokemonFragment : Fragment() {
 
         if(url != "")
         {
-            Picasso.get().load(url).into(random_pokemon_imageview)
-            random_pokemon_name.text = pokemon.name
+            Picasso.get().load(url).into(display_pokemon_imageview)
+            display_pokemon_name.text = pokemon.name
 
         }
         animationView.visibility=View.GONE

@@ -48,6 +48,25 @@ pokemonCount.value = 898
             return pokemonCount
 
     }
+
+    fun getPokemon(id : Int) : LiveData<PokemonModel>
+    {
+        val call = request.getPokemon(id)
+        call.enqueue(object : Callback<PokemonModel> {
+            override fun onResponse(call: Call<PokemonModel>, response: Response<PokemonModel>) {
+                if (response.isSuccessful) {
+                    currentPokemon.value = response.body()!!
+                }
+            }
+
+            override fun onFailure(call: Call<PokemonModel>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        return currentPokemon
+    }
     // Send a request to get count of pokemon
     //Generate an integer from 0 to 897 (or 1 to 898
     //Send a request to pokemon-species/{int}

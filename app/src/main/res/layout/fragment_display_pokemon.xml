@@ -7,7 +7,7 @@
     android:layout_width="match_parent">
 
     <TextView
-        android:id="@+id/random_pokemon_name"
+        android:id="@+id/display_pokemon_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -17,16 +17,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/random_pokemon_cardview"
+        android:id="@+id/display_pokemon_cardview"
         app:cardCornerRadius="100dp"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="33dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/random_pokemon_name">
+        app:layout_constraintTop_toTopOf="@+id/display_pokemon_name">
         <ImageView
-            android:id="@+id/random_pokemon_imageview"
+            android:id="@+id/display_pokemon_imageview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"/>
@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/random_pokemon_cardview"
+        app:layout_constraintTop_toBottomOf="@+id/display_pokemon_cardview"
         app:layout_constraintVertical_bias="0.336"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
