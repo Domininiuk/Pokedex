@@ -9,6 +9,8 @@ data class PokemonModel(val id : Int, val base_experience : Int,  val name : Str
 {
 
       constructor(name: String) : this( -1, -1, name, "", null ) {}
+
+    constructor() : this( -1, -1, "", "", null ) {}
     fun getOfficialArtworkFrontDefault() : String
     {
         if (sprites != null) {

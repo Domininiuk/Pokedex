@@ -19,7 +19,7 @@ object PokemonRepository
 
 
   init {
-pokemonCount.value = 0
+pokemonCount.value = 898
 
   }
 
@@ -84,8 +84,5 @@ pokemonCount.value = 0
         }
 
 }
-    private fun <T> addToRequestQueue(call : Call<T>)
-    {
 
-    }
 }

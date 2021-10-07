@@ -9,7 +9,7 @@ import com.example.pokdex.PokemonRepository
 class RandomPokemonViewModel : ViewModel() {
 
     var  pokemon : MutableLiveData<PokemonModel>
-    var pokemonCount : MutableLiveData<Int>
+    private var pokemonCount : MutableLiveData<Int>
 
    init {
       pokemon = MutableLiveData(PokemonModel(""))
