@@ -23,6 +23,10 @@ pokemonCount.value = 898
 
   }
 
+    fun getRandomId() : Int
+    {
+        return Random.nextInt(0, pokemonCount.value!!)
+    }
     //
     //Send a request for the number of pokemon
     fun getPokemonCount() : LiveData<Int>

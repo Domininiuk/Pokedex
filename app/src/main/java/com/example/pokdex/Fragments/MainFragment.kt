@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.example.pokdex.PokemonRepository
 import com.example.pokdex.R
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -30,7 +31,8 @@ class MainFragment : Fragment() {
 
         go_to_random_pokemon_button.setOnClickListener()
         {
-            val action =  MainFragmentDirections.actionMainFragmentToRandomPokemonFragment()
+            val id : Int = PokemonRepository.getRandomId()
+            val action =  MainFragmentDirections.actionMainFragmentToRandomPokemonFragment(id)
             findNavController().navigate(action)
 
         }

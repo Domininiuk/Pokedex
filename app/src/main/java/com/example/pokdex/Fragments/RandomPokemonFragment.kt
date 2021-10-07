@@ -12,10 +12,14 @@ import com.example.pokdex.ViewModel.RandomPokemonViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_random_pokemon.*
 import androidx.lifecycle.Observer
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.navArgs
+
 class RandomPokemonFragment : Fragment() {
 
-    lateinit var pokemon : PokemonModel
-    lateinit var randomPokemonVM : RandomPokemonViewModel
+   // val args : RandomPokemonFragmentArgs
+    private lateinit var pokemon : PokemonModel
+    private lateinit var randomPokemonVM : RandomPokemonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
