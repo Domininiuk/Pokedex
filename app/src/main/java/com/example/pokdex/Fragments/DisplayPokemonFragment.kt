@@ -7,17 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
-import com.example.pokdex.ViewModel.RandomPokemonViewModel
+import com.example.pokdex.ViewModel.DisplayPokemonViewModel
 import com.squareup.picasso.Picasso
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_display_pokemon.*
 
 class DisplayPokemonFragment : Fragment() {
 
-    val args : DisplayPokemonFragmentArgs by navArgs()
+    private val args : DisplayPokemonFragmentArgs by navArgs()
     private lateinit var pokemon : PokemonModel
-    private lateinit var randomPokemonVM : RandomPokemonViewModel
+    private lateinit var displayPokemonVM : DisplayPokemonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,14 +39,14 @@ class DisplayPokemonFragment : Fragment() {
     // Initialize as many variables as possible
     private fun initializeMemberVariables()
     {
-        randomPokemonVM = RandomPokemonViewModel()
+        displayPokemonVM = DisplayPokemonViewModel()
         pokemon = PokemonModel()
     }
     private fun getAndDisplayPokemon(id : Int)
     {
         animationView.playAnimation()
-        pokemon = randomPokemonVM.getRandomPokemon().value!!
-        randomPokemonVM.pokemon.observe(viewLifecycleOwner, Observer {
+       // pokemon = displayPokemonVM.get().value!!
+        displayPokemonVM.pokemon.observe(viewLifecycleOwner, {
                 newPokemon ->
             pokemon = newPokemon
             displayRandomPokemon()

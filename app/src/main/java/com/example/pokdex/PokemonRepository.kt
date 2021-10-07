@@ -19,13 +19,13 @@ object PokemonRepository
 
 
   init {
-pokemonCount.value = 898
+pokemonCount.value = 1118
 
   }
 
     fun getRandomId() : Int
     {
-        return Random.nextInt(0, pokemonCount.value!!)
+        return Random.nextInt(0, pokemonCount.value!!.minus(1))
     }
     //
     //Send a request for the number of pokemon

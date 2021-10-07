@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.PokemonRepository
 
-class RandomPokemonViewModel : ViewModel() {
+class DisplayPokemonViewModel : ViewModel() {
 
     var  pokemon : MutableLiveData<PokemonModel>
     private var pokemonCount : MutableLiveData<Int>

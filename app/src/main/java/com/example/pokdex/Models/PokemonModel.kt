@@ -1,6 +1,5 @@
 package com.example.pokdex.Models
 
-//FINISH THE MODELS
 import com.google.gson.annotations.SerializedName
 
 data class PokemonModel(val id : Int, val base_experience : Int,  val name : String ,
