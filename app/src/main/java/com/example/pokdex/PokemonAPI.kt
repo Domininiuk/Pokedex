@@ -1,6 +1,7 @@
 package com.example.pokdex
 
 
+import com.example.pokdex.Models.AllPokemonModel
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.Models.PokemonSpecies
 import retrofit2.Call
@@ -19,8 +20,8 @@ interface  PokemonAPI
     fun getPokemon(@Path ("id") id : Int) : Call<PokemonModel>
 
     //Get a list of all pokemon
-    @GET("pokemon?limit={1118}")
-    fun getAllPokemon(limit : Int, offset : Int) : Call<List<PokemonModel>>
+    @GET("pokemon?limit={limit}")
+    fun getAllPokemon(@Path("limit")limit : Int) : Call<AllPokemonModel>
 
     // Create model class forthis
     @GET("pokemon-species/?limit=0")

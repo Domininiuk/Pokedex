@@ -2,6 +2,7 @@ package com.example.pokdex
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.pokdex.Models.AllPokemonModel
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.Models.PokemonSpecies
 import com.example.pokdex.ServiceBuilder.buildService
@@ -13,15 +14,13 @@ import kotlin.random.Random
 
 object PokemonRepository
 {
-   private var pokemonCount : MutableLiveData<Int> = MutableLiveData()
+   private var pokemonCount : MutableLiveData<Int> = MutableLiveData(1118)
     private val request = ServiceBuilder.buildService(PokemonAPI::class.java)
     private  var currentPokemon : MutableLiveData<PokemonModel> = MutableLiveData(PokemonModel(""))
-    private val allPokemon = MutableLiveData<List<PokemonModel>>()
+    private val allPokemon : MutableLiveData<AllPokemonModel> = MutableLiveData(AllPokemonModel())
 
-  init {
-    pokemonCount.value = 1118
 
-  }
+
 
     fun getRandomId() : Int
     {
@@ -48,13 +47,28 @@ object PokemonRepository
             return pokemonCount
 
     }
-/*
-    fun getAllPokemon() : LiveData<List<PokemonModel>>
-    {
 
+    // THIS IS GONNA CRASH BECAUSE THE LIST OF POKEMON IS IN AN JSON OBJECT CALLED RESULTS
+
+
+    //CREATE A MODEL CLASS CALLED RESULTS/POKEMONALL/ALLPOKEMON AND MAKE IT CONTAIN A LIST OF POKEMONMODELS CALLED RESULTS????
+    fun getAllPokemon() : LiveData<AllPokemonModel>
+    {
+        val call = request.getAllPokemon(pokemonCount.value!!)
+        call.enqueue(object : Callback<AllPokemonModel>{
+            override fun onResponse(call: Call<AllPokemonModel>, response: Response<AllPokemonModel>) {
+                allPokemon.value = response.body()
+            }
+
+            override fun onFailure(call: Call<AllPokemonModel>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        return allPokemon
     }
 
- */
     fun getPokemon(id : Int) : LiveData<PokemonModel>
     {
         val call = request.getPokemon(id)
