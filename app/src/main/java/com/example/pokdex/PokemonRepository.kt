@@ -16,10 +16,10 @@ object PokemonRepository
    private var pokemonCount : MutableLiveData<Int> = MutableLiveData()
     private val request = ServiceBuilder.buildService(PokemonAPI::class.java)
     private  var currentPokemon : MutableLiveData<PokemonModel> = MutableLiveData(PokemonModel(""))
-
+    private val allPokemon = MutableLiveData<List<PokemonModel>>()
 
   init {
-pokemonCount.value = 1118
+    pokemonCount.value = 1118
 
   }
 
@@ -48,7 +48,13 @@ pokemonCount.value = 1118
             return pokemonCount
 
     }
+/*
+    fun getAllPokemon() : LiveData<List<PokemonModel>>
+    {
 
+    }
+
+ */
     fun getPokemon(id : Int) : LiveData<PokemonModel>
     {
         val call = request.getPokemon(id)

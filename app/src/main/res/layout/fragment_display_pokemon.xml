@@ -14,7 +14,8 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAppearance="?attr/textAppearanceHeadline6"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/display_pokemon_cardview"
@@ -25,11 +26,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/display_pokemon_name">
+
         <ImageView
             android:id="@+id/display_pokemon_imageview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 
     <com.airbnb.lottie.LottieAnimationView

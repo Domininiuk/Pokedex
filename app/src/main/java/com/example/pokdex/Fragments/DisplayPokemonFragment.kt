@@ -45,7 +45,7 @@ class DisplayPokemonFragment : Fragment() {
     private fun getAndDisplayPokemon(id : Int)
     {
         animationView.playAnimation()
-       // pokemon = displayPokemonVM.get().value!!
+        pokemon = displayPokemonVM.getPokemon(id).value!!
         displayPokemonVM.pokemon.observe(viewLifecycleOwner, {
                 newPokemon ->
             pokemon = newPokemon

@@ -19,11 +19,9 @@ interface  PokemonAPI
     fun getPokemon(@Path ("id") id : Int) : Call<PokemonModel>
 
     //Get a list of all pokemon
-    @GET("pokemon?limit={limit}&offset={offset}")
-    fun getListOfPokemon(limit : Int, offset : Int) : Call<List<PokemonModel>>
-    // Get the pokemon with the given string
-    @GET("pokemon-species/")
-    fun getPokemon(name : String) : Call<PokemonSpecies>
+    @GET("pokemon?limit={1118}")
+    fun getAllPokemon(limit : Int, offset : Int) : Call<List<PokemonModel>>
+
     // Create model class forthis
     @GET("pokemon-species/?limit=0")
     fun getPokemonCount() : Call<PokemonSpecies>
