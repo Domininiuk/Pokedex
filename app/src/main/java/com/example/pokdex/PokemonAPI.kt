@@ -7,6 +7,7 @@ import com.example.pokdex.Models.PokemonSpecies
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface  PokemonAPI
 {
@@ -20,8 +21,8 @@ interface  PokemonAPI
     fun getPokemon(@Path ("id") id : Int) : Call<PokemonModel>
 
     //Get a list of all pokemon
-    @GET("pokemon?limit={limit}")
-    fun getAllPokemon(@Path("limit")limit : Int) : Call<AllPokemonModel>
+    @GET("pokemon")
+    fun getAllPokemon(@Query("limit")limit : Int) : Call<AllPokemonModel>
 
     // Create model class forthis
     @GET("pokemon-species/?limit=0")

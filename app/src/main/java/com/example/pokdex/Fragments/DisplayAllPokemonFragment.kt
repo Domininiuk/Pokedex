@@ -12,6 +12,7 @@ import com.example.pokdex.Models.AllPokemonModel
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.ViewModel.DisplayAllPokemonViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_display_all_pokemon.*
 import kotlinx.android.synthetic.main.item_recyclerview_display_all.view.*
 
@@ -52,10 +53,12 @@ class DisplayAllPokemonFragment : Fragment()
     {
         allPokemon = displayAllPokemonVM.getAllPokemon().value!!
         displayAllPokemonVM.allPokemonModel.observe(viewLifecycleOwner, { newAllPokemon ->
-            allPokemon = newAllPokemon
-            display_all_recyclerview.adapter = DisplayAllPokemonAdapter(allPokemon)
-            display_all_recyclerview.layoutManager = LinearLayoutManager(context)
-          //  display_all_recyclerview.setrecy
+            if(newAllPokemon.results.size > 1) {
+                allPokemon = newAllPokemon
+                display_all_recyclerview.adapter = DisplayAllPokemonAdapter(allPokemon)
+                display_all_recyclerview.layoutManager = LinearLayoutManager(context)
+                //  display_all_recyclerview.setrecy
+            }
     })
 }
     //Get an adapter of ALL pokemon
@@ -79,7 +82,15 @@ class DisplayAllPokemonAdapter(allpokemon : AllPokemonModel) :
     }
 
     override fun onBindViewHolder(holder: PokemonHolder, position: Int) {
-        holder.itemView.display_all_pokemon_name.text = pokemonList[position].name
+        val pokemonModel = pokemonList[position]
+        holder.itemView.display_all_pokemon_name.text = pokemonModel.name
+
+        //ERROR: PATH MUST NOT BE MPTY
+        //ADD A GETFRONTARTWORKURL METHOD TO THE VIEWMODEL?
+        //Save the ur0l in the list? and redownload iamges every time an item shows up?
+        Picasso.get().load(pokemonModel.getOfficialArtworkFrontDefault()).
+        into(holder.itemView.display_all_pokemon_image)
+
     }
 
     override fun getItemCount(): Int {
@@ -90,5 +101,10 @@ class DisplayAllPokemonAdapter(allpokemon : AllPokemonModel) :
 
 class PokemonHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
+    lateinit var pokemon : PokemonModel
 
+    fun downloadPokemonData(id : Int)
+    {
+
+    }
 }

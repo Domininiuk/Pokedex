@@ -1,7 +1,7 @@
 package com.example.pokdex.Models
 
-data class AllPokemonModel(val results : List<PokemonModel>)
+data class AllPokemonModel(var results : MutableList<PokemonModel>)
 {
-    constructor(model : PokemonModel) : this(results = listOf(model))
-    constructor() : this(results = listOf(PokemonModel()))
+    constructor(model : PokemonModel) : this(results = mutableListOf(model))
+    constructor() : this(results = mutableListOf(PokemonModel()))
 }
