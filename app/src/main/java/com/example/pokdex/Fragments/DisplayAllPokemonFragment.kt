@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Models.AllPokemonModel
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.ViewModel.DisplayAllPokemonViewModel
+import kotlinx.android.synthetic.main.fragment_display_all_pokemon.*
 import kotlinx.android.synthetic.main.item_recyclerview_display_all.view.*
 
 
@@ -48,9 +50,12 @@ class DisplayAllPokemonFragment : Fragment()
 
     private fun displayRecyclerView()
     {
+        allPokemon = displayAllPokemonVM.getAllPokemon().value!!
         displayAllPokemonVM.allPokemonModel.observe(viewLifecycleOwner, { newAllPokemon ->
             allPokemon = newAllPokemon
-
+            display_all_recyclerview.adapter = DisplayAllPokemonAdapter(allPokemon)
+            display_all_recyclerview.layoutManager = LinearLayoutManager(context)
+          //  display_all_recyclerview.setrecy
     })
 }
     //Get an adapter of ALL pokemon
@@ -62,7 +67,7 @@ class DisplayAllPokemonAdapter(allpokemon : AllPokemonModel) :
 
 {
     //List of the displayed Pokemon
-    var allPokemon = allpokemon
+    private var allPokemon = allpokemon
     var pokemonList = allPokemon.results
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonHolder {

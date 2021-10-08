@@ -6,6 +6,7 @@
     tools:context=".Fragments.DisplayAllPokemonFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/display_all_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
