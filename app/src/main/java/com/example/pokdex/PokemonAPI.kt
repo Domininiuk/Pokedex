@@ -18,7 +18,7 @@ interface  PokemonAPI
 
     // Get the pokemon with the given id
     @GET("pokemon/{id}")
-    fun getPokemon(@Path ("id") id : Int) : Call<PokemonModel>
+   suspend fun getPokemonId(@Path ("id") id : Int) : PokemonModel
 
     @GET("pokemon/{name}")
     fun getPokemon(@Path("name")name : String) : Call<PokemonModel>

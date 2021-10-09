@@ -15,11 +15,8 @@ import kotlin.random.Random
 object PokemonRepository
 {
    private var pokemonCount : MutableLiveData<Int> = MutableLiveData(1118)
-    private val request = ServiceBuilder.buildService(PokemonAPI::class.java)
-    private  var currentPokemon : MutableLiveData<PokemonModel> = MutableLiveData(PokemonModel(""))
-    private val allPokemon : MutableLiveData<AllPokemonModel> = MutableLiveData(AllPokemonModel())
-
-
+    private val request : PokemonAPI = ServiceBuilder.buildService(PokemonAPI::class.java)
+    var allPokemon = MutableLiveData<AllPokemonModel>()
 
 
     fun getRandomId() : Int
@@ -71,6 +68,7 @@ object PokemonRepository
 
     fun getPokemonString(name : String) : LiveData<PokemonModel>
     {
+        var currentPokemon : MutableLiveData<PokemonModel> = MutableLiveData<PokemonModel>()
         val call = request.getPokemon(name)
         call.enqueue(object : Callback<PokemonModel> {
             override fun onResponse(call: Call<PokemonModel>, response: Response<PokemonModel>) {
@@ -87,8 +85,9 @@ object PokemonRepository
 
         return currentPokemon
     }
-    fun getPokemonId(id : Int) : LiveData<PokemonModel>
-    {
+   suspend fun getPokemonId(id : Int) = request.getPokemonId(id)
+        /*
+        {
         val call = request.getPokemon(id)
         call.enqueue(object : Callback<PokemonModel> {
             override fun onResponse(call: Call<PokemonModel>, response: Response<PokemonModel>) {
@@ -104,46 +103,15 @@ object PokemonRepository
         })
 
         return currentPokemon
-    }
+}
+         */
+
+
+
     // Send a request to get count of pokemon
     //Generate an integer from 0 to 897 (or 1 to 898
     //Send a request to pokemon-species/{int}
     //Get the name of the pokemon
     // Then send a request to pokemon/{ name}
-    fun getRandomPokemon() : LiveData<PokemonModel>
-    {
-        //Add observers to getPokemonCount?
-        if(pokemonCount.value == 0)
-        {
-            getPokemonCount()
-            return currentPokemon
-        }
-        else {
-            val id: Int = Random.nextInt(0, pokemonCount.value!!)
-
-
-            val call = request.getPokemon(id)
-
-            call.enqueue(object : Callback<PokemonModel> {
-                override fun onResponse(
-                    call: Call<PokemonModel>,
-                    response: Response<PokemonModel>
-                ) {
-
-                    //If the response is sucessful and the pokemon object isnt null,
-                    // set it as the currentPokemon variable
-                    if (response.isSuccessful) {
-                        currentPokemon.value = response.body()!!
-                    }
-                }
-
-                override fun onFailure(call: Call<PokemonModel>, t: Throwable) {
-                }
-            })
-
-            return currentPokemon
-        }
-
-}
 
 }

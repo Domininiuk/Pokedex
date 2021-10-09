@@ -40,18 +40,21 @@ class DisplayPokemonFragment : Fragment() {
     private fun initializeMemberVariables()
     {
         displayPokemonVM = DisplayPokemonViewModel()
-        pokemon = PokemonModel()
+        pokemon = PokemonModel("")
     }
     private fun getAndDisplayPokemon(id : Int)
     {
         animationView.playAnimation()
-        pokemon = displayPokemonVM.getPokemon(id).value!!
-        displayPokemonVM.pokemon.observe(viewLifecycleOwner, {
+      //  pokemon = displayPokemonVM.getPokemon(id).value!!
+        displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner, {
                 newPokemon ->
             pokemon = newPokemon
             displayRandomPokemon()
         })
 
+
+
+       // displayRandomPokemon()
     }
     private fun displayRandomPokemon()
     {
