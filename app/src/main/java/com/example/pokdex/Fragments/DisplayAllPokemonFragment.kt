@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Models.AllPokemonModel
@@ -26,9 +28,6 @@ class DisplayAllPokemonFragment : Fragment()
         super.onCreate(savedInstanceState)
     }
 
-    override fun getContext(): Context? {
-        return super.getContext()
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,15 +53,14 @@ class DisplayAllPokemonFragment : Fragment()
         allPokemon = displayAllPokemonVM.getAllPokemon().value!!
         displayAllPokemonVM.allPokemonModel.observe(viewLifecycleOwner, { newAllPokemon ->
             if(newAllPokemon.results.size > 1) {
-                allPokemon = newAllPokemon
                 display_all_recyclerview.adapter = DisplayAllPokemonAdapter(allPokemon)
-                display_all_recyclerview.layoutManager = LinearLayoutManager(context)
-                //  display_all_recyclerview.setrecy
+                display_all_recyclerview.layoutManager = GridLayoutManager(context, 2)
+
+                Toast.makeText(context, "Observer", Toast.LENGTH_SHORT).show()
             }
     })
 }
-    //Get an adapter of ALL pokemon
-    //And then in the PokemonHolder download the rest of the data to display the pokemon on the screen?
+
 }
 
 class DisplayAllPokemonAdapter(allpokemon : AllPokemonModel) :
@@ -88,8 +86,8 @@ class DisplayAllPokemonAdapter(allpokemon : AllPokemonModel) :
         //ERROR: PATH MUST NOT BE MPTY
         //ADD A GETFRONTARTWORKURL METHOD TO THE VIEWMODEL?
         //Save the ur0l in the list? and redownload iamges every time an item shows up?
-        Picasso.get().load(pokemonModel.getOfficialArtworkFrontDefault()).
-        into(holder.itemView.display_all_pokemon_image)
+      //  Picasso.get().load(pokemonModel.getOfficialArtworkFrontDefault()).
+     //   into(holder.itemView.display_all_pokemon_image)
 
     }
 
@@ -99,12 +97,5 @@ class DisplayAllPokemonAdapter(allpokemon : AllPokemonModel) :
 
 }
 
-class PokemonHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-{
-    lateinit var pokemon : PokemonModel
-
-    fun downloadPokemonData(id : Int)
-    {
-
-    }
+class PokemonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 }

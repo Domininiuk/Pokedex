@@ -18,7 +18,6 @@ class DisplayAllPokemonViewModel : ViewModel() {
         if(allPokemonModel.value!!.results.size <= 1)
         {
             allPokemonModel = PokemonRepository.getAllPokemon() as MutableLiveData<AllPokemonModel>
-            completePokemonModels()
         }
 
 
@@ -26,16 +25,4 @@ class DisplayAllPokemonViewModel : ViewModel() {
        return allPokemonModel
     }
 
-    fun completePokemonModels()
-    {
-        var list= allPokemonModel.value!!.results
-
-        //For each pokemon, send a request for its spirtes
-        for(i in 0 until list.size)
-        {
-            var newPokemon = PokemonRepository.getPokemon(list[i].id)
-            list[i] = newPokemon.value!!
-        }
-        allPokemonModel.value!!.results = list
-    }
 }
