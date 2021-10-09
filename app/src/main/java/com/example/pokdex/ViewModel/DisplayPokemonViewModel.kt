@@ -27,7 +27,7 @@ class DisplayPokemonViewModel : ViewModel() {
    }
    fun getPokemon(id : Int) : LiveData<PokemonModel>
    {
-      pokemon = PokemonRepository.getPokemon(id) as MutableLiveData<PokemonModel>
+      pokemon = PokemonRepository.getPokemonId(id) as MutableLiveData<PokemonModel>
       return pokemon
    }
 

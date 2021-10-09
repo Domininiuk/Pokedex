@@ -1,5 +1,6 @@
 package com.example.pokdex.ViewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pokdex.Models.AllPokemonModel
@@ -10,7 +11,15 @@ class DisplayAllPokemonViewModel : ViewModel() {
     var allPokemonModel : MutableLiveData<AllPokemonModel> = MutableLiveData(AllPokemonModel(
         PokemonModel()
     ))
+    var pokemonList : LiveData<MutableList<PokemonModel>> = MutableLiveData(mutableListOf(PokemonModel("test")))
 
+    fun getPokemon(name : String) : LiveData<PokemonModel>
+    {
+       var pokemon =  PokemonRepository.getPokemonString(name) as MutableLiveData<PokemonModel>
+        pokemonList.value!!.add(pokemon.value!!)
+        //pokemon = PokemonRepository.getPokemon(id) as MutableLiveData<PokemonModel>
+        return pokemon
+    }
 
     //If the number of pokemon in AllPokemonModel is not at least 2, send a request to the repository
     fun getAllPokemon() : MutableLiveData<AllPokemonModel>

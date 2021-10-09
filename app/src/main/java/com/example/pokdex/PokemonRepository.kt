@@ -69,7 +69,25 @@ object PokemonRepository
         return allPokemon
     }
 
-    fun getPokemon(id : Int) : LiveData<PokemonModel>
+    fun getPokemonString(name : String) : LiveData<PokemonModel>
+    {
+        val call = request.getPokemon(name)
+        call.enqueue(object : Callback<PokemonModel> {
+            override fun onResponse(call: Call<PokemonModel>, response: Response<PokemonModel>) {
+                if (response.isSuccessful) {
+                    currentPokemon.value = response.body()!!
+                }
+            }
+
+            override fun onFailure(call: Call<PokemonModel>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        return currentPokemon
+    }
+    fun getPokemonId(id : Int) : LiveData<PokemonModel>
     {
         val call = request.getPokemon(id)
         call.enqueue(object : Callback<PokemonModel> {

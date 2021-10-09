@@ -20,6 +20,8 @@ interface  PokemonAPI
     @GET("pokemon/{id}")
     fun getPokemon(@Path ("id") id : Int) : Call<PokemonModel>
 
+    @GET("pokemon/{name}")
+    fun getPokemon(@Path("name")name : String) : Call<PokemonModel>
     //Get a list of all pokemon
     @GET("pokemon")
     fun getAllPokemon(@Query("limit")limit : Int) : Call<AllPokemonModel>
