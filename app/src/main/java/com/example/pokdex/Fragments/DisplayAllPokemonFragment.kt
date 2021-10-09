@@ -20,9 +20,6 @@ import kotlinx.android.synthetic.main.item_recyclerview_display_all.view.*
 
 class DisplayAllPokemonFragment : Fragment()
 {
-
-   private lateinit var displayAllPokemonVM : DisplayAllPokemonViewModel
-   private lateinit var allPokemon : AllPokemonModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -42,27 +39,11 @@ class DisplayAllPokemonFragment : Fragment()
     //Initialize member variables
     private fun initializeVariables()
     {
-        displayAllPokemonVM = DisplayAllPokemonViewModel()
-        allPokemon = AllPokemonModel()
-
     }
 
-    private fun displayRecyclerView()
-    {
+    private fun displayRecyclerView() {
+    }
 
-
-        allPokemon = displayAllPokemonVM.getAllPokemon().value!!
-        displayAllPokemonVM.allPokemonModel.observe(viewLifecycleOwner, { newAllPokemon ->
-            if(newAllPokemon.results.size > 1) {
-                allPokemon = newAllPokemon
-                display_all_recyclerview.adapter = DisplayAllPokemonAdapter(allPokemon)
-                display_all_recyclerview.layoutManager = GridLayoutManager(context, 2)
-
-                //INSTEAD OF DOWNLOADING ALL POKEMON SIMPLY DOWNLOAD
-            // INDIVIDUAL POKEMON USING THEIR POSITION IN THE ADAPTER AS ID AS THEY APPEAR?
-            }
-    })
-}
 
 }
 
@@ -100,8 +81,6 @@ class PokemonHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 {
     fun bind(id : PokemonModel)
     {
-
         itemView.display_all_pokemon_name.text = id.name
-
     }
 }

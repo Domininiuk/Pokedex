@@ -15,18 +15,13 @@ class DisplayPokemonViewModel : ViewModel() {
    fun getPokemon(id : Int) : LiveData<PokemonModel> {
       pokemon = liveData(Dispatchers.IO)
       {
-         val retrievedPokemon = PokemonRepository.getPokemonId(1)
+         val retrievedPokemon = PokemonRepository.getPokemonId(id)
 
          emit(retrievedPokemon)
       }
       return pokemon
    }
-    private var pokemonCount : MutableLiveData<Int>
 
-   init {
-
-      pokemonCount = MutableLiveData(0)
-   }
 
 
 

@@ -11,25 +11,7 @@ import retrofit2.http.Query
 
 interface  PokemonAPI
 {
-
-    // Get the ditto pokemon (Test method)
-    @GET("pokemon/ditto")
-    fun getDitto() : Call<PokemonModel>
-
     // Get the pokemon with the given id
     @GET("pokemon/{id}")
    suspend fun getPokemonId(@Path ("id") id : Int) : PokemonModel
-
-    @GET("pokemon/{name}")
-    fun getPokemon(@Path("name")name : String) : Call<PokemonModel>
-    //Get a list of all pokemon
-    @GET("pokemon")
-    fun getAllPokemon(@Query("limit")limit : Int) : Call<AllPokemonModel>
-
-    // Create model class forthis
-    @GET("pokemon-species/?limit=0")
-    fun getPokemonCount() : Call<PokemonSpecies>
-
-    @GET("pokemon-species/{id}")
-    fun getPokemonSpecies(id : Int) : Call<PokemonSpecies>
 }
