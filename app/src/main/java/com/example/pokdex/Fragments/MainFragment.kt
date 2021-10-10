@@ -31,17 +31,19 @@ class MainFragment : Fragment() {
 
         go_to_random_pokemon_button.setOnClickListener()
         {
-
+/*
             val id : Int = PokemonRepository.getRandomId()
             val action =  MainFragmentDirections.actionMainFragmentToDisplayPokemonFragment(id)
             findNavController().navigate(action)
 
 
-            /*
+ */
+
+
             val action = MainFragmentDirections.actionMainFragmentToDisplayAllPokemonFragment()
             findNavController().navigate(action)
 
-             */
+
 
         }
 

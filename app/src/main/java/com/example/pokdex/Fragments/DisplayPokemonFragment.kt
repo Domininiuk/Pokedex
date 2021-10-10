@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.ViewModel.DisplayPokemonViewModel
 import com.squareup.picasso.Picasso
 import androidx.navigation.fragment.navArgs
+import com.google.common.base.Ascii.toUpperCase
 import kotlinx.android.synthetic.main.fragment_display_pokemon.*
 
 class DisplayPokemonFragment : Fragment() {
@@ -17,6 +19,8 @@ class DisplayPokemonFragment : Fragment() {
     private val args : DisplayPokemonFragmentArgs by navArgs()
     private lateinit var pokemon : PokemonModel
     private lateinit var displayPokemonVM : DisplayPokemonViewModel
+
+    var   list : MutableList<PokemonModel> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -41,19 +45,25 @@ class DisplayPokemonFragment : Fragment() {
     {
         displayPokemonVM = DisplayPokemonViewModel()
         pokemon = PokemonModel("")
+
     }
     private fun getAndDisplayPokemon(id : Int)
     {
         animationView.playAnimation()
-      //  pokemon = displayPokemonVM.getPokemon(id).value!!
         displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner, {
                 newPokemon ->
             pokemon = newPokemon
+            list.add(pokemon)
             displayRandomPokemon()
         })
 
 
-
+        displayPokemonVM.getPokemon(2).observe(viewLifecycleOwner, {
+                newPokemon ->
+            pokemon = newPokemon
+            list.add(pokemon)
+            displayRandomPokemon()
+        })
        // displayRandomPokemon()
     }
     private fun displayRandomPokemon()
@@ -63,8 +73,8 @@ class DisplayPokemonFragment : Fragment() {
         if(url != "")
         {
             Picasso.get().load(url).into(display_pokemon_imageview)
-            display_pokemon_name.text = pokemon.name
-
+            display_pokemon_name.text = toUpperCase(pokemon.name)
+           // Toast.makeText()
         }
         animationView.visibility=View.GONE
     }
