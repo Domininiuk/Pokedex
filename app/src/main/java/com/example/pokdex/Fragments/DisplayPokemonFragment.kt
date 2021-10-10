@@ -56,15 +56,6 @@ class DisplayPokemonFragment : Fragment() {
             list.add(pokemon)
             displayRandomPokemon()
         })
-
-
-        displayPokemonVM.getPokemon(2).observe(viewLifecycleOwner, {
-                newPokemon ->
-            pokemon = newPokemon
-            list.add(pokemon)
-            displayRandomPokemon()
-        })
-       // displayRandomPokemon()
     }
     private fun displayRandomPokemon()
     {

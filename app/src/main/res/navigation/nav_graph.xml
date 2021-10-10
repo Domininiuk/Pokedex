@@ -12,12 +12,6 @@
 
         >
         <action
-            android:id="@+id/action_mainFragment_to_displayPokemonFragment"
-            app:destination="@id/displayPokemonFragment" >
-            <argument app:argType="integer"
-                android:name="id"/>
-        </action>
-        <action
             android:id="@+id/action_mainFragment_to_displayAllPokemonFragment"
             app:destination="@id/displayAllPokemonFragment" />
     </fragment>
@@ -34,5 +28,12 @@
         android:id="@+id/displayAllPokemonFragment"
         android:name="com.example.pokdex.Fragments.DisplayAllPokemonFragment"
         android:label="fragment_display_all_pokemon"
-        tools:layout="@layout/fragment_display_all_pokemon" />
+        tools:layout="@layout/fragment_display_all_pokemon" >
+        <action
+            android:id="@+id/action_displayAllPokemonFragment_to_displayPokemonFragment"
+            app:destination="@id/displayPokemonFragment" >
+            <argument android:name="id"
+                app:argType="integer"/>
+        </action>
+    </fragment>
 </navigation>

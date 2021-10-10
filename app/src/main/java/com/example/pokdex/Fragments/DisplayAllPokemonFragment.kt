@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Models.PokemonListModel
@@ -51,15 +52,26 @@ class DisplayAllPokemonFragment : Fragment() {
 
     private fun displayRecyclerView()
     {
-        display_all_recyclerview.adapter = DisplayAllPokemonAdapter(pokemonList)
+        display_all_recyclerview.adapter = DisplayAllPokemonAdapter(pokemonList) { position ->
+            onListItemClick(
+                position
+            )
+        }
         display_all_recyclerview.layoutManager = GridLayoutManager(context, 2)
     }
 
+    //When clicking on a pokemon, go their specific pokemon fragment
+    private fun onListItemClick(position : Int)
+    {
+        val id : Int = position + 1
+        val action =  DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment(id)
+        findNavController().navigate(action)
+    }
 
 }
 
 
-class DisplayAllPokemonAdapter(list : PokemonListModel) :
+class DisplayAllPokemonAdapter(list : PokemonListModel, private val onItemClicked : (position: Int) -> Unit) :
     RecyclerView.Adapter<PokemonHolder>()
 {
     val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
@@ -69,15 +81,13 @@ class DisplayAllPokemonAdapter(list : PokemonListModel) :
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recyclerview_display_all,
         parent, false)
 
-        return PokemonHolder(view)
+        return PokemonHolder(view, onItemClicked)
 
     }
 
     override fun onBindViewHolder(holder: PokemonHolder, position: Int) {
 
        holder.bind(results[position],position.plus(1), imageUrl)
-
-
 
     }
 
@@ -87,11 +97,18 @@ class DisplayAllPokemonAdapter(list : PokemonListModel) :
 
 }
 
-class PokemonHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-{
-    fun bind(pokemonModel: PokemonModel, position: Int, url: String)
-    {
+class PokemonHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    fun bind(pokemonModel: PokemonModel, position: Int, url: String) {
         itemView.display_all_pokemon_name.text = pokemonModel.name
         Picasso.get().load(url + position + ".png").into(itemView.display_all_pokemon_image)
+    }
+
+    init {
+        itemView.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        val position = absoluteAdapterPosition
+        onItemClicked(position)
     }
 }
