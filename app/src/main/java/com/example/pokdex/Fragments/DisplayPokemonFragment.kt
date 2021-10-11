@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.common.base.Ascii.toUpperCase
 import kotlinx.android.synthetic.main.fragment_display_pokemon.*
 
+
 class DisplayPokemonFragment : Fragment() {
 
     private val args : DisplayPokemonFragmentArgs by navArgs()

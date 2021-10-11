@@ -1,13 +1,14 @@
 package com.example.pokdex.Fragments
 
+
 import android.os.Bundle
-import android.view.Display
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
+
+
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,8 @@ import com.example.pokdex.ViewModel.DisplayAllPokemonViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_display_all_pokemon.*
 import kotlinx.android.synthetic.main.item_recyclerview_display_all.view.*
+
+
 
 
 class DisplayAllPokemonFragment : Fragment() {
@@ -34,7 +37,6 @@ class DisplayAllPokemonFragment : Fragment() {
 
 
         initializeVariables()
-
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_display_all_pokemon, container, false)
@@ -101,6 +103,8 @@ class PokemonHolder(itemView: View, private val onItemClicked: (position: Int) -
     fun bind(pokemonModel: PokemonModel, position: Int, url: String) {
         itemView.display_all_pokemon_name.text = pokemonModel.name
         Picasso.get().load(url + position + ".png").into(itemView.display_all_pokemon_image)
+
+
     }
 
     init {
@@ -111,4 +115,6 @@ class PokemonHolder(itemView: View, private val onItemClicked: (position: Int) -
         val position = absoluteAdapterPosition
         onItemClicked(position)
     }
+
+
 }
