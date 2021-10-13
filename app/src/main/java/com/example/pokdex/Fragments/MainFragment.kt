@@ -47,8 +47,5 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onResume() {
 
-        super.onResume()
-    }
 }

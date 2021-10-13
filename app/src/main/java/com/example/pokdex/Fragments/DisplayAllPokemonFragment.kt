@@ -46,7 +46,6 @@ class DisplayAllPokemonFragment : Fragment() {
 
     private fun setUpActionBar()
     {
-        activity?.actionBar?.setDisplayHomeAsUpEnabled(false)
 
     }
     //Initialize member variables

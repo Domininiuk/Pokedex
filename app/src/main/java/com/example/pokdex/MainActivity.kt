@@ -21,36 +21,9 @@ class MainActivity : AppCompatActivity()
        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
        val navController = navHostFragment!!.findNavController()
 
-        setupActionBarWithNavController(navController)
-
-
-        if (supportActionBar != null) {
-            supportActionBar!!.setDisplayShowHomeEnabled(true);
-            supportActionBar!!.setLogo(R.mipmap.ic_launcher);
-            supportActionBar!!.setDisplayUseLogoEnabled(true);
-
-        }
 
     }
 
 
-    override fun onBackPressed() {
-        supportFragmentManager.popBackStack()
-    }
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-
-
-        16908332 -> {
-            onBackPressed()
-
-            true
-        }
-
-        else -> {
-            // If we got here, the user's action was not recognized.
-            // Invoke the superclass to handle it.
-            super.onOptionsItemSelected(item)
-        }
-    }
 
 }
