@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:theme="@style/Theme.Pokédex"
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,6 +14,7 @@
         <!--android:theme="@style/Theme.Pokédex">-->
         <activity
             android:name=".MainActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

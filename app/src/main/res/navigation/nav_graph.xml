@@ -19,7 +19,7 @@
         tools:layout="@layout/fragment_display_pokemon"
         android:id="@+id/displayPokemonFragment"
         android:name="com.example.pokdex.Fragments.DisplayPokemonFragment"
-        android:label="DisplayPokemonFragment" >
+        android:label="pOKEMON" >
         <argument
             android:name="id"
             app:argType="integer" />
@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/displayAllPokemonFragment"
         android:name="com.example.pokdex.Fragments.DisplayAllPokemonFragment"
-        android:label="fragment_display_all_pokemon"
+        android:label="All Pokemon"
         tools:layout="@layout/fragment_display_all_pokemon" >
         <action
             android:id="@+id/action_displayAllPokemonFragment_to_displayPokemonFragment"

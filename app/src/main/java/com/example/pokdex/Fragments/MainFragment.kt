@@ -38,12 +38,8 @@ class MainFragment : Fragment() {
 
 
  */
-
-
             val action = MainFragmentDirections.actionMainFragmentToDisplayAllPokemonFragment()
             findNavController().navigate(action)
-
-
 
         }
 
@@ -51,4 +47,8 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun onResume() {
+
+        super.onResume()
+    }
 }
