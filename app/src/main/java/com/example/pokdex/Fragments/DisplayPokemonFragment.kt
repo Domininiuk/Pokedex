@@ -65,7 +65,7 @@ class DisplayPokemonFragment : Fragment() {
         if(url != "")
         {
             Picasso.get().load(url).into(display_pokemon_imageview)
-            display_pokemon_name.text = toUpperCase(pokemon.name)
+            display_pokemon_name.text = Character.toUpperCase(pokemon.name[0]) + pokemon.name.substring(1)
            // Toast.makeText()
         }
         animationView.visibility=View.GONE

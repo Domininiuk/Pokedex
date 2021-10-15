@@ -20,8 +20,7 @@ import com.example.pokdex.ViewModel.DisplayAllPokemonViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_display_all_pokemon.*
 import kotlinx.android.synthetic.main.item_recyclerview_display_all.view.*
-
-
+import java.lang.Character.toUpperCase
 
 
 class DisplayAllPokemonFragment : Fragment() {
@@ -82,9 +81,9 @@ class DisplayAllPokemonFragment : Fragment() {
 class DisplayAllPokemonAdapter(list : PokemonListModel, private val onItemClicked : (position: Int) -> Unit) :
     RecyclerView.Adapter<PokemonHolder>()
 {
-    val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
-    val pokemonList = list
-    val results = pokemonList.results
+    private val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
+    private val pokemonList = list
+    private val results = pokemonList.results
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recyclerview_display_all,
         parent, false)
@@ -106,8 +105,9 @@ class DisplayAllPokemonAdapter(list : PokemonListModel, private val onItemClicke
 }
 
 class PokemonHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-    fun bind(pokemonModel: PokemonModel, position: Int, url: String) {
-        itemView.display_all_pokemon_name.text = pokemonModel.name
+    fun bind(pokemonModel: PokemonModel, position: Int, url: String)
+    {
+        itemView.display_all_pokemon_name.text = toUpperCase(pokemonModel.name[0]) + pokemonModel.name.substring(1)
         Picasso.get().load(url + position + ".png").into(itemView.display_all_pokemon_image)
 
 

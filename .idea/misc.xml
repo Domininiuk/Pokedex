@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19479166666666667" />
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19479166666666667" />
+        <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/drawable/pokemon_icon_background.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/layout/display_all_recyclerview.xml" value="0.3473731884057971" />
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/layout/fragment_display_all.xml" value="0.3473731884057971" />
@@ -15,6 +16,10 @@
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/layout/item_recyclerview_display_all.xml" value="0.5" />
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/layout/recyclerview_display_all.xml" value="0.33967391304347827" />
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/menu/display_all_pokemon_actions.xml" value="0.5" />
+        <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/mipmap-anydpi-v26/pokemon_icon.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/mipmap-anydpi-v26/pokemon_icon_round.xml" value="0.22135416666666666" />
       </map>
     </option>
   </component>
