@@ -26,7 +26,7 @@ import java.lang.Character.toUpperCase
 class DisplayAllPokemonFragment : Fragment() {
     lateinit var displayAllPokemonVM: DisplayAllPokemonViewModel
     lateinit var pokemonList : PokemonListModel
-    lateinit var  actionBar : ActionBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -38,15 +38,11 @@ class DisplayAllPokemonFragment : Fragment() {
     {
 
             initializeVariables()
-            setUpActionBar()
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_display_all_pokemon, container, false)
     }
 
-    private fun setUpActionBar()
-    {
 
-    }
     //Initialize member variables
     private fun initializeVariables() {
         displayAllPokemonVM = DisplayAllPokemonViewModel()

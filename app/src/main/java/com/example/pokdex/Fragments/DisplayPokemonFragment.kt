@@ -66,6 +66,9 @@ class DisplayPokemonFragment : Fragment() {
         {
             Picasso.get().load(url).into(display_pokemon_imageview)
             display_pokemon_name.text = Character.toUpperCase(pokemon.name[0]) + pokemon.name.substring(1)
+            display_pokemon_weight.text = "Weight: "+  pokemon.getWeightInKilograms() + " kg"
+            display_pokemon_experience.text = "Base experience: " + pokemon.base_experience + " cm"
+            display_pokemon_height.text = "Height: " + pokemon.getHeightInCentimeters() + " cm"
            // Toast.makeText()
         }
         animationView.visibility=View.GONE

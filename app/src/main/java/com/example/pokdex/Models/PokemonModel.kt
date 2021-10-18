@@ -3,20 +3,34 @@ package com.example.pokdex.Models
 import com.google.gson.annotations.SerializedName
 
 data class PokemonModel(val id : Int, val base_experience : Int,  val name : String ,
-                           val weight : String,
-                           val sprites : PokemonSprites?)
+                           val weight : Float = 0.0f,
+                           val sprites : PokemonSprites?, val height : Int = 0)
 {
 
-      constructor(name: String) : this( -1, -1, name, "", null ) {}
+    /*
+    Height is in decimeters
+    Weight is in hectograms (tenth of kilogram)
+     */
+      constructor(name: String) : this( -1, -1, name, 0.0f, null ) {}
 
-    constructor() : this( -1, -1, "", "", null ) {}
-    constructor(id :Int, name: String) : this (id, 0, name, "",null)
+    constructor() : this( -1, -1, "", 0.0f, null ) {}
+    constructor(id :Int, name: String) : this (id, 0, name, 0.0f,null)
     fun getOfficialArtworkFrontDefault() : String
     {
         if (sprites != null) {
             return sprites.getOfficialArtworkFrontDefault()
         }
         return ""
+    }
+    //Return the height in centimeters
+    fun getHeightInCentimeters() : Int
+    {
+        return height * 10
+    }
+    //Return the weight in kilograms
+    fun getWeightInKilograms() : Float
+    {
+        return weight / 10.0f
     }
 }
 
@@ -54,3 +68,5 @@ data class PokemonSpecies(val count : Int, val name : String)
 {
     
 }
+
+data class PokemonAbility(val name : String)
