@@ -2,19 +2,22 @@ package com.example.pokdex.Models
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonModel(val id : Int, val base_experience : Int,  val name : String ,
+data class PokemonModel(val id : Int = -1, val base_experience : Int = 0,  val name : String = "",
                            val weight : Float = 0.0f,
-                           val sprites : PokemonSprites?, val height : Int = 0)
+                           val sprites : PokemonSprites? = null, val height : Int = 0,val abilities
+                           : MutableList<PokemonAbilityHolder>
+                           = mutableListOf())
 {
 
     /*
     Height is in decimeters
     Weight is in hectograms (tenth of kilogram)
      */
-      constructor(name: String) : this( -1, -1, name, 0.0f, null ) {}
+      constructor(name: String) : this( -1, -1, name, 0.0f, null, 0, mutableListOf(
+        PokemonAbilityHolder()
+    ) ) {}
 
-    constructor() : this( -1, -1, "", 0.0f, null ) {}
-    constructor(id :Int, name: String) : this (id, 0, name, 0.0f,null)
+    constructor() : this( -1, -1, "", 0.0f, null, 0,  mutableListOf(PokemonAbilityHolder()) ) {}
     fun getOfficialArtworkFrontDefault() : String
     {
         if (sprites != null) {
@@ -62,11 +65,10 @@ val front_shiny_female : String, val other: PokemonOther)
     {
         return other.official_artwork.front_default
     }
-}
-
-data class PokemonSpecies(val count : Int, val name : String)
-{
     
 }
-
+data class PokemonAbilityHolder(val ability : PokemonAbility = PokemonAbility(""))
 data class PokemonAbility(val name : String)
+{
+
+}
