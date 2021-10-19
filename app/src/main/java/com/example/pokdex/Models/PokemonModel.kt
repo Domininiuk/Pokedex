@@ -65,7 +65,7 @@ val front_shiny_female : String, val other: PokemonOther)
     {
         return other.official_artwork.front_default
     }
-    
+
 }
 data class PokemonAbilityHolder(val ability : PokemonAbility = PokemonAbility(""))
 data class PokemonAbility(val name : String)

@@ -5,14 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.ViewModel.DisplayPokemonViewModel
 import com.squareup.picasso.Picasso
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.pokdex.Models.PokemonAbilityHolder
 import com.google.common.base.Ascii.toUpperCase
 import kotlinx.android.synthetic.main.fragment_display_pokemon.*
+import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_ability.view.*
 
 
 class DisplayPokemonFragment : Fragment() {
@@ -69,10 +75,45 @@ class DisplayPokemonFragment : Fragment() {
             display_pokemon_weight.text = "Weight: "+  pokemon.getWeightInKilograms() + " kg"
             display_pokemon_experience.text = "Base experience: " + pokemon.base_experience + " cm"
             display_pokemon_height.text = "Height: " + pokemon.getHeightInCentimeters() + " cm"
+            displayAbilitiesRecyclerView()
            // Toast.makeText()
         }
         animationView.visibility=View.GONE
     }
 
+    private fun displayAbilitiesRecyclerView()
+    {
+        display_pokemon_ability_recyclerview.adapter = AbilitiesAdapter(pokemon.abilities)
+        display_pokemon_ability_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
 
+
+    internal class AbilitiesAdapter(abilitiesList : List<PokemonAbilityHolder>) : RecyclerView.Adapter<AbilitiesAdapter.AbilityViewHolder>()
+    {
+       val  abilities : List<PokemonAbilityHolder> = abilitiesList
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): AbilitiesAdapter.AbilityViewHolder {
+            val view =  LayoutInflater.from(parent.context).inflate(R.layout.item_recyclerview_display_pokemon_ability, parent, false)
+
+            return AbilityViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: AbilitiesAdapter.AbilityViewHolder, position: Int)
+        {
+            holder.itemView.pokemon_ability.text = abilities[position].ability.name
+        }
+
+        override fun getItemCount(): Int {
+            return abilities.size
+        }
+
+
+
+        internal class AbilityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+        {
+
+        }
+    }
 }

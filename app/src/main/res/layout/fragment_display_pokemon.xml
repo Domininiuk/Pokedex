@@ -64,6 +64,19 @@
                         android:layout_marginEnd="10dp"/>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="182dp"
+                    android:layout_height="178dp"
+                    android:orientation="horizontal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/display_pokemon_ability_recyclerview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
