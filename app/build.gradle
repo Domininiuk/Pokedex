@@ -37,6 +37,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs"
 dependencies {
 
+    implementation 'com.synnapps:carouselview:0.1.5'
+
     def paging_version = "3.0.1"
 
     implementation "androidx.paging:paging-runtime:$paging_version"

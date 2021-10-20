@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.pokdex.Models.PokemonModel
@@ -69,9 +70,13 @@ class DisplayPokemonFragment : Fragment() {
     {
         val url =  pokemon.getOfficialArtworkFrontDefault()
 
+
         if(url != "")
         {
             Picasso.get().load(url).into(display_pokemon_imageview)
+            if (url != null) {
+                loadImageView(url, display_pokemon_imageview)
+            }
             display_pokemon_name.text = Utility.capitalizeFirstCharacter(pokemon.name)
             display_pokemon_weight.text = "Weight: "+  pokemon.getWeightInKilograms() + " kg"
             display_pokemon_experience.text = "Base experience: " + pokemon.base_experience
@@ -80,6 +85,12 @@ class DisplayPokemonFragment : Fragment() {
            // Toast.makeText()
         }
         animationView.visibility=View.GONE
+    }
+
+    private fun loadImageView(url : String, imageView : ImageView)
+    {
+        Picasso.get().load(url).into(display_pokemon_imageview)
+
     }
 
     private fun displayAbilitiesRecyclerView()
