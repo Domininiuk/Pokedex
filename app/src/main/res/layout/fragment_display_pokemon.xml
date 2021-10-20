@@ -51,20 +51,30 @@
                         android:id="@+id/display_pokemon_experience"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+
                         android:layout_marginEnd="10dp"/>
                     <TextView
                         android:id="@+id/display_pokemon_height"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         android:layout_marginEnd="10dp"/>
                     <TextView
                         android:id="@+id/display_pokemon_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         android:layout_marginEnd="10dp"/>
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:text="Abilities: "
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
                 <LinearLayout
                     android:layout_width="182dp"
                     android:layout_height="178dp"
@@ -73,7 +83,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/display_pokemon_ability_recyclerview"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content" />
 
 
                 </LinearLayout>

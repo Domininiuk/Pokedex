@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Models.PokemonListModel
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
+import com.example.pokdex.Utility
 import com.example.pokdex.ViewModel.DisplayAllPokemonViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_display_all_pokemon.*
@@ -103,7 +104,7 @@ class DisplayAllPokemonAdapter(list : PokemonListModel, private val onItemClicke
 class PokemonHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     fun bind(pokemonModel: PokemonModel, position: Int, url: String)
     {
-        itemView.display_all_pokemon_name.text = toUpperCase(pokemonModel.name[0]) + pokemonModel.name.substring(1)
+        itemView.display_all_pokemon_name.text = Utility.capitalizeFirstCharacter(pokemonModel.name)
         Picasso.get().load(url + position + ".png").into(itemView.display_all_pokemon_image)
 
 

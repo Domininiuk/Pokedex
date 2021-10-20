@@ -8,5 +8,14 @@ import java.net.URL
 
 object Utility
 {
+    fun capitalizeFirstCharacter(string : String) : String
+    {
+        if(string.length > 1)
+        {
+            return Character.toUpperCase(string[0]) + string.substring(1)
+        }
+
+        return string
+    }
 
 }

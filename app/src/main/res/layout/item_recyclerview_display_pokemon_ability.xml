@@ -8,6 +8,7 @@
     <TextView
         android:id="@+id/pokemon_ability"
         android:layout_width="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
