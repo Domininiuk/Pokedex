@@ -1,6 +1,6 @@
 # Pokedex
 NOTE: This app is a work-in-progress. Currently trying to display pokemon abilities and possible evolutions on the screen.
 Libraries used: Jetpack Compose (Navigation, Material Design Components, LiveData), Picasso, Retrofit2, OKHTTP
-![Screenshot_1634625072](https://user-images.githubusercontent.com/75265195/137855808-16d154ba-db6f-4a65-b5c0-aeb844c6e608.png)
+![Screenshot_1634712160](https://user-images.githubusercontent.com/75265195/138041427-e6d94b2b-6769-48de-8734-a81ffd8df908.png)
 
-![Screenshot_1634624391](https://user-images.githubusercontent.com/75265195/137855617-465b9abc-0a8b-47c1-a109-345e9a6b824e.png)
+![Screenshot_1634712162](https://user-images.githubusercontent.com/75265195/138041445-5a738ecd-2079-4f88-b56e-245a2dcb0e5f.png)
