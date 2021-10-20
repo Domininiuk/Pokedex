@@ -4,4 +4,4 @@ Libraries used: Jetpack Compose (Navigation, Material Design Components, LiveDat
 
 ![Screenshot_1634712296](https://user-images.githubusercontent.com/75265195/138041688-8b278171-ceca-4b8f-82f6-53afea355638.png)
 
-![Screenshot_1634712162](https://user-images.githubusercontent.com/75265195/138041445-5a738ecd-2079-4f88-b56e-245a2dcb0e5f.png)
+![Screenshot_1634726027](https://user-images.githubusercontent.com/75265195/138077678-44fbbd5f-74ab-47d3-8068-881498e6eb40.png)
