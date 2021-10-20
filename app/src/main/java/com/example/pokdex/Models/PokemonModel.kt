@@ -65,6 +65,31 @@ val front_shiny_female : String, val other: PokemonOther)
     {
         return other.official_artwork.front_default
     }
+    internal fun getListOfUrls() : List<String>
+    {
+        var list : MutableList<String> = mutableListOf()
+
+        //Add all the elements to the list
+        list.add(other.official_artwork.front_default)
+        list.add(back_default)
+        list.add(back_female)
+        list.add(back_shiny)
+        list.add(back_shiny_female)
+        list.add(front_default)
+        list.add(front_female)
+        list.add(front_shiny_female)
+
+        //Iterate through the list and remove all null elements
+        var returnList : MutableList<String> = mutableListOf()
+        for(url in list)
+        {
+            if(url != null)
+            {
+                returnList.add(url)
+            }
+        }
+        return returnList
+    }
 
 }
 data class PokemonAbilityHolder(val ability : PokemonAbility = PokemonAbility(""))

@@ -1,5 +1,6 @@
 package com.example.pokdex.Fragments
 
+import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Models.PokemonAbilityHolder
 import com.example.pokdex.Utility
 import com.google.common.base.Ascii.toUpperCase
+import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.fragment_display_pokemon.*
 import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_ability.view.*
 
@@ -28,8 +30,8 @@ class DisplayPokemonFragment : Fragment() {
     private val args : DisplayPokemonFragmentArgs by navArgs()
     private lateinit var pokemon : PokemonModel
     private lateinit var displayPokemonVM : DisplayPokemonViewModel
+    private lateinit var spritesUrls : List<String>
 
-    var   list : MutableList<PokemonModel> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -45,6 +47,7 @@ class DisplayPokemonFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         initializeMemberVariables()
+        //Display the pokemon chosen on the previous fragment
         getAndDisplayPokemon(args.id)
 
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +65,6 @@ class DisplayPokemonFragment : Fragment() {
         displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner, {
                 newPokemon ->
             pokemon = newPokemon
-            list.add(pokemon)
             displayRandomPokemon()
         })
     }
@@ -73,10 +75,8 @@ class DisplayPokemonFragment : Fragment() {
 
         if(url != "")
         {
-            Picasso.get().load(url).into(display_pokemon_imageview)
-            if (url != null) {
-                loadImageView(url, display_pokemon_imageview)
-            }
+            spritesUrls = pokemon.sprites?.getListOfUrls()!!
+            loadCarousel()
             display_pokemon_name.text = Utility.capitalizeFirstCharacter(pokemon.name)
             display_pokemon_weight.text = "Weight: "+  pokemon.getWeightInKilograms() + " kg"
             display_pokemon_experience.text = "Base experience: " + pokemon.base_experience
@@ -87,9 +87,22 @@ class DisplayPokemonFragment : Fragment() {
         animationView.visibility=View.GONE
     }
 
+    fun loadCarousel()
+    {
+        carouselView.setImageListener(imageListener)
+        carouselView.pageCount = spritesUrls.size
+    }
+    //Image listener for the carousel
+    var imageListener: ImageListener = object : ImageListener {
+        override fun setImageForPosition(position: Int, imageView: ImageView?) {
+            if (imageView != null) {
+                loadImageView(spritesUrls[position], imageView)
+            }
+        }
+    }
     private fun loadImageView(url : String, imageView : ImageView)
     {
-        Picasso.get().load(url).into(display_pokemon_imageview)
+        Picasso.get().load(url).into(imageView)
 
     }
 
