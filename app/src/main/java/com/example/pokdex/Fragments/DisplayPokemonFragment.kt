@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokdex.Adapter.AbilitiesAdapter
 import com.example.pokdex.Models.EvolutionModel
 import com.example.pokdex.Models.PokemonAbilityHolder
 import com.example.pokdex.Utility
@@ -58,6 +59,11 @@ class DisplayPokemonFragment : Fragment() {
     {
         displayPokemonVM = DisplayPokemonViewModel()
         pokemon = PokemonModel("")
+
+    }
+
+    private fun getAndDisplayEvolutions(name : String)
+    {
 
     }
     private fun getAndDisplayPokemon(id : Int)
@@ -120,32 +126,4 @@ class DisplayPokemonFragment : Fragment() {
     }
 
 
-    internal class AbilitiesAdapter(abilitiesList : List<PokemonAbilityHolder>) : RecyclerView.Adapter<AbilitiesAdapter.AbilityViewHolder>()
-    {
-       val  abilities : List<PokemonAbilityHolder> = abilitiesList
-        override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
-        ): AbilitiesAdapter.AbilityViewHolder {
-            val view =  LayoutInflater.from(parent.context).inflate(R.layout.item_recyclerview_display_pokemon_ability, parent, false)
-
-            return AbilityViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: AbilitiesAdapter.AbilityViewHolder, position: Int)
-        {
-            holder.itemView.pokemon_ability.text = Utility.capitalizeFirstCharacter(abilities[position].ability.name)
-        }
-
-        override fun getItemCount(): Int {
-            return abilities.size
-        }
-
-
-
-        internal class AbilityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-        {
-
-        }
-    }
 }
