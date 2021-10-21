@@ -14,6 +14,9 @@ interface  PokemonAPI
     @GET("pokemon/{id}")
    suspend fun getPokemonId(@Path ("id") id : Int) : PokemonModel
 
+   @GET("pokemon/{name}")
+   suspend fun getPokemonName(@Path("name") name : String) : PokemonModel
+
    //Get a list of pokemon names
    @GET("pokemon?limit=1118")
    suspend fun getPokemonList() : PokemonListModel

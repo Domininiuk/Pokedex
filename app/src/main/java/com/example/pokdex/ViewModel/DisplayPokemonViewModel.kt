@@ -24,6 +24,16 @@ class DisplayPokemonViewModel : ViewModel() {
       return pokemon
    }
 
+   fun getPokemon(name: String) : LiveData<PokemonModel>
+   {
+      pokemon = liveData(Dispatchers.IO)
+      {
+         val retrievedPokemon = PokemonRepository.getPokemonName(name)
+
+         emit(retrievedPokemon)
+      }
+      return pokemon
+   }
    fun getEvolutionChain(id : Int ) : LiveData<EvolutionModel>
    {
       evolutionChain = liveData(Dispatchers.IO)
