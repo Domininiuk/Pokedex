@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center_horizontal"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -64,20 +64,20 @@
                         android:id="@+id/display_pokemon_experience"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
 
                         android:layout_marginEnd="10dp"/>
                     <TextView
                         android:id="@+id/display_pokemon_height"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:layout_marginEnd="10dp"/>
                     <TextView
                         android:id="@+id/display_pokemon_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:layout_marginEnd="10dp"/>
 
                 </LinearLayout>
@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_marginTop="10dp"
                     android:text="Abilities: "
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <LinearLayout

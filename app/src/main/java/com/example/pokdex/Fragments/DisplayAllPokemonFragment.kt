@@ -106,8 +106,6 @@ class PokemonHolder(itemView: View, private val onItemClicked: (position: Int) -
     {
         itemView.display_all_pokemon_name.text = Utility.capitalizeFirstCharacter(pokemonModel.name)
         Picasso.get().load(url + position + ".png").into(itemView.display_all_pokemon_image)
-
-
     }
 
     init {
