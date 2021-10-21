@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokdex.Models.EvolutionModel
 import com.example.pokdex.Models.PokemonAbilityHolder
 import com.example.pokdex.Utility
 import com.google.common.base.Ascii.toUpperCase
@@ -66,6 +67,12 @@ class DisplayPokemonFragment : Fragment() {
                 newPokemon ->
             pokemon = newPokemon
             displayRandomPokemon()
+
+            var c : EvolutionModel
+          displayPokemonVM.getEvolutionChain(id).observe(viewLifecycleOwner, {
+              evolutionChain ->
+              c = evolutionChain
+          })
         })
     }
     private fun displayRandomPokemon()

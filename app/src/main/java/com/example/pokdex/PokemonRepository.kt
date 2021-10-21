@@ -16,4 +16,7 @@ object PokemonRepository
    suspend fun getPokemonId(id : Int) = request.getPokemonId(id)
 
     suspend fun getPokemonList() = request.getPokemonList()
+
+
+    suspend fun getEvolutionChain(id : Int ) = request.getEvolutionChain(id)
 }
