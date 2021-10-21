@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_ability.
 
  class AbilitiesAdapter(abilitiesList : List<PokemonAbilityHolder>) : RecyclerView.Adapter<AbilitiesAdapter.AbilityViewHolder>()
 {
-    val  abilities : List<PokemonAbilityHolder> = abilitiesList
+    private val  abilities : List<PokemonAbilityHolder> = abilitiesList
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

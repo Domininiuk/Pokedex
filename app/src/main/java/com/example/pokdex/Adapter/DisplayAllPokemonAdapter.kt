@@ -38,7 +38,7 @@ class DisplayAllPokemonAdapter(list : PokemonListModel, private val onItemClicke
     }
 
 
-    public class PokemonHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) :
+    class PokemonHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
         fun bind(pokemonModel: PokemonModel, position: Int, url: String) {
             itemView.display_all_pokemon_name.text =

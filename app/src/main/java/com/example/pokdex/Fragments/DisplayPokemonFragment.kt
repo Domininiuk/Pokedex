@@ -116,7 +116,6 @@ class DisplayPokemonFragment : Fragment() {
     private fun loadImageView(url : String, imageView : ImageView)
     {
         Picasso.get().load(url).into(imageView)
-
     }
 
     private fun displayAbilitiesRecyclerView()
