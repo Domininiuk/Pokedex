@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Adapter.AbilitiesAdapter
 import com.example.pokdex.Adapter.DisplayEvolutionsAdapter
 import com.example.pokdex.Models.EvolutionModel
+import com.example.pokdex.Models.PokemonSpeciesModel
 import com.example.pokdex.Utility
 import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.fragment_display_pokemon.*
@@ -45,6 +46,7 @@ class DisplayPokemonFragment : Fragment() {
         initializeMemberVariables()
         //Display the pokemon chosen on the previous fragment
         getAndDisplayPokemon(args.id)
+        getPokemonSpecies(args.id)
         getAndDisplayEvolutions(args.id)
         super.onViewCreated(view, savedInstanceState)
     }
@@ -56,22 +58,30 @@ class DisplayPokemonFragment : Fragment() {
 
     }
 
+    private fun getPokemonSpecies(id : Int)
+    {
+        lateinit var pokemonSpecies  : PokemonSpeciesModel
+        displayPokemonVM.getPokemonSpecies(id).observe(viewLifecycleOwner, {
+            pokemonSpecies ->
+            getAndDisplayEvolutions(pokemonSpecies.evolution_chain.getChainId())
+        })
+
+    }
     private fun getAndDisplayEvolutions(id : Int)
     {
         var c : EvolutionModel
-        var listOfEvolutions  = listOf<String>()
+
         displayPokemonVM.getEvolutionChain(id).observe(viewLifecycleOwner, {
                 evolutionChain ->
             c = evolutionChain
-            listOfEvolutions = c.getListOfPokemonNames()
-            display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions)
-            display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            displayEvolutions(c.getListOfPokemonNames())
         })
     }
 
-    private fun displayEvolutions()
+    private fun displayEvolutions(listOfEvolutions: List<String>)
     {
-
+        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions)
+        display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
     }
     private fun getAndDisplayPokemon(id : Int)

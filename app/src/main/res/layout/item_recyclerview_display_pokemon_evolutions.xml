@@ -23,13 +23,13 @@
                 app:cardElevation="@dimen/cardview_default_elevation">
 
                 <ImageView
-                    android:id="@+id/display_all_pokemon_image"
+                    android:id="@+id/display_evolution_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/display_all_pokemon_name"
+                android:id="@+id/display_evolution_name"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
