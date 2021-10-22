@@ -14,10 +14,9 @@ object PokemonRepository
     }
 
     suspend fun getPokemonName(name : String ) = request.getPokemonName(name)
-   suspend fun getPokemonId(id : Int) = request.getPokemonId(id)
-
+    suspend fun getPokemonId(id : Int) = request.getPokemonId(id)
     suspend fun getPokemonList() = request.getPokemonList()
-
-
     suspend fun getEvolutionChain(id : Int ) = request.getEvolutionChain(id)
+    suspend fun getPokemonSpecies(id : Int) = request.getPokemonSpecies(id)
+
 }
