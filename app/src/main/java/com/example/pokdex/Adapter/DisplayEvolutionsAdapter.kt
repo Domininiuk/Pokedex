@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Models.EvolutionModel
 import com.example.pokdex.R
+import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_evolutions.view.*
 
-class DisplayEvolutionsAdapter(var evolutionChain : EvolutionModel) : RecyclerView.Adapter<DisplayEvolutionsAdapter.EvolutionHolder>()
+class DisplayEvolutionsAdapter(var names : List<String>) : RecyclerView.Adapter<DisplayEvolutionsAdapter.EvolutionHolder>()
 {
 
     //Get a list of names?
@@ -27,10 +28,10 @@ class DisplayEvolutionsAdapter(var evolutionChain : EvolutionModel) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: EvolutionHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.itemView.display_all_pokemon_name.text = names[position]
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return names.size
     }
 }
