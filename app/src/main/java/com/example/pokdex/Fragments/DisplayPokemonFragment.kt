@@ -80,7 +80,7 @@ class DisplayPokemonFragment : Fragment() {
 
     private fun displayEvolutions(listOfEvolutions: List<String>)
     {
-        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions) {
+        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions, pokemon) {
             position -> onEvolutionsItemClick(position)
         }
         display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

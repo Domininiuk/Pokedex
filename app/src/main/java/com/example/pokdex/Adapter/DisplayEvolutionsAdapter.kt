@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Models.EvolutionModel
+import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.Utility
 import com.squareup.picasso.Picasso
@@ -12,17 +13,18 @@ import kotlinx.android.synthetic.main.item_recyclerview_display_all.view.*
 import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_evolutions.view.*
 
 
-class DisplayEvolutionsAdapter(private var names : List<String>, private val onItemClicked : (position: Int) -> Unit) : RecyclerView.Adapter<DisplayEvolutionsAdapter.EvolutionHolder>()
+class DisplayEvolutionsAdapter(private var names : List<String>, private var currentlyChosenPokemon :PokemonModel, private val onItemClicked : (position: Int) -> Unit) : RecyclerView.Adapter<DisplayEvolutionsAdapter.EvolutionHolder>()
 {
 
     class EvolutionHolder(itemView : View, private val onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
 
+        
         /*
         init {
             itemView.setOnClickListener(this)
         }
-        
+
          */
         override fun onClick(p0: View?) {
             val position = absoluteAdapterPosition
@@ -37,6 +39,8 @@ class DisplayEvolutionsAdapter(private var names : List<String>, private val onI
     }
 
     override fun onBindViewHolder(holder: EvolutionHolder, position: Int) {
+        //If the names[position] == chosenPokemon.name
+        //Then imageId == chosenPokemon.id + position
         holder.itemView.display_evolution_name.text = Utility.capitalizeFirstCharacter(names[position])
     }
 
