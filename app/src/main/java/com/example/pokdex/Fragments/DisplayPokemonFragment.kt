@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.ViewModel.DisplayPokemonViewModel
@@ -79,9 +80,19 @@ class DisplayPokemonFragment : Fragment() {
 
     private fun displayEvolutions(listOfEvolutions: List<String>)
     {
-        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions)
+        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions) {
+            position -> onEvolutionsItemClick(position)
+        }
         display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+    }
+
+    //When clicking on a pokemon, go their specific pokemon fragment
+    private fun onEvolutionsItemClick(position : Int)
+    {
+        val id : Int = position + 1
+        val action =  DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment(id)
+        findNavController().navigate(action)
     }
     private fun getAndDisplayPokemon(id : Int)
     {
