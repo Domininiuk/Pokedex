@@ -79,8 +79,8 @@ class DisplayPokemonFragment : Fragment() {
 
     private fun displayEvolutions(listOfEvolutions: List<String>)
     {
-        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions, pokemon.id)
-        display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions)
+        display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
     }
     private fun getAndDisplayPokemon(id : Int)
