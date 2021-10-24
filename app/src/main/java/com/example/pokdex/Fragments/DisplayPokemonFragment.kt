@@ -46,8 +46,7 @@ class DisplayPokemonFragment : Fragment() {
         initializeMemberVariables()
         //Display the pokemon chosen on the previous fragment
         getAndDisplayPokemon(args.id)
-        getPokemonSpecies(args.id)
-        getAndDisplayEvolutions(args.id)
+
         super.onViewCreated(view, savedInstanceState)
     }
     // Initialize as many variables as possible
@@ -80,7 +79,7 @@ class DisplayPokemonFragment : Fragment() {
 
     private fun displayEvolutions(listOfEvolutions: List<String>)
     {
-        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions)
+        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions, pokemon.id)
         display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
     }
@@ -91,7 +90,7 @@ class DisplayPokemonFragment : Fragment() {
                 newPokemon ->
             pokemon = newPokemon
             displayPokemon()
-
+            getPokemonSpecies(id)
 
         })
     }
