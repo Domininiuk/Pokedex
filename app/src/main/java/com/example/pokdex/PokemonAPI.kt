@@ -1,10 +1,7 @@
 package com.example.pokdex
 
 
-import com.example.pokdex.Models.EvolutionChainLinkModel
-import com.example.pokdex.Models.EvolutionModel
-import com.example.pokdex.Models.PokemonListModel
-import com.example.pokdex.Models.PokemonModel
+import com.example.pokdex.Models.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -21,8 +18,11 @@ interface  PokemonAPI
    @GET("pokemon?limit=1118")
    suspend fun getPokemonList() : PokemonListModel
 
-   //Get evolution chain for the pokemon with the given id
+   //Get evolution chain with the given id
    @GET("evolution-chain/{id}")
    suspend fun getEvolutionChain(@Path("id") id : Int) : EvolutionModel
 
+   //Get pokemon species with the given id
+   @GET("pokemon-species/{id}")
+   suspend fun getPokemonSpecies(@Path("id") id : Int ) : PokemonSpeciesModel
 }

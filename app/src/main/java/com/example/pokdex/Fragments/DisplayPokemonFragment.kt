@@ -1,15 +1,12 @@
 package com.example.pokdex.Fragments
 
-import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.pokdex.Models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.ViewModel.DisplayPokemonViewModel
@@ -18,13 +15,12 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Adapter.AbilitiesAdapter
+import com.example.pokdex.Adapter.DisplayEvolutionsAdapter
 import com.example.pokdex.Models.EvolutionModel
-import com.example.pokdex.Models.PokemonAbilityHolder
+import com.example.pokdex.Models.PokemonSpeciesModel
 import com.example.pokdex.Utility
-import com.google.common.base.Ascii.toUpperCase
 import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.fragment_display_pokemon.*
-import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_ability.view.*
 
 
 class DisplayPokemonFragment : Fragment() {
@@ -62,9 +58,41 @@ class DisplayPokemonFragment : Fragment() {
 
     }
 
-    private fun getAndDisplayEvolutions(name : String)
+    private fun getPokemonSpecies(id : Int)
     {
+        lateinit var pokemonSpecies  : PokemonSpeciesModel
+        displayPokemonVM.getPokemonSpecies(id).observe(viewLifecycleOwner, {
+            pokemonSpecies ->
+            getAndDisplayEvolutions(pokemonSpecies.evolution_chain.getChainId())
+        })
 
+    }
+    private fun getAndDisplayEvolutions(id : Int)
+    {
+        var c : EvolutionModel
+
+        displayPokemonVM.getEvolutionChain(id).observe(viewLifecycleOwner, {
+                evolutionChain ->
+            c = evolutionChain
+            displayEvolutions(c.getListOfPokemonNames())
+        })
+    }
+
+    private fun displayEvolutions(listOfEvolutions: List<String>)
+    {
+        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions, pokemon) {
+            position -> onEvolutionsItemClick(position)
+        }
+        display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+    }
+
+    //When clicking on a pokemon, go their specific pokemon fragment
+    private fun onEvolutionsItemClick(position : Int)
+    {
+        val id : Int = position + 1
+        val action =  DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment(id)
+        findNavController().navigate(action)
     }
     private fun getAndDisplayPokemon(id : Int)
     {
@@ -72,16 +100,12 @@ class DisplayPokemonFragment : Fragment() {
         displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner, {
                 newPokemon ->
             pokemon = newPokemon
-            displayRandomPokemon()
+            displayPokemon()
+            getPokemonSpecies(id)
 
-            var c : EvolutionModel
-          displayPokemonVM.getEvolutionChain(id).observe(viewLifecycleOwner, {
-              evolutionChain ->
-              c = evolutionChain
-          })
         })
     }
-    private fun displayRandomPokemon()
+    private fun displayPokemon()
     {
         val url =  pokemon.getOfficialArtworkFrontDefault()
 
