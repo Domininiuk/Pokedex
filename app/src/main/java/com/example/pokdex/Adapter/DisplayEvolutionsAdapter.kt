@@ -19,7 +19,7 @@ class DisplayEvolutionsAdapter(private var names : List<String>, private var cur
     class EvolutionHolder(itemView : View, private val onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
 
-        
+
         /*
         init {
             itemView.setOnClickListener(this)
