@@ -19,7 +19,7 @@ data class EvolutionModel(val id : Int,  val chain : EvolutionChainLinkModel)
         //Add species name to the list
         var chain = chain.evolves_to
 
-        while(chain.size != 0)
+        while(chain.isNotEmpty())
         {
             returnList.add(chain[0].species.name)
             chain = chain[0].evolves_to
