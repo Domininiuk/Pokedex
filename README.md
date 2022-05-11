@@ -8,15 +8,15 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 - [PokéAPI](https://pokeapi.co/)
 
 ## Libraries Used
-- Jetpack Compose
-- Navigation
-- Material Design Components
-- LiveData
-- Picasso
-- Retrofit2
-- OKHTTP
-- CarouselView
-- Hamcrest
+- Navigation - Version 2.3.5
+- Material Design Components- Version 1.6.0-alpha01
+- Lifecycle
+- Picasso - Version 2.71828
+- Retrofit2 - Version 2.9.0
+- CarouselView - Version 0.1.5
+- Hamcrest - Version 2.2
+- Lottie- Version 3.4.0
+- JUnit - Version 4.13.2
 ## Features
 - Displaying over 1000 different Pokemon species
 - Displaying detailed information such as abilities, weight, height and evolution chain for each of the Pokemon.
@@ -43,7 +43,8 @@ To do:
 - Ability to create Pokemon teams
 
 
-
+ ## Credits
+ - Loading animation is from lottiefiles.com
 ## Contact
 Created by [@Dominik Wieczynski](https://www.linkedin.com/in/dominik-wieczy%C5%84ski-19ba77209/) - feel free to contact me!
 
