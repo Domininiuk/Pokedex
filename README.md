@@ -10,7 +10,7 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 ## Libraries Used
 - Navigation - Version 2.3.5
 - Material Design Components- Version 1.6.0-alpha01
-- Lifecycle
+- Lifecycle - Version 2.4.1
 - Picasso - Version 2.71828
 - Retrofit2 - Version 2.9.0
 - CarouselView - Version 0.1.5
