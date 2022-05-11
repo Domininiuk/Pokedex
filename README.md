@@ -3,9 +3,8 @@
 ## Introduction 
 The goal of this project was to become familiar with the Retrofit2 library. For this I decided to use an open-source API, as creating my ownAPI would be a challenge of its own. After some research I decided to use the PokéAPI and develop a Pokédex (in the Pokémon world a device used to store and catalog information about the various Pokémon species) app. 
 ## Technologies Used
-- Tech 1 - version 1.0
-- Tech 2 - version 2.0
-- Tech 3 - version 3.0
+- Kotlin
+- Android Studio
 
 ## Libraries Used
 - Jetpack Compose
