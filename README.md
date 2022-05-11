@@ -1,4 +1,4 @@
-# Pokédex - 
+# Pokédex
 
 ## Introduction 
 The goal of this project was to become familiar with the Retrofit2 library. For this I decided to use an open-source API, as creating my ownAPI would be a challenge of its own. After some research I decided to use the PokéAPI and develop a Pokédex (in the Pokémon world a device used to store and catalog information about the various Pokémon species) app. 
