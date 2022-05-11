@@ -43,16 +43,8 @@ dependencies {
     def paging_version = "3.0.1"
 
     implementation "androidx.paging:paging-runtime:$paging_version"
-
-
-    // optional - RxJava2 support
-    implementation "androidx.paging:paging-rxjava2:$paging_version"
-
-    // optional - RxJava3 support
-    implementation "androidx.paging:paging-rxjava3:$paging_version"
-
-    // optional - Guava ListenableFuture support
-    implementation "androidx.paging:paging-guava:$paging_version"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-service:2.4.1'
 
 
 

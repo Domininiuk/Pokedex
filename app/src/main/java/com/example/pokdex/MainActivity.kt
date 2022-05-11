@@ -16,15 +16,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity()
 {
-  //  private val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-  //  private val navController = navHostFragment?.findNavController()
-    private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
        // goToRandomPokemonButton = findViewById(R.id.go_to_random_pokemon_button)
-
-
 
        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
        val navController = navHostFragment!!.findNavController()

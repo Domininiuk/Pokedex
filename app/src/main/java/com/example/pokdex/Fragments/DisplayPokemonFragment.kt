@@ -1,6 +1,7 @@
 package com.example.pokdex.Fragments
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -57,8 +58,11 @@ class DisplayPokemonFragment : Fragment() {
     {
         animationView.playAnimation()
         displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner) { newPokemon ->
-            displayPokemon()
-            getPokemonSpecies(id)
+            // Delay because I want the cool animation to be visible :)
+            Handler().postDelayed({
+                displayPokemon()
+                getPokemonSpecies(id)
+            }, 500)
         }
     }
     private fun displayPokemon()
@@ -74,8 +78,10 @@ class DisplayPokemonFragment : Fragment() {
             display_pokemon_experience.text = "Base experience: " + displayPokemonVM.pokemon.value?.base_experience
             display_pokemon_height.text = "Height: " + displayPokemonVM.pokemon.value?.getHeightInCentimeters() + " cm"
             displayAbilitiesRecyclerView()
+
         }
         animationView.visibility=View.GONE
+
     }
 
     fun loadCarousel()
