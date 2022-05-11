@@ -35,6 +35,7 @@ I am currently in the process of refactoring the application to be more in line 
 ## Room for Improvement
 Room for improvement:
 - User Interface
+- More functionality
 
 To do:
 - Add option to display a random Pokemon
