@@ -44,6 +44,8 @@ Room for improvement:
 
 To do:
 - Add option to display a random Pokemon
+- Ability to collect favourite Pokemon
+- Ability to create Pokemon teams
 
 
 ## Acknowledgements
