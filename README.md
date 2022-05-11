@@ -17,27 +17,13 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 - CarouselView
 - Hamcrest
 ## Features
-List the ready features here:
-- List of over 1000 different Pokemon species
+- Displaying over 1000 different Pokemon species
 - Displaying detailed information such as ability, health and evolution chain for each of the Pokemon.
 
 
 ## Screenshots
 ![Example screenshot](./img/screenshot.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
-
-
-## Setup
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
-
-Proceed to describe how to install / setup one's local environment / get started with the project.
-
-
-## Usage
-How does one go about using it?
-Provide various use cases and code examples here.
-
-`write-your-code-here`
 
 
 ## Project Status
@@ -57,7 +43,7 @@ To do:
 
 
 ## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
+Created by [@Dominik Wieczynski](https://www.linkedin.com/in/dominik-wieczy%C5%84ski-19ba77209/) - feel free to contact me!
 
 
 <!-- Optional -->
