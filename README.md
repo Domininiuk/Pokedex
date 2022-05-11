@@ -5,6 +5,7 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 ## Technologies Used
 - Kotlin
 - Android Studio
+- [PokéAPI](https://pokeapi.co/)
 
 ## Libraries Used
 - Jetpack Compose
