@@ -18,7 +18,7 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 - Hamcrest
 ## Features
 - Displaying over 1000 different Pokemon species
-- Displaying detailed information such as ability, health and evolution chain for each of the Pokemon.
+- Displaying detailed information such as abilities, weight, height and evolution chain for each of the Pokemon.
 
 
 ## Screenshots
