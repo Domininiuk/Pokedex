@@ -1,16 +1,26 @@
-# Pokedex
-Libraries used: Jetpack Compose (Navigation, Material Design Components, LiveData), Picasso, Retrofit2, OKHTTP, CarouselView, Hamcrest
+# Pokédex - 
+
+## Introduction 
+The goal of this project was to become familiar with the Retrofit2 library. For this I decided to use an open-source API, as creating my ownAPI would be a challenge of its own. After some research I decided to use the PokéAPI and develop a Pokédex (in the Pokémon world a device used to store and catalog information about the various Pokémon species) app. 
 ## Technologies Used
 - Tech 1 - version 1.0
 - Tech 2 - version 2.0
 - Tech 3 - version 3.0
 
-
+## Libraries Used
+- Jetpack Compose
+- Navigation
+- Material Design Components
+- LiveData
+- Picasso
+- Retrofit2
+- OKHTTP
+- CarouselView
+- Hamcrest
 ## Features
 List the ready features here:
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
+- List of over 1000 different Pokemon species
+- Displaying detailed information such as ability, health and evolution chain for each of the Pokemon.
 
 
 ## Screenshots
@@ -33,12 +43,10 @@ Provide various use cases and code examples here.
 
 ## Project Status
 Project is: _in progress_. 
-I am currently in the processing of refactoring the application to be more in line with my current skills.
+I am currently in the processing of refactoring the application to be more in line with my current skillset and knowledge.
 
 
 ## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
 Room for improvement:
 - User Interface
 
@@ -47,12 +55,6 @@ To do:
 - Ability to collect favourite Pokemon
 - Ability to create Pokemon teams
 
-
-## Acknowledgements
-Give credit here.
-- This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
-- Many thanks to...
 
 
 ## Contact
