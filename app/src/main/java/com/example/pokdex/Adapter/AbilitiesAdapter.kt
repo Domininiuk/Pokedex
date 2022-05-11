@@ -32,8 +32,5 @@ import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_ability.
 
 
 
-    public class AbilityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    {
-
-    }
+    class AbilityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

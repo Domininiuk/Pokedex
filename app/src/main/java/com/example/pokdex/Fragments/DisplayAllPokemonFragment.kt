@@ -31,10 +31,6 @@ class DisplayAllPokemonFragment : Fragment() {
     lateinit var displayAllPokemonVM: DisplayAllPokemonViewModel
     lateinit var pokemonList : PokemonListModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

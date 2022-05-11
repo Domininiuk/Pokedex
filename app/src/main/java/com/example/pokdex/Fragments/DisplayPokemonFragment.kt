@@ -26,13 +26,9 @@ import kotlinx.android.synthetic.main.fragment_display_pokemon.*
 class DisplayPokemonFragment : Fragment() {
 
     private val args : DisplayPokemonFragmentArgs by navArgs()
-    private lateinit var pokemon : PokemonModel
     private lateinit var displayPokemonVM : DisplayPokemonViewModel
     private lateinit var spritesUrls : List<String>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,37 +46,69 @@ class DisplayPokemonFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
     }
+
     // Initialize as many variables as possible
     private fun initializeMemberVariables()
     {
         displayPokemonVM = DisplayPokemonViewModel()
-        pokemon = PokemonModel("")
 
     }
+    private fun getAndDisplayPokemon(id : Int)
+    {
+        animationView.playAnimation()
+        displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner) { newPokemon ->
+            displayPokemon()
+            getPokemonSpecies(id)
+        }
+    }
+    private fun displayPokemon()
+    {
+        val url = displayPokemonVM.pokemon.value?.getOfficialArtworkFrontDefault()
+
+        if(url != "")
+        {
+            spritesUrls = displayPokemonVM.pokemon.value?.sprites?.getListOfUrls()!!
+            loadCarousel()
+            display_pokemon_name.text = Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.name.toString())
+            display_pokemon_weight.text = "Weight: "+  displayPokemonVM.pokemon.value?.getWeightInKilograms() + " kg"
+            display_pokemon_experience.text = "Base experience: " + displayPokemonVM.pokemon.value?.base_experience
+            display_pokemon_height.text = "Height: " + displayPokemonVM.pokemon.value?.getHeightInCentimeters() + " cm"
+            displayAbilitiesRecyclerView()
+        }
+        animationView.visibility=View.GONE
+    }
+
+    fun loadCarousel()
+    {
+        carouselView.setImageListener(imageListener)
+        carouselView.pageCount = spritesUrls.size
+    }
+    private fun displayAbilitiesRecyclerView()
+    {
+        display_pokemon_ability_recyclerview.adapter = AbilitiesAdapter(displayPokemonVM.pokemon.value?.abilities!!)
+        display_pokemon_ability_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
+
 
     private fun getPokemonSpecies(id : Int)
     {
-        lateinit var pokemonSpecies  : PokemonSpeciesModel
-        displayPokemonVM.getPokemonSpecies(id).observe(viewLifecycleOwner, {
-            pokemonSpecies ->
+        displayPokemonVM.getPokemonSpecies(id).observe(viewLifecycleOwner) { pokemonSpecies ->
             getAndDisplayEvolutions(pokemonSpecies.evolution_chain.getChainId())
-        })
+        }
 
     }
     private fun getAndDisplayEvolutions(id : Int)
     {
-        var c : EvolutionModel
-
-        displayPokemonVM.getEvolutionChain(id).observe(viewLifecycleOwner, {
-                evolutionChain ->
-            c = evolutionChain
-            displayEvolutions(c.getListOfPokemonNames())
-        })
+        displayPokemonVM.getEvolutionChain(id).observe(viewLifecycleOwner) { evolutionChain ->
+            displayEvolutions(evolutionChain.getListOfPokemonNames())
+        }
     }
 
     private fun displayEvolutions(listOfEvolutions: List<String>)
     {
-        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions, pokemon) {
+        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions,
+            displayPokemonVM.pokemon.value!!
+        ) {
             position -> onEvolutionsItemClick(position)
         }
         display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -94,41 +122,7 @@ class DisplayPokemonFragment : Fragment() {
         val action =  DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment(id)
         findNavController().navigate(action)
     }
-    private fun getAndDisplayPokemon(id : Int)
-    {
-        animationView.playAnimation()
-        displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner, {
-                newPokemon ->
-            pokemon = newPokemon
-            displayPokemon()
-            getPokemonSpecies(id)
 
-        })
-    }
-    private fun displayPokemon()
-    {
-        val url =  pokemon.getOfficialArtworkFrontDefault()
-
-
-        if(url != "")
-        {
-            spritesUrls = pokemon.sprites?.getListOfUrls()!!
-            loadCarousel()
-            display_pokemon_name.text = Utility.capitalizeFirstCharacter(pokemon.name)
-            display_pokemon_weight.text = "Weight: "+  pokemon.getWeightInKilograms() + " kg"
-            display_pokemon_experience.text = "Base experience: " + pokemon.base_experience
-            display_pokemon_height.text = "Height: " + pokemon.getHeightInCentimeters() + " cm"
-            displayAbilitiesRecyclerView()
-           // Toast.makeText()
-        }
-        animationView.visibility=View.GONE
-    }
-
-    fun loadCarousel()
-    {
-        carouselView.setImageListener(imageListener)
-        carouselView.pageCount = spritesUrls.size
-    }
     //Image listener for the carousel
     var imageListener: ImageListener = object : ImageListener {
         override fun setImageForPosition(position: Int, imageView: ImageView?) {
@@ -141,12 +135,5 @@ class DisplayPokemonFragment : Fragment() {
     {
         Picasso.get().load(url).into(imageView)
     }
-
-    private fun displayAbilitiesRecyclerView()
-    {
-        display_pokemon_ability_recyclerview.adapter = AbilitiesAdapter(pokemon.abilities)
-        display_pokemon_ability_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-    }
-
 
 }

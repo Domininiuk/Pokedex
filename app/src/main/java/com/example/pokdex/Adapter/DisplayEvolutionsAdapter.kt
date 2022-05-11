@@ -20,12 +20,7 @@ class DisplayEvolutionsAdapter(private var names : List<String>, private var cur
     {
 
 
-        /*
-        init {
-            itemView.setOnClickListener(this)
-        }
 
-         */
         override fun onClick(p0: View?) {
             val position = absoluteAdapterPosition
             onItemClicked(position)

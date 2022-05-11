@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 
 class DisplayPokemonViewModel : ViewModel() {
 
-   private var pokemon : LiveData<PokemonModel> = MutableLiveData<PokemonModel>(PokemonModel())
+   var pokemon : LiveData<PokemonModel> = MutableLiveData<PokemonModel>(PokemonModel())
    lateinit var evolutionChain : LiveData<EvolutionModel>
    lateinit var pokemonSpecies: LiveData<PokemonSpeciesModel>
 

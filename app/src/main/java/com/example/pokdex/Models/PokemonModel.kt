@@ -15,9 +15,10 @@ data class PokemonModel(val id : Int = -1, val base_experience : Int = 0,  val n
      */
       constructor(name: String) : this( -1, -1, name, 0.0f, null, 0, mutableListOf(
         PokemonAbilityHolder()
-    ) ) {}
+    ) )
 
-    constructor() : this( -1, -1, "", 0.0f, null, 0,  mutableListOf(PokemonAbilityHolder()) ) {}
+    constructor() : this( -1, -1, "", 0.0f, null, 0,  mutableListOf(PokemonAbilityHolder()) )
+
     fun getOfficialArtworkFrontDefault() : String
     {
         if (sprites != null) {
@@ -45,17 +46,9 @@ data class PokemonModel(val id : Int = -1, val base_experience : Int = 0,  val n
 data class PokemonOther(val dream_world : PokemonDreamWorld,
                         @SerializedName("official-artwork")
                         val official_artwork: PokemonOfficialArtwork)
-{
 
-}
 data class PokemonDreamWorld(val front_default: String, val front_female: String)
-{
-
-}
 data class PokemonOfficialArtwork(val front_default : String)
-{
-
-}
 data class PokemonSprites(val back_default : String, val back_female : String, val back_shiny : String,
 val back_shiny_female: String, val front_default: String, val front_female : String, val front_shiny :String,
 val front_shiny_female : String, val other: PokemonOther)
@@ -94,6 +87,3 @@ val front_shiny_female : String, val other: PokemonOther)
 }
 data class PokemonAbilityHolder(val ability : PokemonAbility = PokemonAbility(""))
 data class PokemonAbility(val name : String)
-{
-
-}
