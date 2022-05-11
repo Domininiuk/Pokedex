@@ -1,7 +1,7 @@
 # Pokédex
 
 ## Introduction 
-The goal of this project was to become familiar with the Retrofit2 library. For this I decided to use an open-source API, as creating my ownAPI would be a challenge of its own. After some research I decided to use the PokéAPI and develop a Pokédex (in the Pokémon world a device used to store and catalog information about the various Pokémon species) app. 
+The goal of this project was to become familiar with the Retrofit2 library. For this, I decided to use an open-source API, because creating my own API would be a challenge of its own. After some research, I decided to use the PokéAPI and develop a Pokédex (in the Pokémon world a device used to store and catalog information about the various Pokémon species) app. 
 ## Technologies Used
 - Kotlin
 - Android Studio
@@ -23,8 +23,9 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+
 <!-- If you have screenshots you'd like to share, include them here. -->
+![output](https://user-images.githubusercontent.com/75265195/167844076-0c4226d6-a5ec-44e8-9236-36b1c8f11092.gif)
 
 
 ## Project Status
@@ -39,8 +40,8 @@ Room for improvement:
 
 To do:
 - Add option to display a random Pokemon
-- Ability to collect favourite Pokemon
-- Ability to create Pokemon teams
+- Add option to collect favourite Pokemon
+- Add option to create Pokemon teams
 
 
  ## Credits
