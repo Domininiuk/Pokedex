@@ -1,9 +1,54 @@
-# Pokedex
-Libraries used: Jetpack Compose (Navigation, Material Design Components, LiveData), Picasso, Retrofit2, OKHTTP, CarouselView, Hamcrest
+# Pokédex
 
-![Screenshot_1634712296](https://user-images.githubusercontent.com/75265195/138041688-8b278171-ceca-4b8f-82f6-53afea355638.png)
+## Introduction 
+The goal of this project was to become familiar with the Retrofit2 library. For this I decided to use an open-source API, as creating my ownAPI would be a challenge of its own. After some research I decided to use the PokéAPI and develop a Pokédex (in the Pokémon world a device used to store and catalog information about the various Pokémon species) app. 
+## Technologies Used
+- Kotlin
+- Android Studio
+
+## Libraries Used
+- Jetpack Compose
+- Navigation
+- Material Design Components
+- LiveData
+- Picasso
+- Retrofit2
+- OKHTTP
+- CarouselView
+- Hamcrest
+## Features
+- Displaying over 1000 different Pokemon species
+- Displaying detailed information such as ability, health and evolution chain for each of the Pokemon.
 
 
-![Screenshot_1635064858](https://user-images.githubusercontent.com/75265195/138586749-006d888b-80da-4930-988b-32a0f50dfa98.png)
+## Screenshots
+![Example screenshot](./img/screenshot.png)
+<!-- If you have screenshots you'd like to share, include them here. -->
 
-![Screenshot_1635064882](https://user-images.githubusercontent.com/75265195/138586754-e137dcba-362d-4b09-ae71-76c5d83cbb07.png)
+
+## Project Status
+Project is: _in progress_. 
+I am currently in the process of refactoring the application to be more in line with my current skillset and knowledge.
+
+
+## Room for Improvement
+Room for improvement:
+- User Interface
+
+To do:
+- Add option to display a random Pokemon
+- Ability to collect favourite Pokemon
+- Ability to create Pokemon teams
+
+
+
+## Contact
+Created by [@Dominik Wieczynski](https://www.linkedin.com/in/dominik-wieczy%C5%84ski-19ba77209/) - feel free to contact me!
+
+
+<!-- Optional -->
+<!-- ## License -->
+<!-- This project is open source and available under the [... License](). -->
+
+<!-- You don't have to include all sections - just the one's relevant to your project -->
+
