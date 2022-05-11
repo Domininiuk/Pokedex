@@ -29,7 +29,12 @@
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/mipmap-anydpi-v26/pokemon_icon.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Rutko/AndroidStudioProjects/Pokdex/app/src/main/res/mipmap-anydpi-v26/pokemon_icon_round.xml" value="0.22135416666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18177083333333333" />
-        <entry key="app/src/main/res/layout/fragment_display_all_pokemon.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/fragment_display_all_pokemon.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_display_pokemon.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/item_recyclerview_display_all.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_recyclerview_display_pokemon_ability.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/item_recyclerview_display_pokemon_evolutions.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/recyclerview_display_all_pokemon.xml" value="0.18177083333333333" />
       </map>
     </option>
   </component>

@@ -2,6 +2,7 @@ package com.example.pokdex.Fragments
 
 
 import android.app.ActionBar
+import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 
 
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.Adapter.DisplayAllPokemonAdapter
@@ -63,6 +65,8 @@ class DisplayAllPokemonFragment : Fragment() {
             )
         }
         display_all_recyclerview.layoutManager = GridLayoutManager(context, 2)
+        display_all_recyclerview.addItemDecoration(MarginItemDecorator(20, 2))
+
     }
 
     //When clicking on a pokemon, go their specific pokemon fragment
@@ -75,3 +79,42 @@ class DisplayAllPokemonFragment : Fragment() {
 
 }
 
+class MarginItemDecorator(private val spaceSize: Int, private val spanCount: Int = 1,
+private val orientation : Int  = GridLayoutManager.VERTICAL) : RecyclerView.ItemDecoration()
+{
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        with(outRect)
+        {
+            if(orientation == GridLayoutManager.VERTICAL)
+            {
+                if(parent.getChildAdapterPosition(view) < spanCount)
+                {
+                    top = spaceSize
+                }
+                if(parent.getChildAdapterPosition(view) % spanCount == 0)
+                {
+                    left = spaceSize
+                }
+            }
+            else
+            {
+                if(parent.getChildAdapterPosition(view) < spanCount)
+                {
+                    left = spaceSize
+                }
+                if(parent.getChildAdapterPosition(view) % spanCount == 0)
+                {
+                    top = spaceSize
+                }
+            }
+            right = spaceSize
+            bottom = spaceSize
+
+        }
+    }
+}

@@ -29,14 +29,6 @@ class MainActivity : AppCompatActivity()
        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
        val navController = navHostFragment!!.findNavController()
 
-        val layout = findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar_layout)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-       // val appBarConfiguration = AppBarConfiguration(navController.graph)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-     //      setupWithNavController(toolbar, navController)
-       layout.setupWithNavController(toolbar, navController, appBarConfiguration)
-
-
     }
 
 
