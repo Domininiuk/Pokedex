@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:theme="@style/Theme.Pokédex"
+        android:theme="@style/Theme.Material3.Dark"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
