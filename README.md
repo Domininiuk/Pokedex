@@ -29,8 +29,7 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 
 
 ## Project Status
-Project is: _in progress_. 
-I am currently in the process of refactoring the application to be more in line with my current skillset and knowledge.
+Project is: _complete_ 
 
 
 ## Room for Improvement
