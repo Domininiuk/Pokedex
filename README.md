@@ -46,6 +46,7 @@ To do:
 
  ## Credits
  - Loading animation is from lottiefiles.com
+ - All Pokemon data is fetched from [PokeAPI](https://pokeapi.co/)
 ## Contact
 Created by [@Dominik Wieczynski](https://www.linkedin.com/in/dominik-wieczy%C5%84ski-19ba77209/) - feel free to contact me!
 
