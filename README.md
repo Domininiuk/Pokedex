@@ -29,7 +29,7 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 
 
 ## Project Status
-Project is: _complete_ 
+Project is: _in progress_.
 
 
 ## Room for Improvement
