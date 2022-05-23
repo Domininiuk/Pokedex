@@ -6,18 +6,20 @@ data class PokemonModel(val id : Int = -1, val base_experience : Int = 0,  val n
                            val weight : Float = 0.0f,
                            val sprites : PokemonSprites? = null, val height : Int = 0,val abilities
                            : MutableList<PokemonAbilityHolder>
-                           = mutableListOf())
+                           = mutableListOf(), val types : MutableList<PokemonTypeHolder> = mutableListOf())
 {
 
     /*
-    Height is in decimeters
-    Weight is in hectograms (tenth of kilogram)
+    Fetched height is in decimeters
+    Fetched weight is in hectograms (tenth of a kilogram)
      */
       constructor(name: String) : this( -1, -1, name, 0.0f, null, 0, mutableListOf(
-        PokemonAbilityHolder()
-    ) )
+        PokemonAbilityHolder()), mutableListOf(PokemonTypeHolder(PokemonType("", ""))))
 
-    constructor() : this( -1, -1, "", 0.0f, null, 0,  mutableListOf(PokemonAbilityHolder()) )
+
+    constructor() : this( -1, -1, "", 0.0f, null, 0,
+        mutableListOf(PokemonAbilityHolder()),  mutableListOf(PokemonTypeHolder(PokemonType("", "")))
+    )
 
     fun getOfficialArtworkFrontDefault() : String
     {
@@ -85,5 +87,12 @@ val front_shiny_female : String, val other: PokemonOther)
     }
 
 }
+
+/*
+Pokemon have upwards to two types (dual type Pokemon)
+ */
+data class PokemonTypeHolder(val type : PokemonType){}
+data class PokemonType(val name : String, val url : String)
+
 data class PokemonAbilityHolder(val ability : PokemonAbility = PokemonAbility(""))
 data class PokemonAbility(val name : String)

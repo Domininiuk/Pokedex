@@ -30,6 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
+    namespace 'com.example.pokdex'
 }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'

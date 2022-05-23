@@ -9,7 +9,7 @@ import com.example.pokdex.R
 import com.example.pokdex.Utility
 import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_ability.view.*
 
- class AbilitiesAdapter(abilitiesList : List<PokemonAbilityHolder>) : RecyclerView.Adapter<AbilitiesAdapter.AbilityViewHolder>()
+class AbilitiesAdapter(abilitiesList : List<PokemonAbilityHolder>) : RecyclerView.Adapter<AbilitiesAdapter.AbilityViewHolder>()
 {
     private val  abilities : List<PokemonAbilityHolder> = abilitiesList
     override fun onCreateViewHolder(

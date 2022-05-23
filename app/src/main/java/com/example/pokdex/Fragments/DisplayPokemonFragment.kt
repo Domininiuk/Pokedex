@@ -77,6 +77,18 @@ class DisplayPokemonFragment : Fragment() {
             display_pokemon_weight.text = "Weight: "+  displayPokemonVM.pokemon.value?.getWeightInKilograms() + " kg"
             display_pokemon_experience.text = "Base experience: " + displayPokemonVM.pokemon.value?.base_experience
             display_pokemon_height.text = "Height: " + displayPokemonVM.pokemon.value?.getHeightInCentimeters() + " cm"
+            var types = displayPokemonVM.pokemon.value?.types
+
+            if(types!!.size == 2)
+            {
+                display_pokemon_type.text = "Types: " + Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(0).type.name) + ", " +
+                        Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(1).type.name)
+            }
+            else if(types!!.size == 1)
+            {
+                display_pokemon_type.text = "Type: " + Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(0).type.name)
+
+            }
             displayAbilitiesRecyclerView()
 
         }
@@ -84,7 +96,7 @@ class DisplayPokemonFragment : Fragment() {
 
     }
 
-    fun loadCarousel()
+    private fun loadCarousel()
     {
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = spritesUrls.size
@@ -106,6 +118,7 @@ class DisplayPokemonFragment : Fragment() {
     private fun getAndDisplayEvolutions(id : Int)
     {
         displayPokemonVM.getEvolutionChain(id).observe(viewLifecycleOwner) { evolutionChain ->
+            // Send requests for the pokemon data?
             displayEvolutions(evolutionChain.getListOfPokemonNames())
         }
     }
