@@ -1,7 +1,7 @@
 package com.example.pokdex
 
 
-import com.example.pokdex.Models.*
+import com.example.pokdex.models.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 

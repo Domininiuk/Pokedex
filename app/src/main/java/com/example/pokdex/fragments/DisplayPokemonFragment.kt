@@ -1,27 +1,21 @@
-package com.example.pokdex.Fragments
+package com.example.pokdex.fragments
 
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.navigation.fragment.findNavController
-import com.example.pokdex.Models.PokemonModel
-import com.example.pokdex.R
-import com.example.pokdex.ViewModel.DisplayPokemonViewModel
-import com.squareup.picasso.Picasso
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.pokdex.Adapter.AbilitiesAdapter
-import com.example.pokdex.Adapter.DisplayEvolutionsAdapter
-import com.example.pokdex.Models.EvolutionModel
-import com.example.pokdex.Models.PokemonSpeciesModel
+import com.example.pokdex.adapters.AbilitiesAdapter
+import com.example.pokdex.adapters.DisplayEvolutionsAdapter
 import com.example.pokdex.Utility
+import com.example.pokdex.viewmodels.DisplayPokemonViewModel
+import com.example.pokdex.databinding.FragmentDisplayPokemonBinding
+import com.squareup.picasso.Picasso
 import com.synnapps.carouselview.ImageListener
-import kotlinx.android.synthetic.main.fragment_display_pokemon.*
 
 
 class DisplayPokemonFragment : Fragment() {
@@ -29,6 +23,8 @@ class DisplayPokemonFragment : Fragment() {
     private val args : DisplayPokemonFragmentArgs by navArgs()
     private lateinit var displayPokemonVM : DisplayPokemonViewModel
     private lateinit var spritesUrls : List<String>
+    private var _binding : FragmentDisplayPokemonBinding? = null
+    private val binding get() = _binding!!
 
 
     override fun onCreateView(
@@ -36,7 +32,8 @@ class DisplayPokemonFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_display_pokemon, container, false)
+        initializeBinding()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
@@ -52,11 +49,15 @@ class DisplayPokemonFragment : Fragment() {
     private fun initializeMemberVariables()
     {
         displayPokemonVM = DisplayPokemonViewModel()
+    }
 
+    private fun initializeBinding()
+    {
+        _binding = FragmentDisplayPokemonBinding.inflate(layoutInflater)
     }
     private fun getAndDisplayPokemon(id : Int)
     {
-        animationView.playAnimation()
+        binding.animationView.playAnimation()
         displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner) { newPokemon ->
             // Delay because I want the cool animation to be visible :)
             Handler().postDelayed({
@@ -73,38 +74,38 @@ class DisplayPokemonFragment : Fragment() {
         {
             spritesUrls = displayPokemonVM.pokemon.value?.sprites?.getListOfUrls()!!
             loadCarousel()
-            display_pokemon_name.text = Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.name.toString())
-            display_pokemon_weight.text = "Weight: "+  displayPokemonVM.pokemon.value?.getWeightInKilograms() + " kg"
-            display_pokemon_experience.text = "Base experience: " + displayPokemonVM.pokemon.value?.base_experience
-            display_pokemon_height.text = "Height: " + displayPokemonVM.pokemon.value?.getHeightInCentimeters() + " cm"
+            binding.displayPokemonName.text = Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.name.toString())
+            binding.displayPokemonWeight.text = "Weight: "+  displayPokemonVM.pokemon.value?.getWeightInKilograms() + " kg"
+            binding.displayPokemonExperience.text = "Base experience: " + displayPokemonVM.pokemon.value?.base_experience
+            binding.displayPokemonHeight.text = "Height: " + displayPokemonVM.pokemon.value?.getHeightInCentimeters() + " cm"
             var types = displayPokemonVM.pokemon.value?.types
 
             if(types!!.size == 2)
             {
-                display_pokemon_type.text = "Types: " + Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(0).type.name) + ", " +
+                binding.displayPokemonType.text = "Types: " + Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(0).type.name) + ", " +
                         Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(1).type.name)
             }
             else if(types!!.size == 1)
             {
-                display_pokemon_type.text = "Type: " + Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(0).type.name)
+                binding.displayPokemonType.text = "Type: " + Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(0).type.name)
 
             }
             displayAbilitiesRecyclerView()
 
         }
-        animationView.visibility=View.GONE
+        binding.animationView.visibility = View.GONE
 
     }
 
     private fun loadCarousel()
     {
-        carouselView.setImageListener(imageListener)
-        carouselView.pageCount = spritesUrls.size
+        binding.carouselView.setImageListener(imageListener)
+        binding.carouselView.pageCount = spritesUrls.size
     }
     private fun displayAbilitiesRecyclerView()
     {
-        display_pokemon_ability_recyclerview.adapter = AbilitiesAdapter(displayPokemonVM.pokemon.value?.abilities!!)
-        display_pokemon_ability_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.displayPokemonAbilityRecyclerview.adapter = AbilitiesAdapter(displayPokemonVM.pokemon.value?.abilities!!)
+        binding.displayPokemonAbilityRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
 
@@ -125,12 +126,12 @@ class DisplayPokemonFragment : Fragment() {
 
     private fun displayEvolutions(listOfEvolutions: List<String>)
     {
-        display_pokemon_evolutions_recyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions,
+        binding.displayPokemonEvolutionsRecyclerview.adapter = DisplayEvolutionsAdapter(listOfEvolutions,
             displayPokemonVM.pokemon.value!!
         ) {
             position -> onEvolutionsItemClick(position)
         }
-        display_pokemon_evolutions_recyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.displayPokemonEvolutionsRecyclerview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
     }
 
@@ -138,8 +139,8 @@ class DisplayPokemonFragment : Fragment() {
     private fun onEvolutionsItemClick(position : Int)
     {
         val id : Int = position + 1
-        val action =  DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment(id)
-        findNavController().navigate(action)
+       // val action =  DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment(id)
+       // findNavController().navigate(action)
     }
 
     //Image listener for the carousel

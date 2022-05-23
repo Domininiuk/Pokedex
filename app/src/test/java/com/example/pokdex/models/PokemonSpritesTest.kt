@@ -1,10 +1,8 @@
-package com.example.pokdex.Models
+package com.example.pokdex.models
 
 import junit.framework.TestCase
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
-import org.hamcrest.Matchers.equalTo
-import org.junit.Test
 
 
 class PokemonSpritesTest : TestCase() {

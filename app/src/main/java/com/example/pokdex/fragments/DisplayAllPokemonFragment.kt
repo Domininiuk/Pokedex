@@ -1,7 +1,6 @@
-package com.example.pokdex.Fragments
+package com.example.pokdex.fragments
 
 
-import android.app.ActionBar
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,56 +11,55 @@ import android.view.ViewGroup
 
 
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pokdex.Adapter.DisplayAllPokemonAdapter
-import com.example.pokdex.Models.PokemonListModel
-import com.example.pokdex.Models.PokemonModel
+import com.example.pokdex.adapters.DisplayAllPokemonAdapter
+import com.example.pokdex.models.PokemonListModel
 import com.example.pokdex.R
-import com.example.pokdex.Utility
-import com.example.pokdex.ViewModel.DisplayAllPokemonViewModel
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_display_all_pokemon.*
-import kotlinx.android.synthetic.main.item_recyclerview_display_all.view.*
-import java.lang.Character.toUpperCase
+import com.example.pokdex.viewmodels.DisplayAllPokemonViewModel
+import com.example.pokdex.databinding.FragmentDisplayAllPokemonBinding
 
 
 class DisplayAllPokemonFragment : Fragment() {
     lateinit var displayAllPokemonVM: DisplayAllPokemonViewModel
     lateinit var pokemonList : PokemonListModel
 
+    private var _binding : FragmentDisplayAllPokemonBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View?
     {
-
+            initializeBinding()
             initializeVariables()
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_display_all_pokemon, container, false)
+        return binding.root
     }
 
-
+    private fun initializeBinding()
+    {
+        _binding = FragmentDisplayAllPokemonBinding.inflate(layoutInflater)
+    }
     //Initialize member variables
     private fun initializeVariables() {
         displayAllPokemonVM = DisplayAllPokemonViewModel()
-        displayAllPokemonVM.pokemonList.observe(viewLifecycleOwner, {newList ->
+        displayAllPokemonVM.pokemonList.observe(viewLifecycleOwner) { newList ->
             pokemonList = newList
             displayRecyclerView()
-        })
+        }
     }
 
 
     private fun displayRecyclerView()
     {
-        display_all_recyclerview.adapter = DisplayAllPokemonAdapter(pokemonList) { position ->
+        binding.displayAllRecyclerview.adapter = DisplayAllPokemonAdapter(pokemonList) { position ->
             onListItemClick(
                 position
             )
         }
-        display_all_recyclerview.layoutManager = GridLayoutManager(context, 2)
-        display_all_recyclerview.addItemDecoration(MarginItemDecorator(20, 2))
+        binding.displayAllRecyclerview.layoutManager = GridLayoutManager(context, 2)
+        binding.displayAllRecyclerview.addItemDecoration(MarginItemDecorator(20, 2))
 
     }
 
@@ -69,8 +67,8 @@ class DisplayAllPokemonFragment : Fragment() {
     private fun onListItemClick(position : Int)
     {
         val id : Int = position + 1
-        val action =  DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment(id)
-        findNavController().navigate(action)
+        val action =  DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment2(id)
+       findNavController().navigate(action)
     }
 
 }

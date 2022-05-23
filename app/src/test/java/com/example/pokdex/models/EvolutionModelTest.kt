@@ -1,4 +1,4 @@
-package com.example.pokdex.Models
+package com.example.pokdex.models
 
 import junit.framework.TestCase
 

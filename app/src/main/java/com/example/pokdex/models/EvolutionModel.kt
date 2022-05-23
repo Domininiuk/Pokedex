@@ -1,4 +1,4 @@
-package com.example.pokdex.Models
+package com.example.pokdex.models
 
 
 //Add a recursive function to iterate through the chain and add all pokemons to a list??

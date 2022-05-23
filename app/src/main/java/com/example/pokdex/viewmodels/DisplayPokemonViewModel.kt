@@ -1,13 +1,12 @@
-package com.example.pokdex.ViewModel
+package com.example.pokdex.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.example.pokdex.Models.EvolutionChainLinkModel
-import com.example.pokdex.Models.EvolutionModel
-import com.example.pokdex.Models.PokemonModel
-import com.example.pokdex.Models.PokemonSpeciesModel
+import com.example.pokdex.models.EvolutionModel
+import com.example.pokdex.models.PokemonModel
+import com.example.pokdex.models.PokemonSpeciesModel
 import com.example.pokdex.PokemonRepository
 import kotlinx.coroutines.Dispatchers
 

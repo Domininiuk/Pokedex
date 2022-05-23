@@ -8,22 +8,21 @@
     <fragment
         tools:layout="@layout/fragment_display_pokemon"
         android:id="@+id/displayPokemonFragment"
-        android:name="com.example.pokdex.Fragments.DisplayPokemonFragment"
+        android:name="com.example.pokdex.fragments.DisplayPokemonFragment"
         android:label="pOKEMON" >
         <argument
             android:name="id"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_displayPokemonFragment_to_displayAllPokemonFragment"
-            app:destination="@id/displayAllPokemonFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/displayAllPokemonFragment"
-        android:name="com.example.pokdex.Fragments.DisplayAllPokemonFragment"
+        android:name="com.example.pokdex.fragments.DisplayAllPokemonFragment"
         android:label="All Pokemon"
         tools:layout="@layout/fragment_display_all_pokemon" >
+
         <action
-            android:id="@+id/action_displayAllPokemonFragment_to_displayPokemonFragment"
+            android:id="@+id/action_displayAllPokemonFragment_to_displayPokemonFragment2"
             app:destination="@id/displayPokemonFragment" >
             <argument android:name="id"
                 app:argType="integer"/>

@@ -1,4 +1,4 @@
-package com.example.pokdex.Models
+package com.example.pokdex.models
 
 data class PokemonSpeciesModel(var name : String, var evolution_chain : EvolutionChain)
 {

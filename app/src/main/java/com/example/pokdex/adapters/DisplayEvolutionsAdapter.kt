@@ -1,25 +1,29 @@
-package com.example.pokdex.Adapter
+package com.example.pokdex.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pokdex.Models.EvolutionModel
-import com.example.pokdex.Models.PokemonModel
+import com.example.pokdex.models.PokemonModel
 import com.example.pokdex.R
 import com.example.pokdex.Utility
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_recyclerview_display_all.view.*
-import kotlinx.android.synthetic.main.item_recyclerview_display_pokemon_evolutions.view.*
+import com.example.pokdex.databinding.ItemRecyclerviewDisplayPokemonEvolutionsBinding
 
 
 class DisplayEvolutionsAdapter(private var names : List<String>, private var currentlyChosenPokemon :PokemonModel, private val onItemClicked : (position: Int) -> Unit) : RecyclerView.Adapter<DisplayEvolutionsAdapter.EvolutionHolder>()
 {
 
-    class EvolutionHolder(itemView : View, private val onItemClicked: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView), View.OnClickListener
+    class EvolutionHolder(
+        itemView: View,
+        private val onItemClicked: (position: Int) -> Unit,
+        private val binding: ItemRecyclerviewDisplayPokemonEvolutionsBinding
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
 
-
+        public fun bind(evolutionName : String)
+        {
+            binding.displayEvolutionName.text = evolutionName
+        }
 
         override fun onClick(p0: View?) {
             val position = absoluteAdapterPosition
@@ -29,14 +33,15 @@ class DisplayEvolutionsAdapter(private var names : List<String>, private var cur
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EvolutionHolder
     {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recyclerview_display_pokemon_evolutions, parent, false)
-        return EvolutionHolder(view, onItemClicked)
+        val binding = ItemRecyclerviewDisplayPokemonEvolutionsBinding.inflate(LayoutInflater.from(parent.context))
+
+        return EvolutionHolder(binding.root, onItemClicked, binding)
     }
 
     override fun onBindViewHolder(holder: EvolutionHolder, position: Int) {
         //If the names[position] == chosenPokemon.name
         //Then imageId == chosenPokemon.id + position
-        holder.itemView.display_evolution_name.text = Utility.capitalizeFirstCharacter(names[position])
+        holder.bind(Utility.capitalizeFirstCharacter(names[position]))
     }
 
     override fun getItemCount(): Int {
