@@ -29,8 +29,7 @@ The goal of this project was to become familiar with the Retrofit2 library. For 
 
 
 ## Project Status
-Project is: _in progress_. 
-I am currently in the process of refactoring the application to be more in line with my current skillset and knowledge.
+Project is: _in progress_.
 
 
 ## Room for Improvement
@@ -46,6 +45,7 @@ To do:
 
  ## Credits
  - Loading animation is from lottiefiles.com
+ - All Pokemon data is fetched from [PokeAPI](https://pokeapi.co/)
 ## Contact
 Created by [@Dominik Wieczynski](https://www.linkedin.com/in/dominik-wieczy%C5%84ski-19ba77209/) - feel free to contact me!
 
