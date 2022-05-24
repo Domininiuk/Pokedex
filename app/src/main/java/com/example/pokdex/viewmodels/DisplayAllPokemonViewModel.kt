@@ -10,6 +10,7 @@ class DisplayAllPokemonViewModel : ViewModel()
     val pokemonList = liveData(Dispatchers.IO)
     {
         val retrievedList = PokemonRepository.getPokemonList()
+        retrievedList.attachIdsToPokemons()
         emit(retrievedList)
     }
 

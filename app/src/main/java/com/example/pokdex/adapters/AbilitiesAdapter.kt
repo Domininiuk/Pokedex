@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.models.PokemonAbilityHolder
-import com.example.pokdex.R
 import com.example.pokdex.Utility
 import com.example.pokdex.databinding.ItemRecyclerviewDisplayPokemonAbilityBinding
 
@@ -26,7 +25,7 @@ class AbilitiesAdapter(abilitiesList : List<PokemonAbilityHolder>) : RecyclerVie
 
     override fun onBindViewHolder(holder: AbilityViewHolder, position: Int)
     {
-        holder.bind(Utility.capitalizeFirstCharacter(abilities[position].ability.name))
+        holder.bind(Utility.firstToUpper(abilities[position].ability.name))
     }
 
     override fun getItemCount(): Int {

@@ -2,9 +2,10 @@ package com.example.pokdex.models
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonModel(val id : Int = -1, val base_experience : Int = 0,  val name : String = "",
-                           val weight : Float = 0.0f,
-                           val sprites : PokemonSprites? = null, val height : Int = 0,val abilities
+data class PokemonModel(
+    var id : Int = -1, val base_experience : Int = 0, val name : String = "",
+    val weight : Float = 0.0f,
+    val sprites : PokemonSprites? = null, val height : Int = 0, val abilities
                            : MutableList<PokemonAbilityHolder>
                            = mutableListOf(), val types : MutableList<PokemonTypeHolder> = mutableListOf())
 {

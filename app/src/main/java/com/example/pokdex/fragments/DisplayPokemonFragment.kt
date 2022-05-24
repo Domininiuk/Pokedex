@@ -74,7 +74,7 @@ class DisplayPokemonFragment : Fragment() {
         {
             spritesUrls = displayPokemonVM.pokemon.value?.sprites?.getListOfUrls()!!
             loadCarousel()
-            binding.displayPokemonName.text = Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.name.toString())
+            binding.displayPokemonName.text = Utility.firstToUpper(displayPokemonVM.pokemon.value?.name.toString())
             binding.displayPokemonWeight.text = "Weight: "+  displayPokemonVM.pokemon.value?.getWeightInKilograms() + " kg"
             binding.displayPokemonExperience.text = "Base experience: " + displayPokemonVM.pokemon.value?.base_experience
             binding.displayPokemonHeight.text = "Height: " + displayPokemonVM.pokemon.value?.getHeightInCentimeters() + " cm"
@@ -82,12 +82,12 @@ class DisplayPokemonFragment : Fragment() {
 
             if(types!!.size == 2)
             {
-                binding.displayPokemonType.text = "Types: " + Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(0).type.name) + ", " +
-                        Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(1).type.name)
+                binding.displayPokemonType.text = "Types: " + Utility.firstToUpper(displayPokemonVM.pokemon.value?.types!!.get(0).type.name) + ", " +
+                        Utility.firstToUpper(displayPokemonVM.pokemon.value?.types!!.get(1).type.name)
             }
             else if(types!!.size == 1)
             {
-                binding.displayPokemonType.text = "Type: " + Utility.capitalizeFirstCharacter(displayPokemonVM.pokemon.value?.types!!.get(0).type.name)
+                binding.displayPokemonType.text = "Type: " + Utility.firstToUpper(displayPokemonVM.pokemon.value?.types!!.get(0).type.name)
 
             }
             displayAbilitiesRecyclerView()

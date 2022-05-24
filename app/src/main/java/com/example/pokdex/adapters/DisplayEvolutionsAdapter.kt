@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.models.PokemonModel
-import com.example.pokdex.R
 import com.example.pokdex.Utility
 import com.example.pokdex.databinding.ItemRecyclerviewDisplayPokemonEvolutionsBinding
 
@@ -41,7 +40,7 @@ class DisplayEvolutionsAdapter(private var names : List<String>, private var cur
     override fun onBindViewHolder(holder: EvolutionHolder, position: Int) {
         //If the names[position] == chosenPokemon.name
         //Then imageId == chosenPokemon.id + position
-        holder.bind(Utility.capitalizeFirstCharacter(names[position]))
+        holder.bind(Utility.firstToUpper(names[position]))
     }
 
     override fun getItemCount(): Int {

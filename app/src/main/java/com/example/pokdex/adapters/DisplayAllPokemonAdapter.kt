@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokdex.models.PokemonListModel
 import com.example.pokdex.models.PokemonModel
-import com.example.pokdex.R
 import com.example.pokdex.Utility
 import com.example.pokdex.databinding.ItemRecyclerviewDisplayAllBinding
 import com.squareup.picasso.Picasso
@@ -45,7 +44,7 @@ class DisplayAllPokemonAdapter(list : PokemonListModel, private val onItemClicke
 
         fun bind(pokemonModel: PokemonModel, position: Int, url: String) {
             binding.displayAllPokemonName.text =
-                Utility.capitalizeFirstCharacter(pokemonModel.name)
+                Utility.firstToUpper(pokemonModel.name)
             Picasso.get().load(url + position + ".png").into(binding.displayAllPokemonImage)
         }
 

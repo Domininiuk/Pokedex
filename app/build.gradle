@@ -8,6 +8,9 @@ plugins {
 android {
     compileSdk 31
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.2.0-beta02"
+    }
 
 
     defaultConfig {
@@ -22,6 +25,8 @@ android {
 
     buildFeatures {
         viewBinding true
+        compose true
+
     }
     buildTypes {
         release {
@@ -43,7 +48,7 @@ apply plugin: 'kotlin-android'
 dependencies {
 
 
-
+    implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     implementation 'com.google.android.material:material:1.6.0-alpha01'
 
     implementation 'com.synnapps:carouselview:0.1.5'
@@ -86,4 +91,18 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
+    implementation "com.google.android.material:compose-theme-adapter:1.1.1"
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    // Compose Material Design
+    implementation 'androidx.compose.material:material:1.1.1'
+    // Animations
+    implementation 'androidx.compose.animation:animation:1.1.1'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.1.1'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
 }
