@@ -16,7 +16,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -25,8 +24,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.compose.rememberAsyncImagePainter
@@ -36,8 +33,10 @@ import com.example.pokdex.Utility
 import com.example.pokdex.compose.PokedexTheme
 import com.example.pokdex.viewmodels.DisplayPokemonViewModel
 import com.example.pokdex.databinding.FragmentDisplayPokemonBinding
+import com.example.pokdex.models.EvolutionModel
+import com.example.pokdex.models.EvolutionSpeciesModel
+import com.example.pokdex.models.PokemonAbilityHolder
 import com.example.pokdex.models.PokemonModel
-import com.example.pokdex.viewmodels.DisplayAllPokemonViewModel
 import com.squareup.picasso.Picasso
 import com.synnapps.carouselview.ImageListener
 
@@ -68,8 +67,16 @@ class DisplayPokemonFragment : Fragment() {
                 ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
             )
 
-            displayPokemonVM.getPokemon(args.id).observe(viewLifecycleOwner) { newPokemon ->
-                setContent { DisplayPokemonScreen(pokemon = newPokemon) }
+            displayPokemonVM.getPokemon(args.id).observe(viewLifecycleOwner) {
+                    newPokemon ->
+                displayPokemonVM.getPokemonSpecies(args.id).observe(viewLifecycleOwner) { pokemonSpecies ->
+                    displayPokemonVM.getEvolutionChain(pokemonSpecies.evolution_chain.getChainId()).observe(viewLifecycleOwner) { evolutionChain ->
+
+                        setContent { DisplayPokemonScreen(pokemon = newPokemon, evolutionChain.getListOfPokemonNames()) }
+                    }
+                }
+
+
             }
         }
 /*
@@ -174,7 +181,7 @@ class DisplayPokemonFragment : Fragment() {
     {
         displayPokemonVM.getEvolutionChain(id).observe(viewLifecycleOwner) { evolutionChain ->
             // Send requests for the pokemon data?
-            displayEvolutions(evolutionChain.getListOfPokemonNames())
+          //  displayEvolutions(evolutionChain.getListOfPokemonSpecies())
         }
     }
 
@@ -214,7 +221,7 @@ class DisplayPokemonFragment : Fragment() {
 
 
 @Composable
-fun DisplayPokemonScreen(pokemon: PokemonModel)
+fun DisplayPokemonScreen(pokemon: PokemonModel, evolution: List<EvolutionSpeciesModel>)
 {
     val scrollState = rememberScrollState()
 
@@ -229,6 +236,8 @@ fun DisplayPokemonScreen(pokemon: PokemonModel)
                         .fillMaxSize()
                         .verticalScroll(scrollState)) {
                         PokemonHeader(pokemon = pokemon, containerHeight = this@BoxWithConstraints.maxHeight)
+                        PokemonContent(pokemon = pokemon, evolution = evolution)
+
                     }
                 }
             }
@@ -258,10 +267,9 @@ fun PokemonHeader(
             .fillMaxWidth(),
         contentScale = ContentScale.Crop
     )
-    PokemonContent(pokemon = pokemon)
 }
 @Composable
-fun PokemonContent(pokemon: PokemonModel)
+fun PokemonContent(pokemon: PokemonModel, evolution: List<EvolutionSpeciesModel>)
 {
     Title(pokemon = pokemon)
     if(pokemon.types.size == 2)
@@ -269,20 +277,22 @@ fun PokemonContent(pokemon: PokemonModel)
         val firstType = Utility.firstToUpper(pokemon.types[0].type.name)
         val secondType = Utility.firstToUpper(pokemon.types[1].type.name)
 
-        PokemonPropety(label = "Types:", value =
+        PokemonProperty(label = "Types:", value =
         "$firstType, $secondType"
         )
     }
     else {
         val firstType = Utility.firstToUpper(pokemon.types[0].type.name)
 
-        PokemonPropety(label = "Types:", value =
+        PokemonProperty(label = "Types:", value =
         firstType
         )
     }
-    PokemonPropety(label = "Base experience gained:", value = pokemon.base_experience.toString())
-    PokemonPropety(label = "Height", value = pokemon.height.toString())
-    PokemonPropety(label = "Weight", value =pokemon.weight.toString())
+    PokemonProperty(label = "Base experience gained:", value = pokemon.base_experience.toString())
+    PokemonProperty(label = "Height", value = pokemon.height.toString())
+    PokemonProperty(label = "Weight", value =pokemon.weight.toString())
+    PokemonAbilityList(abilities = pokemon.abilities)
+    PokemonEvolutionChain(evolution)
 
 }
 @Composable
@@ -297,7 +307,7 @@ fun Title(pokemon: PokemonModel)
 }
 
 @Composable
-fun PokemonPropety(label: String, value: String)
+fun PokemonProperty(label: String, value: String)
 {
     Column(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start =16.dp, end = 16.dp)) {
         Divider(modifier = Modifier.padding(bottom = 4.dp))
@@ -311,12 +321,50 @@ fun PokemonPropety(label: String, value: String)
     }
 }
 @Composable
-fun Pokemon(pokemon: PokemonModel)
+fun PokemonAbilityList(abilities: List<PokemonAbilityHolder>)
 {
-    val scrollState = rememberScrollState()
-    
-    Column() {
-        Text(text = pokemon.name)
-    }
+    Column(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start =16.dp, end = 16.dp)) 
+    {
+        Divider(modifier = Modifier.padding(bottom = 4.dp))
+        Text(text = "Abilities:", modifier = Modifier.height(24.dp),
+            style = MaterialTheme.typography.caption)
 
+        
+        Column(Modifier.wrapContentHeight()){
+            abilities.forEach(){
+                Row{
+                    Text(modifier = Modifier.padding(end = 4.dp), text = Utility.firstToUpper(it.ability.name), style = MaterialTheme.typography.body1, overflow = TextOverflow.Visible)
+                    //Text(text = "" + "Lorem ipsum, testing how a description would look like")
+                }
+            }
+            
+        }
+            
+    }
+}
+
+@Composable
+fun PokemonEvolutionChain(evolution: List<EvolutionSpeciesModel>)
+{
+    Column(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start =16.dp, end = 16.dp)) {
+        Divider(modifier = Modifier.padding(bottom = 4.dp))
+        Text(text = "Evolutions:", modifier = Modifier.height(24.dp),
+            style = MaterialTheme.typography.caption)
+        Column(Modifier.wrapContentHeight()){
+            evolution.forEach(){
+                Row{
+                    var url : String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" + it.getIdFromUrl() +".png"
+
+                    Image(
+                        painter = rememberAsyncImagePainter(url),
+                        contentDescription = null,
+                        modifier = Modifier.size(128.dp)
+                    )
+                    Text(modifier = Modifier.padding(end = 4.dp), text = Utility.firstToUpper(it.name), style = MaterialTheme.typography.body1, overflow = TextOverflow.Visible)
+                    //Text(text = "" + "Lorem ipsum, testing how a description would look like")
+
+                }
+            }
+
+    }}
 }

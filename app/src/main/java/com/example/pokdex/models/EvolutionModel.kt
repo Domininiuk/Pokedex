@@ -8,12 +8,12 @@ package com.example.pokdex.models
 data class EvolutionModel(val id : Int,  val chain : EvolutionChainLinkModel)
 {
 
-    fun getListOfPokemonNames() : List<String>
+    fun getListOfPokemonNames() : List<EvolutionSpeciesModel>
     {
-        var returnList  = mutableListOf<String>()
+        var returnList  = mutableListOf<EvolutionSpeciesModel>()
         if(chain.species.name != null)
         {
-            returnList.add(chain.species.name)
+            returnList.add(chain.species)
         }
 //While evolves to isnt null
         //Add species name to the list
@@ -21,7 +21,7 @@ data class EvolutionModel(val id : Int,  val chain : EvolutionChainLinkModel)
 
         while(chain.isNotEmpty())
         {
-            returnList.add(chain[0].species.name)
+            returnList.add(chain[0].species)
             chain = chain[0].evolves_to
 
         }
@@ -30,4 +30,10 @@ data class EvolutionModel(val id : Int,  val chain : EvolutionChainLinkModel)
 }
 data class EvolutionChainLinkModel( val species : EvolutionSpeciesModel, val evolves_to : List<EvolutionChainLinkModel>)
 
-data class EvolutionSpeciesModel(val name : String , val url : String)
+data class EvolutionSpeciesModel(val name : String , val id : Int, val url : String)
+{
+   fun getIdFromUrl() : Int
+   {
+       return url.subSequence(41, url.length - 1).toString().filter { c: Char -> c != '/' }.toString().toInt()
+   }
+}
