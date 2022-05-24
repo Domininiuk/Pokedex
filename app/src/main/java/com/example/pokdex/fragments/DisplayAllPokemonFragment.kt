@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.navigation.NavController
 
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -49,10 +50,7 @@ class DisplayAllPokemonFragment : Fragment() {
 
     private var _binding : FragmentDisplayAllPokemonBinding? = null
     private val binding get() = _binding!!
-    fun navigateToPokemon(pokemon: PokemonModel)
-    {
 
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,7 +65,7 @@ class DisplayAllPokemonFragment : Fragment() {
             displayAllPokemonVM = DisplayAllPokemonViewModel()
             displayAllPokemonVM.pokemonList.observe(viewLifecycleOwner) { newList ->
              //   pokemonList = newList
-                setContent { PokemonList(pokemonList = newList) }
+                setContent { PokemonList(pokemonList = newList, findNavController()) }
             }
         }
 
@@ -157,13 +155,13 @@ private val orientation : Int  = GridLayoutManager.VERTICAL) : RecyclerView.Item
 
 
 @Composable
-fun PokemonList( pokemonList : PokemonListModel)
+fun PokemonList( pokemonList : PokemonListModel, navController: NavController)
 {
     remember{pokemonList}
 
     PokedexTheme() {
         Scaffold(content ={
-            Pokemon(pokemonList)
+            Pokemon(pokemonList, navController)
         }
         )
     }
@@ -171,20 +169,20 @@ fun PokemonList( pokemonList : PokemonListModel)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Pokemon(pokemonList: PokemonListModel)
+fun Pokemon(pokemonList: PokemonListModel, navController: NavController)
 {
  LazyVerticalGrid( cells = GridCells.Fixed(2) , contentPadding = PaddingValues(horizontal = 16.dp,
  vertical = 8.dp)) {
 
      items(items = pokemonList.results,
      itemContent = {
-         PokemonListItem(pokemon = it)
+         PokemonListItem(pokemon = it, navController)
      })
  }
 }
 
 @Composable
-fun PokemonListItem(pokemon : PokemonModel){
+fun PokemonListItem(pokemon : PokemonModel, navController: NavController){
     Card(modifier = Modifier
         .padding(horizontal = 8.dp, vertical = 8.dp)
         .wrapContentWidth()
@@ -192,18 +190,20 @@ fun PokemonListItem(pokemon : PokemonModel){
     elevation = 2.dp,
     shape = RoundedCornerShape(corner = CornerSize(16.dp)))
     {
-        Row(modifier = Modifier.clickable {  }
+        Row(modifier = Modifier.clickable {
+            navController.navigate(DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment2(pokemon.id))
+        }
             .wrapContentWidth(),
         ) {
             Column(
                 modifier = Modifier
                     .padding(16.dp)
-                    .wrapContentWidth()
-                    .align(Alignment.CenterVertically)
+                    .wrapContentWidth(),
+                        verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PokemonImage(pokemonModel = pokemon)
-                Text(modifier = Modifier.fillMaxWidth(), text = Utility.firstToUpper(pokemon.name), style = typography.h6)
-               // Text(text = pokemon.id.toString(), style = typography.caption)
+                Text(modifier = Modifier.wrapContentWidth(), text = Utility.firstToUpper(pokemon.name), style = typography.h6)
             }
         }
     }
@@ -219,5 +219,4 @@ fun PokemonImage(pokemonModel: PokemonModel)
         contentDescription = null,
         modifier = Modifier.size(128.dp)
     )
-   // Picasso.get().load(url + position + ".png").into(binding.displayAllPokemonImage)
 }

@@ -1,9 +1,8 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Pokédex" parent="Theme.Material3.Dark">
         <item name="statusBarBackground">@color/grey</item>
-        <item name="android:statusBarColor" >?attr/statusBarBackground</item>
+        <item name="android:statusBarColor">?attr/statusBarBackground</item>
         <item name="android:navigationBarColor">?android:attr/windowBackground</item>
 
 

@@ -5,9 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-
-
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <com.google.android.material.card.MaterialCardView
+        android:visibility="gone"
         android:id="@+id/display_pokemon_cardview"
         app:cardCornerRadius="14dp"
         android:layout_width="match_parent"

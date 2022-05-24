@@ -21,6 +21,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
 
     buildFeatures {
@@ -38,10 +41,22 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = '11'
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += "-opt-in=org.mylibrary.OptInAnnotation"
+            freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+            jvmTarget = '11'
+
+        }
     }
+
     namespace 'com.example.pokdex'
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
 }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -52,6 +67,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.0-alpha01'
 
     implementation 'com.synnapps:carouselview:0.1.5'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
     def paging_version = "3.0.1"
 
