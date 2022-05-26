@@ -13,6 +13,9 @@
         <argument
             android:name="id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_displayPokemonFragment_self"
+            app:destination="@id/displayPokemonFragment" />
 
     </fragment>
     <fragment

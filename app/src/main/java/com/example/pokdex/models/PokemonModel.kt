@@ -1,5 +1,6 @@
 package com.example.pokdex.models
 
+import androidx.compose.ui.graphics.Color
 import com.google.gson.annotations.SerializedName
 
 data class PokemonModel(
@@ -46,7 +47,8 @@ data class PokemonModel(
 
 
 
-data class PokemonOther(val dream_world : PokemonDreamWorld,
+data class PokemonOther(
+    val dream_world : PokemonDreamWorld,
                         @SerializedName("official-artwork")
                         val official_artwork: PokemonOfficialArtwork)
 
@@ -74,6 +76,7 @@ val front_shiny_female : String, val other: PokemonOther)
         list.add(front_default)
         list.add(front_female)
         list.add(front_shiny_female)
+        list.add(other.dream_world.front_default)
 
         //Iterate through the list and remove all null elements
         var returnList : MutableList<String> = mutableListOf()
@@ -94,6 +97,32 @@ Pokemon have upwards to two types (dual type Pokemon)
  */
 data class PokemonTypeHolder(val type : PokemonType){}
 data class PokemonType(val name : String, val url : String)
+{
+    fun getColour() : Color
+    {
+        var color : Color? = null
+        when(name)
+        {
+                 "normal" -> color =  Color(0xFFA8A77A)
+                 "fire" -> color = Color(0xFFEE8130)
+                 "water" -> color = Color(0xFF6390F0)
+                 "electric" -> color = Color(0xFFF7D02C)
+                 "grass" -> color = Color(0xFF7AC74C)
+                 "ice" -> color = Color(0xFF96D9D6)
+                 "fighting" -> color = Color(0xFFC22E28)
+                 "poison" -> color = Color(0xFFA33EA1)
+                 "ground" -> color =Color(0xFFE2BF65)
+                 "flying" -> color =Color(0xFFA98FF3)
+                 "psychic" -> color = Color(0xFFF95587)
+                 "bug" -> color =Color(0xFFA6B91A)
+                 "rock" -> color = Color(0xFFB6A136)
+                 "ghost" -> color = Color(0xFF735797)
+                 "dragon" -> color =Color(0xFF6F35FC)
+                 "unknown" -> color = Color(0xFFD685AD)
+        }
+        return color!!
+    }
+}
 
 data class PokemonAbilityHolder(val ability : PokemonAbility = PokemonAbility(""))
 data class PokemonAbility(val name : String)
