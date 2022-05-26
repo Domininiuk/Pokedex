@@ -26,6 +26,8 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.fragment.findNavController
 import coil.compose.rememberAsyncImagePainter
@@ -58,7 +60,7 @@ class DisplayAllPokemonFragment : Fragment() {
             displayAllPokemonVM = DisplayAllPokemonViewModel()
             displayAllPokemonVM.pokemonList.observe(viewLifecycleOwner) { newList ->
                 //   pokemonList = newList
-                setContent { PokemonList(pokemonList = newList, findNavController()) }
+                setContent { PokemonList(pokemonList = newList) }
             }
         }
 
@@ -73,9 +75,10 @@ class DisplayAllPokemonFragment : Fragment() {
     }
 }
 @Composable
-fun PokemonList(pokemonList : PokemonListModel, navController: NavController)
+fun PokemonList(pokemonList : PokemonListModel)
 {
     remember{pokemonList}
+    val navController = rememberNavController()
     PokedexTheme() {
         Scaffold{
             Pokemon(pokemonList, navController, it)
@@ -88,6 +91,9 @@ fun PokemonList(pokemonList : PokemonListModel, navController: NavController)
 @Composable
 fun Pokemon(pokemonList: PokemonListModel, navController: NavController, padding : PaddingValues)
 {
+
+
+
  LazyVerticalGrid( columns = GridCells.Fixed(2) , contentPadding = PaddingValues(horizontal = 16.dp,
  vertical = 8.dp)) {
 
