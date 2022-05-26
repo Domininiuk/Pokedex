@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -127,6 +128,11 @@ fun DisplayPokemonScreen(pokemon: PokemonModel, evolution: List<EvolutionSpecies
 
     PokedexTheme() {
         val scrollState = rememberScrollState()
+        TopAppBar(
+            title = { Text(text = "AppBar") },
+            navigationIcon = {
+            }
+        )
         Column(modifier = Modifier.fillMaxSize())
         {
             BoxWithConstraints{
@@ -156,7 +162,7 @@ fun PokemonHeader(
     pokemon: PokemonModel, containerHeight : Dp)
 {
 
-    // This will be changed to a carouselview
+    // Im pretty sure is a major performance sink because all the images are loaded at once
 
     var urls = pokemon.sprites!!.getListOfUrls()
     var state = rememberPagerState()
@@ -275,6 +281,7 @@ fun PokemonProperty(label: String, value: String)
 @Composable
 fun PokemonAbilityList(abilities: List<PokemonAbilityModel>)
 {
+
     Column(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start =16.dp, end = 16.dp)) 
     {
         Divider(modifier = Modifier.padding(bottom = 4.dp))
@@ -282,7 +289,10 @@ fun PokemonAbilityList(abilities: List<PokemonAbilityModel>)
             style = MaterialTheme.typography.caption)
 
         
-        Row(Modifier.wrapContentWidth()){
+        Row(
+            Modifier
+                .wrapContentSize()
+                .horizontalScroll(rememberScrollState())){
             abilities.forEach(){
                     PokemonAbility(it, Modifier.padding(end = 10.dp))
             }
@@ -295,25 +305,47 @@ fun PokemonAbilityList(abilities: List<PokemonAbilityModel>)
 @Composable
 fun PokemonAbility(pokemonAbility: PokemonAbilityModel, modifier: Modifier = Modifier)
 {
+    var isExpanded by remember{ mutableStateOf(false)}
     val  context = LocalContext.current
     Card(
-        elevation = 2.dp,
+        elevation = 50.dp,
         backgroundColor = graySurface,
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier.clickable { Toast.makeText(context, pokemonAbility.effect_entries[1].effect, Toast.LENGTH_LONG).show() },
+        modifier = modifier
+            .widthIn(0.dp, 300.dp)
+            .clickable { //Toast.makeText(context, pokemonAbility.effect_entries[1].effect, Toast.LENGTH_LONG).show()
+                isExpanded = !isExpanded
+            },
     ) {
-        Text(
-            modifier = Modifier
-                .padding(vertical = 2.dp)
-                .padding(horizontal = 8.dp),
-            text = Utility.firstToUpper(pokemonAbility.name),
-            style = MaterialTheme.typography.body1,
-            overflow = TextOverflow.Visible
-
-        )
+        Column() {
 
 
-    }
+            Text(
+                modifier = Modifier
+                    .padding(vertical = 2.dp)
+                    .padding(horizontal = 8.dp),
+                text = Utility.firstToUpper(pokemonAbility.name),
+                style = MaterialTheme.typography.body1,
+                overflow = TextOverflow.Visible
+
+            )
+            if (isExpanded) {
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = 2.dp)
+                        .padding(horizontal = 8.dp),
+                    text = pokemonAbility.getEnglishVersion().effect,
+                    style = MaterialTheme.typography.body1,
+                    overflow = TextOverflow.Visible
+
+                )
+            }
+        }
+        }
+
+
+
+
 }
 
 

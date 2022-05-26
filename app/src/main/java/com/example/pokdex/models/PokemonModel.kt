@@ -11,25 +11,11 @@ data class PokemonModel(
                            = mutableListOf(), val types : MutableList<PokemonTypeHolder> = mutableListOf())
 {
 
-    /*
-    Fetched height is in decimeters
-    Fetched weight is in hectograms (tenth of a kilogram)
-     */
-      constructor(name: String) : this( -1, -1, name, 0.0f, null, 0, mutableListOf(
-        PokemonAbilityHolder()), mutableListOf(PokemonTypeHolder(PokemonType("", ""))))
-
 
     constructor() : this( -1, -1, "", 0.0f, null, 0,
         mutableListOf(PokemonAbilityHolder()),  mutableListOf(PokemonTypeHolder(PokemonType("", "")))
     )
 
-    fun getOfficialArtworkFrontDefault() : String
-    {
-        if (sprites != null) {
-            return sprites.getOfficialArtworkFrontDefault()
-        }
-        return ""
-    }
     //Return the height in centimeters
     fun getHeightInCentimeters() : Int
     {
@@ -114,7 +100,7 @@ data class PokemonType(val name : String, val url : String)
 {
     fun getColour() : Color
     {
-        var color : Color? = null
+        var color: Color
         when(name)
         {
                  "normal" -> color =  Color(0xFFA8A77A)
@@ -133,8 +119,9 @@ data class PokemonType(val name : String, val url : String)
                  "ghost" -> color = Color(0xFF735797)
                  "dragon" -> color =Color(0xFF6F35FC)
                  "unknown" -> color = Color(0xFFD685AD)
+            else -> color = Color(0xFFD685AD)
         }
-        return color!!
+        return color
     }
 }
 
@@ -143,6 +130,9 @@ data class PokemonAbilityName(val name : String, val url: String)
 {
     fun getIdFromUrl() : Int
     {
-        return url.subSequence(35, url.length - 1).toString().filter { c: Char -> c != '/' }.toInt()
+        var d = url.subSequence(34, url.length - 1)
+        var c = d.toString()
+        var e = c.filter { c: Char -> c != '/' }
+        return url.subSequence(34, url.length - 1).toString().filter { c: Char -> c != '/' }.toInt()
     }
 }

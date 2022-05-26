@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.fragment.findNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.pokdex.Utility
@@ -75,7 +76,6 @@ class DisplayAllPokemonFragment : Fragment() {
 fun PokemonList(pokemonList : PokemonListModel, navController: NavController)
 {
     remember{pokemonList}
-
     PokedexTheme() {
         Scaffold{
             Pokemon(pokemonList, navController, it)
@@ -107,9 +107,14 @@ fun PokemonListItem(pokemon : PokemonModel, navController: NavController){
     elevation = 2.dp,
     shape = RoundedCornerShape(corner = CornerSize(16.dp)))
     {
-        Row(modifier = Modifier.clickable {
-            navController.navigate(DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment2(pokemon.id))
-        }
+        Row(modifier = Modifier
+            .clickable {
+                navController.navigate(
+                    DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment2(
+                        pokemon.id
+                    )
+                )
+            }
             .wrapContentWidth(),
         ) {
             Column(
