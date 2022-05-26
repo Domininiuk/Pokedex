@@ -1,13 +1,8 @@
 package com.example.pokdex.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import com.example.pokdex.models.EvolutionModel
-import com.example.pokdex.models.PokemonModel
-import com.example.pokdex.models.PokemonSpeciesModel
+import androidx.lifecycle.*
 import com.example.pokdex.PokemonRepository
+import com.example.pokdex.models.*
 import kotlinx.coroutines.Dispatchers
 
 class DisplayPokemonViewModel : ViewModel() {
@@ -15,7 +10,10 @@ class DisplayPokemonViewModel : ViewModel() {
    var pokemon : LiveData<PokemonModel> = MutableLiveData<PokemonModel>(PokemonModel())
    lateinit var evolutionChain : LiveData<EvolutionModel>
    lateinit var pokemonSpecies: LiveData<PokemonSpeciesModel>
+   lateinit var pokemonAbility: LiveData<PokemonAbilityModel>
+   lateinit var pokemonAbilities: LiveData<MutableList<PokemonAbilityModel>>
 
+   // Dow
    fun getPokemon(id : Int) : LiveData<PokemonModel> {
       pokemon = liveData(Dispatchers.IO)
       {
@@ -25,6 +23,19 @@ class DisplayPokemonViewModel : ViewModel() {
       }
       return pokemon
    }
+
+
+   fun getPokemonAbility(id :Int) : LiveData<PokemonAbilityModel>
+   {
+      pokemonAbility = liveData(Dispatchers.IO)
+      {
+         val retrievedAbility = PokemonRepository.getPokemonAbility(id)
+         emit(retrievedAbility)
+      }
+
+      return pokemonAbility
+   }
+
 
    fun getPokemon(name: String) : LiveData<PokemonModel>
    {

@@ -13,6 +13,7 @@ object PokemonRepository
         return Random.nextInt(0, pokemonCount.value!!.minus(1))
     }
 
+ suspend fun getPokemonAbility(id : Int) = request.getPokemonAbility(id)
     suspend fun getPokemonName(name : String ) = request.getPokemonName(name)
     suspend fun getPokemonId(id : Int) = request.getPokemonId(id)
     suspend fun getPokemonList() = request.getPokemonList()

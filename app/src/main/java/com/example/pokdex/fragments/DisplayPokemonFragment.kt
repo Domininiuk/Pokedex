@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -54,7 +56,7 @@ class DisplayPokemonFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         initializeBinding()
-        displayPokemonVM = DisplayPokemonViewModel()
+        initializeViewModel()
 
         // initializeMemberVariables()
         //Display the pokemon chosen on the previous fragment
@@ -70,45 +72,45 @@ class DisplayPokemonFragment : Fragment() {
                     .observe(viewLifecycleOwner) { pokemonSpecies ->
                         displayPokemonVM.getEvolutionChain(pokemonSpecies.evolution_chain.getChainId())
                             .observe(viewLifecycleOwner) { evolutionChain ->
+                                 var abilities = mutableListOf<PokemonAbilityModel>()
+                                 var ids = newPokemon.getListOfAbilityIds()
+                                for(id in ids)
+                                {
+                                    displayPokemonVM.getPokemonAbility(id).observe(viewLifecycleOwner)
+                                    {
+                                        abilities.add(it)
+                                        if(abilities.size == ids.size)
+                                        {
 
-                                setContent {
-                                    DisplayPokemonScreen(
-                                        pokemon = newPokemon,
-                                        evolutionChain.getListOfPokemonNames(),
-                                        navController = findNavController()
-                                    )
+                                            setContent {
+
+                                                DisplayPokemonScreen(
+                                                    pokemon = newPokemon,
+                                                    evolutionChain.getListOfPokemonNames(),
+                                                    navController = findNavController(),
+                                                    abilities.sortedBy { ability -> ability.name }
+
+                                                )
+                                            }
+                                        }
+                                    }
                                 }
-                            }
+
+                                }
+
+
                     }
 
 
             }
         }
-/*
-        binding.composeView.apply { setViewCompositionStrategy(
-            ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner))
-        displayPokemonVM = DisplayPokemonViewModel()
-
-
-            displayPokemonVM.getPokemon(id).observe(viewLifecycleOwner) { pokemon ->
-                //   pokemonList = newList
-                Log.d("DisplayPokemon", "SetContent")
-                setContent { DisplayPokemonScreen(pokemon) }
-            }
-
-
-
-        }
-
- */
-
 
 
         return binding.root
     }
 
     // Initialize as many variables as possible
-    private fun initializeMemberVariables() {
+    private fun initializeViewModel() {
         displayPokemonVM = DisplayPokemonViewModel()
     }
 
@@ -119,7 +121,8 @@ class DisplayPokemonFragment : Fragment() {
 
 }
 @Composable
-fun DisplayPokemonScreen(pokemon: PokemonModel, evolution: List<EvolutionSpeciesModel>, navController: NavController)
+fun DisplayPokemonScreen(pokemon: PokemonModel, evolution: List<EvolutionSpeciesModel>, navController: NavController,
+                         abilities: List<PokemonAbilityModel>)
 {
 
     PokedexTheme() {
@@ -132,7 +135,7 @@ fun DisplayPokemonScreen(pokemon: PokemonModel, evolution: List<EvolutionSpecies
                         .fillMaxSize()
                         .verticalScroll(scrollState)) {
                         PokemonHeader(pokemon = pokemon, containerHeight = this@BoxWithConstraints.maxHeight)
-                        PokemonContent(pokemon = pokemon, evolution = evolution, navController)
+                        PokemonContent(pokemon = pokemon, evolution = evolution, navController,abilities)
 
                     }
                 }
@@ -154,7 +157,6 @@ fun PokemonHeader(
 {
 
     // This will be changed to a carouselview
-    val url : String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" +pokemon.id +".png"
 
     var urls = pokemon.sprites!!.getListOfUrls()
     var state = rememberPagerState()
@@ -171,21 +173,15 @@ fun PokemonHeader(
                 shape = RoundedCornerShape(corner = CornerSize(16.dp))
             )
             {
+
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(url[page])
+                        .data(urls[page])
                         .decoderFactory(SvgDecoder.Factory())
                         .build(),
                     contentDescription = null
                 )
-                /*
-                Image(
-                    painter = rememberAsyncImagePainter(urls[page]),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop
-                )
 
-                 */
             }
 
 
@@ -198,30 +194,12 @@ fun PokemonHeader(
         )
     }
 
-    /*
-    Card(modifier = Modifier
-        .padding(horizontal = 8.dp, vertical = 8.dp)
-        .heightIn(max = containerHeight / 2)
-        .fillMaxWidth()
-        ,
-        elevation = 2.dp,
-        shape = RoundedCornerShape(corner = CornerSize(16.dp))
-    )
-    {
-        Image(
-            painter = rememberAsyncImagePainter(url),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-    }
 
-
-     */
 
 
 }
 @Composable
-fun PokemonContent(pokemon: PokemonModel, evolution: List<EvolutionSpeciesModel>, navController: NavController)
+fun PokemonContent(pokemon: PokemonModel, evolution: List<EvolutionSpeciesModel>, navController: NavController, abilities: List<PokemonAbilityModel>)
 {
     Title(pokemon = pokemon)
 
@@ -229,7 +207,7 @@ fun PokemonContent(pokemon: PokemonModel, evolution: List<EvolutionSpeciesModel>
     PokemonProperty(label = "Base experience gained:", value = pokemon.base_experience.toString() + " exp")
     PokemonProperty(label = "Height", value = pokemon.getHeightInCentimeters().toString() + " cm")
     PokemonProperty(label = "Weight", value =pokemon.getWeightInKilograms().toString() +" kg")
-    PokemonAbilityList(abilities = pokemon.abilities)
+    PokemonAbilityList(abilities = abilities)
     PokemonEvolutionChain(evolution, pokemon.id, navController)
 
 }
@@ -295,7 +273,7 @@ fun PokemonProperty(label: String, value: String)
     }
 }
 @Composable
-fun PokemonAbilityList(abilities: List<PokemonAbilityHolder>)
+fun PokemonAbilityList(abilities: List<PokemonAbilityModel>)
 {
     Column(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start =16.dp, end = 16.dp)) 
     {
@@ -306,7 +284,7 @@ fun PokemonAbilityList(abilities: List<PokemonAbilityHolder>)
         
         Row(Modifier.wrapContentWidth()){
             abilities.forEach(){
-                    PokemonAbility(it.ability, Modifier.padding(end = 10.dp))
+                    PokemonAbility(it, Modifier.padding(end = 10.dp))
             }
             
         }
@@ -315,13 +293,14 @@ fun PokemonAbilityList(abilities: List<PokemonAbilityHolder>)
 }
 
 @Composable
-fun PokemonAbility(pokemonAbility: PokemonAbility, modifier: Modifier = Modifier)
+fun PokemonAbility(pokemonAbility: PokemonAbilityModel, modifier: Modifier = Modifier)
 {
+    val  context = LocalContext.current
     Card(
         elevation = 2.dp,
         backgroundColor = graySurface,
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier
+        modifier = modifier.clickable { Toast.makeText(context, pokemonAbility.effect_entries[1].effect, Toast.LENGTH_LONG).show() },
     ) {
         Text(
             modifier = Modifier
@@ -332,6 +311,8 @@ fun PokemonAbility(pokemonAbility: PokemonAbility, modifier: Modifier = Modifier
             overflow = TextOverflow.Visible
 
         )
+
+
     }
 }
 

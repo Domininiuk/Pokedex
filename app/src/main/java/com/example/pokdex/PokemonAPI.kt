@@ -25,4 +25,7 @@ interface  PokemonAPI
    //Get pokemon species with the given id
    @GET("pokemon-species/{id}")
    suspend fun getPokemonSpecies(@Path("id") id : Int ) : PokemonSpeciesModel
+
+   @GET("ability/{id}")
+   suspend fun getPokemonAbility(@Path("id") id : Int) : PokemonAbilityModel
 }

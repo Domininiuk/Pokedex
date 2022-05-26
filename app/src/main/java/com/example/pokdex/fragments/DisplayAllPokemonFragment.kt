@@ -22,15 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
 import com.example.pokdex.Utility
 import com.example.pokdex.compose.PokedexTheme
 import com.example.pokdex.databinding.FragmentDisplayAllPokemonBinding
@@ -134,10 +131,9 @@ fun PokemonImage(pokemonModel: PokemonModel)
 {
     var url : String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" +pokemonModel.id +".png"
 
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
-            .build(),
-        contentDescription = null
+    Image(
+        painter = rememberAsyncImagePainter(url),
+        contentDescription = null,
+        modifier = Modifier.size(128.dp)
     )
 }

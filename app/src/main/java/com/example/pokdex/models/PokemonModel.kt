@@ -40,6 +40,15 @@ data class PokemonModel(
     {
         return weight / 10.0f
     }
+
+    internal fun getListOfAbilityIds(): List<Int>
+    {
+        var list = mutableListOf<Int>()
+        abilities.forEach {
+            list.add(it.ability.getIdFromUrl())
+        }
+        return list;
+    }
 }
 
 
@@ -49,8 +58,10 @@ data class PokemonModel(
 
 data class PokemonOther(
     val dream_world : PokemonDreamWorld,
+    val home : PokemonHome,
                         @SerializedName("official-artwork")
-                        val official_artwork: PokemonOfficialArtwork)
+                        val official_artwork: PokemonOfficialArtwork,)
+data class PokemonHome(val front_default: String)
 
 data class PokemonDreamWorld(val front_default: String, val front_female: String)
 data class PokemonOfficialArtwork(val front_default : String)
@@ -63,12 +74,17 @@ val front_shiny_female : String, val other: PokemonOther)
     {
         return other.official_artwork.front_default
     }
+
+
     internal fun getListOfUrls() : List<String>
     {
         var list : MutableList<String> = mutableListOf()
 
         //Add all the elements to the list
+
         list.add(other.official_artwork.front_default)
+        list.add(other.dream_world.front_default)
+        list.add(other.home.front_default)
         list.add(back_default)
         list.add(back_female)
         list.add(back_shiny)
@@ -76,8 +92,6 @@ val front_shiny_female : String, val other: PokemonOther)
         list.add(front_default)
         list.add(front_female)
         list.add(front_shiny_female)
-        list.add(other.dream_world.front_default)
-
         //Iterate through the list and remove all null elements
         var returnList : MutableList<String> = mutableListOf()
         for(url in list)
@@ -124,5 +138,11 @@ data class PokemonType(val name : String, val url : String)
     }
 }
 
-data class PokemonAbilityHolder(val ability : PokemonAbility = PokemonAbility(""))
-data class PokemonAbility(val name : String)
+data class PokemonAbilityHolder(val ability : PokemonAbilityName = PokemonAbilityName("",""))
+data class PokemonAbilityName(val name : String, val url: String)
+{
+    fun getIdFromUrl() : Int
+    {
+        return url.subSequence(35, url.length - 1).toString().filter { c: Char -> c != '/' }.toInt()
+    }
+}

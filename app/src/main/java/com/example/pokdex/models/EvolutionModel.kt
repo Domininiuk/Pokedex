@@ -34,6 +34,8 @@ data class EvolutionSpeciesModel(val name : String , val id : Int, val url : Str
 {
    fun getIdFromUrl() : Int
    {
-       return url.subSequence(41, url.length - 1).toString().filter { c: Char -> c != '/' }.toString().toInt()
+    //   return url.subSequence(41, url.length - 1).toString().filter { c: Char -> c != '/' }.toString().toInt()
+       return url.subSequence(41, url.length - 1).toString().filter { c: Char -> c != '/' }.toInt()
+
    }
 }
