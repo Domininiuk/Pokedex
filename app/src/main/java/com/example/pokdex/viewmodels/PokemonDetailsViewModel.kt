@@ -1,11 +1,12 @@
 package com.example.pokdex.viewmodels
 
 import androidx.lifecycle.*
-import com.example.pokdex.PokemonRepository
+import com.example.pokdex.data.retrofit.PokemonRepository
 import com.example.pokdex.models.*
 import kotlinx.coroutines.Dispatchers
 
-class DisplayPokemonViewModel : ViewModel() {
+
+class PokemonDetailsViewModel : ViewModel() {
 
    var pokemon : LiveData<PokemonModel> = MutableLiveData<PokemonModel>(PokemonModel())
    lateinit var evolutionChain : LiveData<EvolutionModel>

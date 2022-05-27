@@ -3,6 +3,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -46,7 +48,7 @@ android {
         kotlinOptions {
             freeCompilerArgs += "-opt-in=org.mylibrary.OptInAnnotation"
             freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-            jvmTarget = '11'
+            jvmTarget = JavaVersion.VERSION_11
 
         }
     }
@@ -61,6 +63,13 @@ android {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 dependencies {
+
+    def hilt_version = "2.38.1"
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+
     def pager_version = "0.24.9-beta"
     implementation "com.google.accompanist:accompanist-pager:$pager_version"
     implementation "com.google.accompanist:accompanist-pager-indicators:$pager_version"
@@ -69,12 +78,12 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.1.0"
     )
     implementation 'com.google.android.material:material:1.6.0-alpha01'
-
+    implementation 'androidx.compose.runtime:runtime-livedata:1.2.0-beta02'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
-
     def paging_version = "3.0.1"
 
     implementation "androidx.paging:paging-runtime:$paging_version"

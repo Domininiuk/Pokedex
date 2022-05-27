@@ -1,4 +1,4 @@
-package com.example.pokdex
+package com.example.pokdex.data.retrofit
 
 
 import com.example.pokdex.models.*

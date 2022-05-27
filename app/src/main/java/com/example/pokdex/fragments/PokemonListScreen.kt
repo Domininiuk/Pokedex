@@ -19,29 +19,27 @@ import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.fragment.findNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.pokdex.Utility
 import com.example.pokdex.compose.PokedexTheme
 import com.example.pokdex.databinding.FragmentDisplayAllPokemonBinding
 import com.example.pokdex.models.PokemonListModel
 import com.example.pokdex.models.PokemonModel
-import com.example.pokdex.viewmodels.DisplayAllPokemonViewModel
+import com.example.pokdex.viewmodels.PokemonListViewModel
 
 
 class DisplayAllPokemonFragment : Fragment() {
-    lateinit var displayAllPokemonVM: DisplayAllPokemonViewModel
-    lateinit var pokemonList: PokemonListModel
+    lateinit var displayAllPokemonVM: PokemonListViewModel
 
     private var _binding: FragmentDisplayAllPokemonBinding? = null
     private val binding get() = _binding!!
@@ -57,10 +55,10 @@ class DisplayAllPokemonFragment : Fragment() {
                 ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
             )
 
-            displayAllPokemonVM = DisplayAllPokemonViewModel()
+            displayAllPokemonVM = PokemonListViewModel()
             displayAllPokemonVM.pokemonList.observe(viewLifecycleOwner) { newList ->
                 //   pokemonList = newList
-                setContent { PokemonList(pokemonList = newList) }
+               // setContent { PokemonListScreen(displayAllPokemonVM) }
             }
         }
 
@@ -75,21 +73,27 @@ class DisplayAllPokemonFragment : Fragment() {
     }
 }
 @Composable
-fun PokemonList(pokemonList : PokemonListModel)
+fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigateToPokemon: (id: Int)-> Unit)
 {
-    remember{pokemonList}
-    val navController = rememberNavController()
+    val viewModelState = remember{ mutableStateOf(viewModel)}
+
+    var pokemonList = viewModelState.component1().pokemonList.observeAsState()
+    remember{ mutableStateOf(pokemonList)}
     PokedexTheme() {
-        Scaffold{
-            Pokemon(pokemonList, navController, it)
-        }
+        pokemonList.value?.let {  Scaffold{
+            PokemonList(pokemonList.value!!, it, navigateToPokemon)
+        } }
 
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Pokemon(pokemonList: PokemonListModel, navController: NavController, padding : PaddingValues)
+fun PokemonList(
+    pokemonList: PokemonListModel,
+    padding: PaddingValues,
+    navigateToPokemon: (id: Int) -> Unit
+)
 {
 
 
@@ -97,15 +101,15 @@ fun Pokemon(pokemonList: PokemonListModel, navController: NavController, padding
  LazyVerticalGrid( columns = GridCells.Fixed(2) , contentPadding = PaddingValues(horizontal = 16.dp,
  vertical = 8.dp)) {
 
-     items(items = pokemonList.results,
-     itemContent = {
-         PokemonListItem(pokemon = it, navController)
-     })
+     items(items = pokemonList.results
+     ) {
+         PokemonListItem(pokemon = it, navigateToPokemon)
+     }
  }
 }
 
 @Composable
-fun PokemonListItem(pokemon : PokemonModel, navController: NavController){
+fun PokemonListItem(pokemon: PokemonModel, navigateToPokemon: (id: Int) -> Unit){
     Card(modifier = Modifier
         .padding(horizontal = 8.dp, vertical = 8.dp)
         .wrapContentWidth()
@@ -115,11 +119,7 @@ fun PokemonListItem(pokemon : PokemonModel, navController: NavController){
     {
         Row(modifier = Modifier
             .clickable {
-                navController.navigate(
-                    DisplayAllPokemonFragmentDirections.actionDisplayAllPokemonFragmentToDisplayPokemonFragment2(
-                        pokemon.id
-                    )
-                )
+                    navigateToPokemon(pokemon.id)
             }
             .wrapContentWidth(),
         ) {
