@@ -46,7 +46,7 @@ fun PokemonDetailsScreen(
    var pokemon1=  viewModelState.component1().getPokemon(pokemonId).observeAsState()
     var pokemonSpecies = viewModel.getPokemonSpecies(pokemonId).observeAsState()
     var evolutionChain = pokemonSpecies.value?.let {
-        viewModel.getEvolutionChain(it.id).observeAsState()
+        viewModel.getEvolutionChain(it.evolution_chain.getChainId()).observeAsState()
     }
 
 
@@ -73,10 +73,15 @@ fun PokemonDetailsScreen(
                         pokemon1.value?.let { PokemonHeader(pokemon = it, containerHeight = this@BoxWithConstraints.maxHeight) }
 
 
-                            if(pokemon1.value != null && evolutionChain!!.value != null) {
-                                PokemonContent(pokemon = pokemon1.value!!, evolutionChain.value!!.getListOfPokemonNames())
+                             // This crashes soemtimes
+                        evolutionChain?.let {
+                            if (pokemon1.value != null && evolutionChain.value != null) {
+                                PokemonContent(
+                                    pokemon = pokemon1.value!!,
+                                    evolutionChain.value!!.getListOfPokemonNames()
+                                )
                             }
-
+                        }
 
                     }
                 }
@@ -108,7 +113,7 @@ fun PokemonHeader(
                 modifier = Modifier
                     .padding(horizontal = 8.dp, vertical = 8.dp)
                     .fillMaxWidth()
-                    .heightIn(max = containerHeight / 2)
+                    .heightIn(max = containerHeight / 2, min = containerHeight/ 2)
                 ,
                 elevation = 2.dp,
                 shape = RoundedCornerShape(corner = CornerSize(16.dp))
