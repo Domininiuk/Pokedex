@@ -33,7 +33,7 @@ data class PokemonModel(
         abilities.forEach {
             list.add(it.ability.getIdFromUrl())
         }
-        return list;
+        return list
     }
 }
 
@@ -95,7 +95,7 @@ val front_shiny_female : String, val other: PokemonOther)
 /*
 Pokemon have upwards to two types (dual type Pokemon)
  */
-data class PokemonTypeHolder(val type : PokemonType){}
+data class PokemonTypeHolder(val type : PokemonType)
 data class PokemonType(val name : String, val url : String)
 {
     fun getColour() : Color

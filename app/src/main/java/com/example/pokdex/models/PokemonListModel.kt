@@ -6,7 +6,7 @@ data class PokemonListModel(var results : MutableList<PokemonModel>)
 
     fun attachIdsToPokemons()
     {
-        var id = 1;
+        var id = 1
 
         for (pokemon in results)
         {

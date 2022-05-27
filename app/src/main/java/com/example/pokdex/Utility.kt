@@ -22,7 +22,7 @@ object Utility
 
     fun attachIdsToPokemons(list : MutableList<PokemonModel>)
     {
-        var id = 0;
+        var id = 0
 
         for (pokemon in list)
         {

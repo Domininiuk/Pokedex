@@ -8,7 +8,7 @@ data class PokemonAbilityModel(val effect_entries: List<PokemonAbilityEffect>,va
         {
             if(entry.language.name == "en")
             {
-                return entry;
+                return entry
             }
         }
         return effect_entries[0]

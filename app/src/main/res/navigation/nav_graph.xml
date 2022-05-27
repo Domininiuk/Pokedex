@@ -8,7 +8,7 @@
     <fragment
         tools:layout="@layout/fragment_display_pokemon"
         android:id="@+id/displayPokemonFragment"
-        android:name="com.example.pokdex.fragments.DisplayPokemonFragment"
+        android:name="com.example.pokdex.composables.DisplayPokemonFragment"
         android:label="pOKEMON" >
         <argument
             android:name="id"
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/displayAllPokemonFragment"
-        android:name="com.example.pokdex.fragments.DisplayAllPokemonFragment"
+        android:name="com.example.pokdex.composables.DisplayAllPokemonFragment"
         android:label="All Pokemon"
         tools:layout="@layout/fragment_display_all_pokemon" >
 

@@ -5,16 +5,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.pokdex.compose.PokedexTheme
-import com.example.pokdex.fragments.PokemonDetailsScreen
-import com.example.pokdex.fragments.PokemonListScreen
-import com.example.pokdex.viewmodels.PokemonDetailsViewModel
-import com.example.pokdex.viewmodels.PokemonListViewModel
+import com.example.pokdex.composables.PokemonDetailsScreen
+import com.example.pokdex.composables.PokemonListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -34,15 +30,13 @@ class MainActivity : AppCompatActivity()
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var pokemonListViewModel = PokemonListViewModel()
-        var pokemonDetailsViewModel = PokemonDetailsViewModel()
-        pokemonListViewModel.pokemonList.observe(this){
+
             setContent {
                 PokedexTheme {
                     MainScreen()
                 }
             }
-        }
+
 
     }
 }
@@ -69,7 +63,9 @@ fun MainScreen()
             {
 
             }
-            PokemonDetailsScreen(pokemonId = pokemonId!!.toInt())
+            PokemonDetailsScreen(pokemonId = pokemonId!!.toInt(), navigateToPokemon = {id ->
+                navController.navigate("PokemonDetails/$id")
+            })
         }
 
     }

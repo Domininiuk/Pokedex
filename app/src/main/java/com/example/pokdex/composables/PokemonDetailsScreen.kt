@@ -1,4 +1,4 @@
-package com.example.pokdex.fragments
+package com.example.pokdex.composables
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -37,7 +37,7 @@ fun PokemonDetailsScreen(
    // evolution: List<EvolutionSpeciesModel>,
   //  navController: NavController,
   //  abilities: List<PokemonAbilityModel>,
-    viewModel: PokemonDetailsViewModel = hiltViewModel(), pokemonId: Int
+    viewModel: PokemonDetailsViewModel = hiltViewModel(), pokemonId: Int, navigateToPokemon: (id: Int) -> Unit
 )
 {
     var viewModelState = remember {
@@ -56,13 +56,9 @@ fun PokemonDetailsScreen(
 
 
 
-                PokedexTheme() {
+                PokedexTheme {
         val scrollState = rememberScrollState()
-        TopAppBar(
-            title = { Text(text = "AppBar") },
-            navigationIcon = {
-            }
-        )
+
         Column(modifier = Modifier.fillMaxSize())
         {
             BoxWithConstraints{
@@ -78,7 +74,8 @@ fun PokemonDetailsScreen(
                             if (pokemon1.value != null && evolutionChain.value != null) {
                                 PokemonContent(
                                     pokemon = pokemon1.value!!,
-                                    evolutionChain.value!!.getListOfPokemonNames()
+                                    evolutionChain.value!!.getListOfPokemonNames(),
+                                    navigateToPokemon
                                 )
                             }
                         }
@@ -145,7 +142,7 @@ fun PokemonHeader(
 
 }
 @Composable
-fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel>,
+fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel>, navigateToPokemon: (id: Int) -> Unit
                   // abilities: List<PokemonAbilityModel>
 )
 {
@@ -156,7 +153,7 @@ fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel
     PokemonProperty(label = "Height", value = pokemon.getHeightInCentimeters().toString() + " cm")
     PokemonProperty(label = "Weight", value =pokemon.getWeightInKilograms().toString() +" kg")
     //PokemonAbilityList(abilities = abilities)
-    PokemonEvolutionChain(evolutions, pokemon.id)
+    PokemonEvolutionChain(evolutions, pokemon.id, navigateToPokemon)
 
 }
 @Composable
@@ -178,7 +175,7 @@ fun PokemonTypes(pokemonTypes: List<PokemonTypeHolder>)
         Text(text = "Types:", modifier = Modifier.height(24.dp),
             style = MaterialTheme.typography.caption)
 
-        Row() {
+        Row {
             PokemonType(type = Utility.firstToUpper(pokemonTypes[0].type.name), modifier = Modifier.padding(bottom = 4.dp, end = 10.dp), pokemonTypes[0].type.getColour())
             if(pokemonTypes.size == 2)
             {
@@ -235,7 +232,7 @@ fun PokemonAbilityList(abilities: List<PokemonAbilityModel>)
             Modifier
                 .wrapContentSize()
                 .horizontalScroll(rememberScrollState())){
-            abilities.forEach(){
+            abilities.forEach {
                     PokemonAbility(it, Modifier.padding(end = 10.dp))
             }
             
@@ -259,7 +256,7 @@ fun PokemonAbility(pokemonAbility: PokemonAbilityModel, modifier: Modifier = Mod
                 isExpanded = !isExpanded
             },
     ) {
-        Column() {
+        Column {
 
 
             Text(
@@ -292,7 +289,7 @@ fun PokemonAbility(pokemonAbility: PokemonAbilityModel, modifier: Modifier = Mod
 
 
 @Composable
-fun PokemonEvolutionChain(evolution: List<EvolutionSpeciesModel>, pokemonId :Int)
+fun PokemonEvolutionChain(evolution: List<EvolutionSpeciesModel>, pokemonId :Int, navigateToPokemon: (id: Int) -> Unit)
 {
 
     Column(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start =16.dp, end = 16.dp)) {
@@ -303,8 +300,8 @@ fun PokemonEvolutionChain(evolution: List<EvolutionSpeciesModel>, pokemonId :Int
             Modifier
                 .wrapContentSize()
                 .horizontalScroll(rememberScrollState())){
-            evolution.forEach(){
-              PokemonEvolution(evolution = it, pokemonId)
+            evolution.forEach {
+              PokemonEvolution(evolution = it, navigateToPokemon)
             }
 
     }
@@ -312,29 +309,24 @@ fun PokemonEvolutionChain(evolution: List<EvolutionSpeciesModel>, pokemonId :Int
 }
 
 @Composable
-fun PokemonEvolution(evolution: EvolutionSpeciesModel, pokemonId: Int)
+fun PokemonEvolution(
+    evolution: EvolutionSpeciesModel,
+    navigateToPokemon: (id: Int) -> Unit
+)
 {
     Card(modifier = Modifier
         .padding(horizontal = 8.dp, vertical = 8.dp)
         .wrapContentWidth()
         .clickable {
 
-            /*
-            navController.navigate(
-                DisplayPokemonFragmentDirections.actionDisplayPokemonFragmentSelf(
-                    evolution.getIdFromUrl()
-                )
-            )
-
-
-             */
+            navigateToPokemon(evolution.getIdFromUrl())
 
         },
         elevation = 2.dp,
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
     )
     {
-    Column(){
+    Column {
         val url : String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+
                 evolution.getIdFromUrl()+".png"
 
