@@ -1,14 +1,14 @@
 package com.example.pokdex.models
 
-import com.example.pokdex.Utility
-
 
 data class PokemonListModel(var results : MutableList<PokemonModel>,
-                            var originalResults : MutableList<PokemonModel> = mutableListOf()
+                            var listSortedByGeneration : MutableList<PokemonModel> = mutableListOf(),
+                            var listSortedAlphabetically: MutableList<PokemonModel> = mutableListOf(),
+                            private var sortBy : String = "Generation"
 )
 {
 
-    fun attachIdsToPokemon()
+    fun attachIdsToPokemonAndFormatNames()
     {
 
         var id = 1
@@ -16,6 +16,7 @@ data class PokemonListModel(var results : MutableList<PokemonModel>,
         for (pokemon in results)
         {
             pokemon.id = id
+            pokemon.name = pokemon.getFormattedName()
             // Normal pokemon end at 898, and mega pokemon ids start
             if(id == 898)
             {
@@ -27,37 +28,69 @@ data class PokemonListModel(var results : MutableList<PokemonModel>,
 
     }
 
-    fun saveOriginalList()
+
+    private fun saveListSortedAlphabetically()
     {
-        originalResults = results
+        listSortedAlphabetically = results
+
     }
-    fun restoreOriginalList()
+    fun restoreList()
     {
-        results = originalResults
+        if(sortBy == "Generation")
+        {
+            results = listSortedByGeneration
+        }
+        else if(sortBy == "Alphabetically")
+        {
+            results = listSortedAlphabetically
+        }
     }
-    fun filterPokemon(text: String )
+
+    fun saveListSortedByGeneration()
+    {
+        listSortedByGeneration = results
+    }
+    fun restoreListSortedByGeneration()
+    {
+        results = listSortedByGeneration
+    }
+    fun searchPokemon(text: String)
     {
         var tempList : MutableList<PokemonModel> = mutableListOf()
 
-        for(pokemon in results)
+        if(sortBy == "Alphabetically")
         {
-            if(pokemon.name.startsWith(text))
+            for(pokemon in listSortedAlphabetically)
             {
-                tempList += pokemon
+                if(pokemon.name.lowercase().startsWith(text.lowercase()))
+                {
+                    tempList += pokemon
+                }
             }
         }
-
+        else if(sortBy == "Generation" || sortBy == null){
+            for(pokemon in listSortedByGeneration)
+            {
+                if(pokemon.name.lowercase().startsWith(text.lowercase()))
+                {
+                    tempList += pokemon
+                }
+            }
+        }
 
         results = tempList
     }
     fun sortPokemon(sortBy : String)
     {
+        this.sortBy = sortBy
         if(sortBy == "Alphabetically")
         {
             results =  results.sortedBy { it.name }.toMutableList()
+            saveListSortedAlphabetically()
         }
-        else if(sortBy == "Generation" && !originalResults.isNullOrEmpty()){
-            results = originalResults
+        else if(sortBy == "Generation"){
+            restoreListSortedByGeneration()
+            saveListSortedByGeneration()
         }
     }
 }

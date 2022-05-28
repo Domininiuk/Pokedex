@@ -1,5 +1,9 @@
 package com.example.pokdex.viewmodels
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.pokdex.data.retrofit.PokemonRepository
@@ -14,25 +18,11 @@ class PokemonListViewModel : ViewModel()
     val pokemonList = liveData(Dispatchers.IO)
     {
         val retrievedList = PokemonRepository.getPokemonList()
-        retrievedList.attachIdsToPokemon()
-        retrievedList.saveOriginalList()
+        retrievedList.attachIdsToPokemonAndFormatNames()
+        retrievedList.saveListSortedByGeneration()
         emit(retrievedList)
     }
 
-    fun sortPokemon(pokemonList: PokemonListModel) : MutableList<PokemonModel>
-    {
-        if(sortBy == "Alphabetically")
-        {
-            var list = pokemonList.results
-            list.sortedBy { it.name }
-            return list
-        }
-        else
-        {
-
-        }
-
-        return pokemonList.results
-    }
-
+    var showSearchBar = mutableStateOf(false)
+    var searchText = mutableStateOf("")
 }

@@ -57,7 +57,7 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
             Scaffold(topBar = {
             PokemonListTopAppBar(searchForPokemon = {
                 val tempList =  pokemonListState.value!!
-                tempList.filterPokemon(it)
+                tempList.searchPokemon(it)
 
                 list.value = tempList
             }, sortBy = {
@@ -68,8 +68,9 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
 
                 list.value = tempList
 
-            }, cancelSearch = {val tempList =  pokemonListState.value!!
-                tempList.restoreOriginalList()
+            }, cancelSearch = {
+                val tempList =  pokemonListState.value!!
+                tempList.restoreList()
 
                 list.value = tempList})
         }){
@@ -120,7 +121,8 @@ fun PokemonListTopAppBar(sortBy: (String) ->Unit, searchForPokemon: (String) -> 
             IconButton(onClick = { showSortMenu = !showSortMenu}) {
 
                 Icon(
-                    painter = painterResource(id = R.drawable.sort_icon,),
+                    painter = painterResource(id = R.drawable.sort_icon)
+                    ,
                     contentDescription = null,
                 )
                 DropdownMenu(expanded = showSortMenu, onDismissRequest = {showSortMenu = false}) {
@@ -252,7 +254,7 @@ fun PokemonListItem(pokemon: PokemonModel, navigateToPokemon: (id: Int) -> Unit)
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PokemonImage(pokemonModel = pokemon)
-                Text(modifier = Modifier.wrapContentWidth(), text = pokemon.getFormattedName(), style = typography.h6)
+                Text(modifier = Modifier.wrapContentWidth(), text = pokemon.name, style = typography.h6)
             }
         }
     }

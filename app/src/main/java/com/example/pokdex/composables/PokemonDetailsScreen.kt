@@ -1,5 +1,6 @@
 package com.example.pokdex.composables
 
+import android.os.Handler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -57,9 +58,17 @@ fun PokemonDetailsScreen(
 
 
 
+/*
+    var pokemonLoaded = remember { mutableStateOf(false, neverEqualPolicy()) }
+
+    if(!pokemonLoaded.value)
+    {
+        LottieLoadingAnimation()
+
+    }
 
 
-
+ */
 
                 PokedexTheme {
         val scrollState = rememberScrollState()
@@ -95,6 +104,8 @@ fun PokemonDetailsScreen(
 
 
     }
+
+
 }
 
 
@@ -115,7 +126,7 @@ fun PokemonHeader(
                 modifier = Modifier
                     .padding(horizontal = 8.dp, vertical = 8.dp)
                     .fillMaxWidth()
-                    .heightIn(max = containerHeight / 2, min = containerHeight/ 2)
+                    .heightIn(max = containerHeight / 2, min = containerHeight / 2)
                 ,
                 elevation = 2.dp,
                 shape = RoundedCornerShape(corner = CornerSize(16.dp))
@@ -168,7 +179,7 @@ fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel
 fun Title(pokemon: PokemonModel)
 {
     Column(modifier = Modifier.padding(all = 16.dp)) {
-        Text(text = Utility.firstToUpper(pokemon.getFormattedName()),
+        Text(text = Utility.firstToUpper(pokemon.name),
         style = MaterialTheme.typography.h5,
         fontWeight = FontWeight.Bold)
         
@@ -193,8 +204,10 @@ fun PokemonTypes(pokemonTypes: List<PokemonTypeHolder>)
     }
 }
 @Composable
-fun PokemonType(type : String, modifier: Modifier = Modifier,
-                backGroundColor: Color = MaterialTheme.colors.surface,)
+fun PokemonType(
+    type: String, modifier: Modifier = Modifier,
+    backGroundColor: Color = MaterialTheme.colors.surface,
+)
 {
     Card(
         elevation = 2.dp,

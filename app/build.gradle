@@ -94,7 +94,7 @@ dependencies {
 
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
-
+    implementation "com.airbnb.android:lottie-compose:5.0.3"
     def nav_version = "2.4.2"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
