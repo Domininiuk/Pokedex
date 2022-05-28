@@ -14,7 +14,7 @@ class PokemonListViewModel : ViewModel()
     val pokemonList = liveData(Dispatchers.IO)
     {
         val retrievedList = PokemonRepository.getPokemonList()
-        retrievedList.attachIdsToPokemons()
+        retrievedList.attachIdsToPokemon()
         emit(retrievedList)
     }
 
@@ -24,13 +24,14 @@ class PokemonListViewModel : ViewModel()
         {
             var list = pokemonList.results
             list.sortedBy { it.name }
-            return list.toMutableList()
+            return list
         }
-        else{
+        else
+        {
 
         }
-        var list = pokemonList.results.sortedBy { it.name }
-        return list.toMutableList()
+
+        return pokemonList.results
     }
 
 }

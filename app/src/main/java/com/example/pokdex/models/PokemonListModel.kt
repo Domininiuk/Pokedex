@@ -4,7 +4,7 @@ package com.example.pokdex.models
 data class PokemonListModel(var results : MutableList<PokemonModel>)
 {
 
-    fun attachIdsToPokemons()
+    fun attachIdsToPokemon()
     {
         var id = 1
 
@@ -20,5 +20,15 @@ data class PokemonListModel(var results : MutableList<PokemonModel>)
 
         }
 
+    }
+    fun sortPokemon(sortBy : String)
+    {
+        if(sortBy == "Alphabetically")
+        {
+            results =  results.sortedBy { it.name }.toMutableList()
+        }
+        else{
+
+        }
     }
 }

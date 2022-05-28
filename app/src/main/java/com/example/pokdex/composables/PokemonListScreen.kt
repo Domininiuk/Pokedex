@@ -37,14 +37,22 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
 
 
     PokedexTheme {
-        pokemonListState.value?.let {  Scaffold(topBar = {
+        pokemonListState.value?.let {
+            var list = mutableStateOf(pokemonListState.value, neverEqualPolicy())
+
+            Scaffold(topBar = {
             PokemonListTopAppBar {
 
                 viewModelState.component1().sortBy = it
+               val tempList =  pokemonListState.value!!
+                tempList.sortPokemon(it)
+
+                list.value = tempList
+
             }
         }){
             PokemonList(
-                viewModelState.component1().sortPokemon(pokemonListState.value!!), it, navigateToPokemon)
+                list.component1()!!.results, it, navigateToPokemon)
         } }
 
     }
@@ -84,7 +92,6 @@ fun PokemonListTopAppBar(sortBy: (String) ->Unit)
         backgroundColor = PokemonColors.graySurface)
 
 }
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PokemonList(
     pokemonList: List<PokemonModel>,
