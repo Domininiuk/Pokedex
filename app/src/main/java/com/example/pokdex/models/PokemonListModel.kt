@@ -1,7 +1,11 @@
 package com.example.pokdex.models
 
+import com.example.pokdex.Utility
 
-data class PokemonListModel(var results : MutableList<PokemonModel>)
+
+data class PokemonListModel(var results : MutableList<PokemonModel>,
+                            var originalResults : MutableList<PokemonModel> = mutableListOf()
+)
 {
 
     fun attachIdsToPokemon()
@@ -23,12 +27,13 @@ data class PokemonListModel(var results : MutableList<PokemonModel>)
     }
     fun sortPokemon(sortBy : String)
     {
-        if(sortBy == "Alphabetically")
+        if(sortBy == "Alphabetically" && (originalResults.isNullOrEmpty() || originalResults == results))
         {
+            originalResults = results
             results =  results.sortedBy { it.name }.toMutableList()
         }
-        else{
-
+        else if(sortBy == "Generation" && !originalResults.isNullOrEmpty()){
+            results = originalResults
         }
     }
 }

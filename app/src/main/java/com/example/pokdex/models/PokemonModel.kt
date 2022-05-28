@@ -1,10 +1,11 @@
 package com.example.pokdex.models
 
 import androidx.compose.ui.graphics.Color
+import com.example.pokdex.Utility
 import com.google.gson.annotations.SerializedName
 
 data class PokemonModel(
-    var id : Int = -1, val base_experience : Int = 0, val name : String = "",
+    var id : Int = -1, val base_experience : Int = 0, var name : String = "",
     val weight : Float = 0.0f,
     val sprites : PokemonSprites? = null, val height : Int = 0, val abilities
                            : MutableList<PokemonAbilityHolder>
@@ -12,13 +13,43 @@ data class PokemonModel(
 {
 
 
+
     constructor() : this( -1, -1, "", 0.0f, null, 0,
         mutableListOf(PokemonAbilityHolder()),  mutableListOf(PokemonTypeHolder(PokemonType("", "")))
     )
 
-    fun isPokemonMega() : Boolean
+    fun isMega() : Boolean
     {
         return id > 10000
+    }
+    fun getFormattedName() : String
+    {
+        var tempNameSplit = name.split('-').reversed()
+        var tempName = ""
+        if(tempNameSplit.size > 1)
+        {
+            for(string in tempNameSplit)
+            {
+                if(string == "m")
+                {
+                    tempName += "Male "
+                }
+                else if(string == "f")
+                {
+                    tempName += "Female "
+                }
+                else
+                {
+                    tempName += Utility.firstToUpper(string) + " "
+                }
+            }
+        }
+        else
+        {
+            return Utility.firstToUpper(name)
+        }
+
+        return tempName
     }
     //Return the height in centimeters
     fun getHeightInCentimeters() : Int

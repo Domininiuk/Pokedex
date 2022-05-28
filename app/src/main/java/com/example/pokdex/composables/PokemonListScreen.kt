@@ -78,14 +78,15 @@ fun PokemonListTopAppBar(sortBy: (String) ->Unit)
                 DropdownMenu(expanded = showSortMenu, onDismissRequest = {showSortMenu = false}) {
                     DropdownMenuItem(onClick = {
                         showSortMenu = !showSortMenu
-                        sortBy("Alphabetically")
+                        sortBy("Generation")
                     } ) {
-                        
-                        Text(text = "Alphabetically")
-                    }
-                    DropdownMenuItem(onClick = { /*TODO*/ }) {
+
                         Text(text = "Generation")
-                        
+                    }
+                    DropdownMenuItem(onClick = {  showSortMenu = !showSortMenu
+                        sortBy("Alphabetically")}) {
+                        Text(text = "Alphabetically")
+
                     }
                 }
             }},
@@ -135,7 +136,7 @@ fun PokemonListItem(pokemon: PokemonModel, navigateToPokemon: (id: Int) -> Unit)
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PokemonImage(pokemonModel = pokemon)
-                Text(modifier = Modifier.wrapContentWidth(), text = Utility.firstToUpper(pokemon.name), style = typography.h6)
+                Text(modifier = Modifier.wrapContentWidth(), text = pokemon.getFormattedName(), style = typography.h6)
             }
         }
     }

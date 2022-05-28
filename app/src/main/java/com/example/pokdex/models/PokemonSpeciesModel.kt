@@ -1,6 +1,6 @@
 package com.example.pokdex.models
 
-data class PokemonSpeciesModel(var name : String, var id: Int, var evolution_chain : EvolutionChain)
+data class PokemonSpeciesModel(var name : String, var id: Int, var evolution_chain : EvolutionChain, var generation: Generation)
 {
     data class EvolutionChain(val url : String)
     {
@@ -20,5 +20,9 @@ data class PokemonSpeciesModel(var name : String, var id: Int, var evolution_cha
             return id
         }
     }
+}
+
+data class Generation(var name: String)
+{
 
 }

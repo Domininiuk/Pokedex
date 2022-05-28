@@ -158,14 +158,17 @@ fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel
     PokemonProperty(label = "Height", value = pokemon.getHeightInCentimeters().toString() + " cm")
     PokemonProperty(label = "Weight", value =pokemon.getWeightInKilograms().toString() +" kg")
     //PokemonAbilityList(abilities = abilities)
-    PokemonEvolutionChain(evolutions, pokemon.id, navigateToPokemon)
+    if(!pokemon.isMega())
+    {
+        PokemonEvolutionChain(evolutions, pokemon.id, navigateToPokemon)
+    }
 
 }
 @Composable
 fun Title(pokemon: PokemonModel)
 {
     Column(modifier = Modifier.padding(all = 16.dp)) {
-        Text(text = Utility.firstToUpper(pokemon.name),
+        Text(text = Utility.firstToUpper(pokemon.getFormattedName()),
         style = MaterialTheme.typography.h5,
         fontWeight = FontWeight.Bold)
         
@@ -296,6 +299,7 @@ fun PokemonAbility(pokemonAbility: PokemonAbilityModel, modifier: Modifier = Mod
 @Composable
 fun PokemonEvolutionChain(evolution: List<EvolutionSpeciesModel>, pokemonId :Int, navigateToPokemon: (id: Int) -> Unit)
 {
+
 
     Column(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start =16.dp, end = 16.dp)) {
         Divider(modifier = Modifier.padding(bottom = 4.dp))
