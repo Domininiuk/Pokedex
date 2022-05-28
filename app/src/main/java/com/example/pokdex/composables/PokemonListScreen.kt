@@ -1,7 +1,10 @@
 package com.example.pokdex.composables
 
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,18 +13,29 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.pokdex.R
-import com.example.pokdex.Utility
 import com.example.pokdex.compose.PokedexTheme
 import com.example.pokdex.compose.PokemonColors
 import com.example.pokdex.models.PokemonModel
@@ -41,7 +55,12 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
             var list = mutableStateOf(pokemonListState.value, neverEqualPolicy())
 
             Scaffold(topBar = {
-            PokemonListTopAppBar {
+            PokemonListTopAppBar(searchForPokemon = {
+                val tempList =  pokemonListState.value!!
+                tempList.filterPokemon(it)
+
+                list.value = tempList
+            }, sortBy = {
 
                 viewModelState.component1().sortBy = it
                val tempList =  pokemonListState.value!!
@@ -49,7 +68,10 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
 
                 list.value = tempList
 
-            }
+            }, cancelSearch = {val tempList =  pokemonListState.value!!
+                tempList.restoreOriginalList()
+
+                list.value = tempList})
         }){
             PokemonList(
                 list.component1()!!.results, it, navigateToPokemon)
@@ -57,18 +79,44 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
 
     }
 }
+@OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
-fun PokemonListTopAppBar(sortBy: (String) ->Unit)
+fun PokemonListTopAppBar(sortBy: (String) ->Unit, searchForPokemon: (String) -> Unit, cancelSearch:() -> Unit)
 {
     // Sort by
 
     var showSortMenu by remember{ mutableStateOf(false)}
+    var showSearchBar by remember { mutableStateOf(false)}
     TopAppBar(title = {
         Row() {
             Text("Pokedex")
         }
                       },
         actions = {
+
+            var searchText by remember{mutableStateOf("")}
+            if(showSearchBar)
+            {
+                SearchBar(searchText = searchText, placeholderText = "",
+                    onSearchTextChanged = {
+                        searchText = it
+                        searchForPokemon(it)
+                                          },
+                    onClearClick = {searchText = ""
+                                   showSearchBar = !showSearchBar
+                                   cancelSearch()}
+                    ,
+                    onNavigateBack = {}
+                )
+
+            }
+            IconButton(onClick = {showSearchBar =  !showSearchBar}) {
+                Icon(imageVector = Icons.Filled.Search,
+                contentDescription = null)
+
+            }
+          //  SearchBar(searchText = "ff")
+
             IconButton(onClick = { showSortMenu = !showSortMenu}) {
 
                 Icon(
@@ -80,7 +128,6 @@ fun PokemonListTopAppBar(sortBy: (String) ->Unit)
                         showSortMenu = !showSortMenu
                         sortBy("Generation")
                     } ) {
-
                         Text(text = "Generation")
                     }
                     DropdownMenuItem(onClick = {  showSortMenu = !showSortMenu
@@ -92,6 +139,75 @@ fun PokemonListTopAppBar(sortBy: (String) ->Unit)
             }},
         backgroundColor = PokemonColors.graySurface)
 
+}
+
+
+@ExperimentalAnimationApi
+@ExperimentalComposeUiApi
+@Composable
+fun SearchBar(
+    searchText: String,
+    placeholderText: String = "",
+    onSearchTextChanged: (String) -> Unit = {},
+    onClearClick: () -> Unit = {},
+    onNavigateBack: () -> Unit = {}
+) {
+    var showClearButton by remember { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() }
+
+
+
+ 
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 2.dp)
+                .onFocusChanged { focusState ->
+                    showClearButton = (focusState.isFocused)
+                }
+                .focusRequester(focusRequester),
+            value = searchText,
+            onValueChange = onSearchTextChanged,
+            placeholder = {
+                Text(text = placeholderText)
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                backgroundColor = Color.Transparent,
+                cursorColor = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+            ),
+            trailingIcon = {
+                AnimatedVisibility(
+                    visible = showClearButton,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    IconButton(onClick = { onClearClick() }) {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = null
+                        )
+                    }
+
+                }
+            },
+            maxLines = 1,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = {
+                keyboardController?.hide()
+            }),
+        )
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
+
+  
 }
 @Composable
 fun PokemonList(

@@ -10,6 +10,7 @@ data class PokemonListModel(var results : MutableList<PokemonModel>,
 
     fun attachIdsToPokemon()
     {
+
         var id = 1
 
         for (pokemon in results)
@@ -25,11 +26,34 @@ data class PokemonListModel(var results : MutableList<PokemonModel>,
         }
 
     }
+
+    fun saveOriginalList()
+    {
+        originalResults = results
+    }
+    fun restoreOriginalList()
+    {
+        results = originalResults
+    }
+    fun filterPokemon(text: String )
+    {
+        var tempList : MutableList<PokemonModel> = mutableListOf()
+
+        for(pokemon in results)
+        {
+            if(pokemon.name.startsWith(text))
+            {
+                tempList += pokemon
+            }
+        }
+
+
+        results = tempList
+    }
     fun sortPokemon(sortBy : String)
     {
-        if(sortBy == "Alphabetically" && (originalResults.isNullOrEmpty() || originalResults == results))
+        if(sortBy == "Alphabetically")
         {
-            originalResults = results
             results =  results.sortedBy { it.name }.toMutableList()
         }
         else if(sortBy == "Generation" && !originalResults.isNullOrEmpty()){

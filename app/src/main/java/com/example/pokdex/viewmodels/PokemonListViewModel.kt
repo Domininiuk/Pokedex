@@ -15,6 +15,7 @@ class PokemonListViewModel : ViewModel()
     {
         val retrievedList = PokemonRepository.getPokemonList()
         retrievedList.attachIdsToPokemon()
+        retrievedList.saveOriginalList()
         emit(retrievedList)
     }
 
