@@ -20,15 +20,4 @@ object Utility
     }
 
 
-    fun attachIdsToPokemons(list : MutableList<PokemonModel>)
-    {
-        var id = 0
-
-        for (pokemon in list)
-        {
-            pokemon.id = id
-            id++
-        }
-
-    }
 }

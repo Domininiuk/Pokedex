@@ -12,11 +12,8 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.icons.Icons
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,7 +23,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.pokdex.R
 import com.example.pokdex.Utility
 import com.example.pokdex.compose.PokedexTheme
-import com.example.pokdex.models.PokemonListModel
+import com.example.pokdex.compose.PokemonColors
 import com.example.pokdex.models.PokemonModel
 import com.example.pokdex.viewmodels.PokemonListViewModel
 
@@ -36,30 +33,61 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
 {
     val viewModelState = remember{ mutableStateOf(viewModel)}
 
-    var pokemonList = viewModelState.component1().pokemonList.observeAsState()
-    remember{ mutableStateOf(pokemonList)}
+    var pokemonListState = viewModelState.component1().pokemonList.observeAsState()
+
+
     PokedexTheme {
-        pokemonList.value?.let {  Scaffold(topBar = {
-            TopAppBar(title = {
-                Text("Top App Bar")},
-                backgroundColor = MaterialTheme.colors.primary,
-            navigationIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.sort_icon,),
-                    contentDescription = null
-                )
-            })
-                                                    }){
-            PokemonList(pokemonList.value!!, it, navigateToPokemon)
+        pokemonListState.value?.let {  Scaffold(topBar = {
+            PokemonListTopAppBar {
+
+                viewModelState.component1().sortBy = it
+            }
+        }){
+            PokemonList(
+                viewModelState.component1().sortPokemon(pokemonListState.value!!), it, navigateToPokemon)
         } }
 
     }
 }
+@Composable
+fun PokemonListTopAppBar(sortBy: (String) ->Unit)
+{
+    // Sort by
 
+    var showSortMenu by remember{ mutableStateOf(false)}
+    TopAppBar(title = {
+        Row() {
+            Text("Pokedex")
+        }
+                      },
+        actions = {
+            IconButton(onClick = { showSortMenu = !showSortMenu}) {
+
+                Icon(
+                    painter = painterResource(id = R.drawable.sort_icon,),
+                    contentDescription = null,
+                )
+                DropdownMenu(expanded = showSortMenu, onDismissRequest = {showSortMenu = false}) {
+                    DropdownMenuItem(onClick = {
+                        showSortMenu = !showSortMenu
+                        sortBy("Alphabetically")
+                    } ) {
+                        
+                        Text(text = "Alphabetically")
+                    }
+                    DropdownMenuItem(onClick = { /*TODO*/ }) {
+                        Text(text = "Generation")
+                        
+                    }
+                }
+            }},
+        backgroundColor = PokemonColors.graySurface)
+
+}
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PokemonList(
-    pokemonList: PokemonListModel,
+    pokemonList: List<PokemonModel>,
     padding: PaddingValues,
     navigateToPokemon: (id: Int) -> Unit
 )
@@ -70,7 +98,7 @@ fun PokemonList(
  LazyVerticalGrid( columns = GridCells.Fixed(2) , contentPadding = PaddingValues(horizontal = 16.dp,
  vertical = 8.dp)) {
 
-     items(items = pokemonList.results
+     items(items = pokemonList
      ) {
          PokemonListItem(pokemon = it, navigateToPokemon)
      }

@@ -16,6 +16,10 @@ data class PokemonModel(
         mutableListOf(PokemonAbilityHolder()),  mutableListOf(PokemonTypeHolder(PokemonType("", "")))
     )
 
+    fun isPokemonMega() : Boolean
+    {
+        return id > 10000
+    }
     //Return the height in centimeters
     fun getHeightInCentimeters() : Int
     {

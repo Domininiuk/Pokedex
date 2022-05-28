@@ -63,7 +63,7 @@ fun MainScreen()
             {
 
             }
-            PokemonDetailsScreen(pokemonId = pokemonId!!.toInt(), navigateToPokemon = {id ->
+            PokemonDetailsScreen(pokemonIdParam = pokemonId!!.toInt(), navigateToPokemon = {id ->
                 navController.navigate("PokemonDetails/$id")
             })
         }

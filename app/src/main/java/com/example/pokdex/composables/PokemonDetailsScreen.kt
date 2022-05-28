@@ -37,13 +37,18 @@ fun PokemonDetailsScreen(
    // evolution: List<EvolutionSpeciesModel>,
   //  navController: NavController,
   //  abilities: List<PokemonAbilityModel>,
-    viewModel: PokemonDetailsViewModel = hiltViewModel(), pokemonId: Int, navigateToPokemon: (id: Int) -> Unit
+    viewModel: PokemonDetailsViewModel = hiltViewModel(), pokemonIdParam: Int, navigateToPokemon: (id: Int) -> Unit
 )
 {
+    var pokemonId = pokemonIdParam
     var viewModelState = remember {
         mutableStateOf(viewModel)
     }
    var pokemon1=  viewModelState.component1().getPokemon(pokemonId).observeAsState()
+    if(pokemonId > 10000)
+    {
+        pokemonId -= 9600
+    }
     var pokemonSpecies = viewModel.getPokemonSpecies(pokemonId).observeAsState()
     var evolutionChain = pokemonSpecies.value?.let {
         viewModel.getEvolutionChain(it.evolution_chain.getChainId()).observeAsState()

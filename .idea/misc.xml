@@ -38,7 +38,9 @@
         <entry key="app/src/main/res/layout/recyclerview_display_all_pokemon.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/menu/display_all_pokemon_actions.xml" value="0.16614583333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.175" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.332" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/pokemon_icon.xml" value="0.175" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/pokemon_icon_round.xml" value="0.332" />
       </map>
     </option>
   </component>
