@@ -14,7 +14,7 @@ class PokemonDetailsViewModel : ViewModel() {
    lateinit var pokemonAbility: LiveData<PokemonAbilityModel>
    lateinit var pokemonAbilities: LiveData<MutableList<PokemonAbilityModel>>
 
-   // Dow
+
    fun getPokemon(id : Int) : LiveData<PokemonModel> {
       pokemon = liveData(Dispatchers.IO)
       {

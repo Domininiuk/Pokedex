@@ -4,10 +4,14 @@ package com.example.pokdex
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.pokdex.composables.PokedexBottomAppBar
 import com.example.pokdex.compose.PokedexTheme
 import com.example.pokdex.composables.PokemonDetailsScreen
 import com.example.pokdex.composables.PokemonListScreen
@@ -32,9 +36,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
             setContent {
-                PokedexTheme {
+                PokedexTheme(content = {
                     MainScreen()
-                }
+                })
+
             }
 
 
@@ -46,30 +51,31 @@ class MainActivity : ComponentActivity() {
 fun MainScreen()
 {
     val navController = rememberNavController()
-    
-    NavHost(navController = navController, startDestination = "PokemonList")
-    {
-        composable("PokemonList")
-        {
-            PokemonListScreen(navigateToPokemon = {id ->
-                navController.navigate("PokemonDetails/$id")
-            })
-        }
-        composable("PokemonDetails/{pokemonId}")
-        {
-           var pokemonId = it.arguments?.getString("pokemonId")
 
-            if(pokemonId != "0")
+
+        NavHost(navController = navController, startDestination = "PokemonList", Modifier.padding())
+        {
+            composable("PokemonList")
             {
-
+                PokemonListScreen(navigateToPokemon = {id ->
+                    navController.navigate("PokemonDetails/$id")
+                })
             }
-            PokemonDetailsScreen(pokemonIdParam = pokemonId!!.toInt(), navigateToPokemon = {id ->
-                navController.navigate("PokemonDetails/$id")
-            })
+            composable("PokemonDetails/{pokemonId}")
+            {
+                var pokemonId = it.arguments?.getString("pokemonId")
+
+                if(pokemonId != "0")
+                {
+
+                }
+                PokemonDetailsScreen(pokemonIdParam = pokemonId!!.toInt(), navigateToPokemon = {id ->
+                    navController.navigate("PokemonDetails/$id")
+                })
+            }
+
         }
 
-    }
-    
     
     //DisplayPokemonListScreen(viewModel = viewModel)
     

@@ -40,6 +40,7 @@ import com.example.pokdex.compose.PokedexTheme
 import com.example.pokdex.compose.PokemonColors
 import com.example.pokdex.models.PokemonModel
 import com.example.pokdex.viewmodels.PokemonListViewModel
+import kotlin.random.Random
 
 
 @Composable
@@ -50,35 +51,40 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
     var pokemonListState = viewModelState.component1().pokemonList.observeAsState()
 
 
-    PokedexTheme {
         pokemonListState.value?.let {
-            var list = mutableStateOf(pokemonListState.value, neverEqualPolicy())
+            var listState = mutableStateOf(pokemonListState.value, neverEqualPolicy())
 
-            Scaffold(topBar = {
+            var listVal = listState.value?.results
+            Scaffold(
+                bottomBar = {
+               PokedexBottomAppBar { navigateToPokemon(listState.value!!.results[Random.nextInt(
+                   listVal!!.size)].id) }
+            },
+                topBar = {
             PokemonListTopAppBar(searchForPokemon = {
                 val tempList =  pokemonListState.value!!
                 tempList.searchPokemon(it)
 
-                list.value = tempList
+                listState.value = tempList
             }, sortBy = {
 
                 viewModelState.component1().sortBy = it
                val tempList =  pokemonListState.value!!
                 tempList.sortPokemon(it)
 
-                list.value = tempList
+                listState.value = tempList
 
             }, cancelSearch = {
                 val tempList =  pokemonListState.value!!
                 tempList.restoreList()
 
-                list.value = tempList})
+                listState.value = tempList})
         }){
             PokemonList(
-                list.component1()!!.results, it, navigateToPokemon)
+                listState.component1()!!.results, it, navigateToPokemon)
         } }
 
-    }
+
 }
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable

@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
@@ -30,6 +32,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
+import kotlin.random.Random
 
 
 @Composable
@@ -45,6 +48,7 @@ fun PokemonDetailsScreen(
     var viewModelState = remember {
         mutableStateOf(viewModel)
     }
+    var screenState: PokemonDetailsScreenState
    var pokemon1=  viewModelState.component1().getPokemon(pokemonId).observeAsState()
     if(pokemonId > 10000)
     {
@@ -58,48 +62,67 @@ fun PokemonDetailsScreen(
 
 
 
-/*
+
     var pokemonLoaded = remember { mutableStateOf(false, neverEqualPolicy()) }
 
-    if(!pokemonLoaded.value)
-    {
-        LottieLoadingAnimation()
 
-    }
-
-
- */
 
                 PokedexTheme {
         val scrollState = rememberScrollState()
 
-        Column(modifier = Modifier.fillMaxSize())
-        {
-            BoxWithConstraints{
-                Surface{
+
                     Column(modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(scrollState)) {
-                        pokemon1.value?.let { PokemonHeader(pokemon = it, containerHeight = this@BoxWithConstraints.maxHeight) }
+                            .fillMaxSize(), )
+                        {
+                            BoxWithConstraints{
+                                Surface{
+                                    Column(modifier = Modifier
+                                        .fillMaxSize()
+                                        .verticalScroll(scrollState)) {
+                                        if(!pokemonLoaded.value)
+                                        {
+                                            LottieLoadingAnimation()
+
+                                        }
+                                        if ((evolutionChain != null) && (pokemon1 != null)) {
+                                            if(pokemon1.value != null && evolutionChain.value!=null)
+                                            {
+                                                var abilities by remember{mutableStateOf(mutableListOf<PokemonAbilityModel>(), neverEqualPolicy())}
+                                                var ids = pokemon1.value!!.getListOfAbilityIds()
+                                                if(abilities.size != ids.size)
+                                                {
+                                                    for(id in ids) {
+                                                        viewModel.getPokemonAbility(id).observeAsState().value?.let {
+                                                            val tempList = abilities
+                                                            tempList.add(it)
+                                                            abilities= tempList
+                                                        }
+                                                    }
+                                                }
 
 
-                             // This crashes soemtimes
-                        evolutionChain?.let {
-                            if (pokemon1.value != null && evolutionChain.value != null) {
-                                PokemonContent(
-                                    pokemon = pokemon1.value!!,
-                                    evolutionChain.value!!.getListOfPokemonNames(),
-                                    navigateToPokemon
-                                )
+
+                                                if(ids.size == abilities.size)
+                                                    // This works when it is run outside the if statement
+                                                    pokemonLoaded.value = true
+                                                    PokemonHeader(pokemon = pokemon1.value!!, containerHeight = this@BoxWithConstraints.maxHeight)
+                                                    PokemonContent(
+                                                        pokemon = pokemon1.value!!,
+                                                        evolutionChain.value!!.getListOfPokemonNames(),
+                                                        navigateToPokemon,
+                                                        abilities
+                                                    )
+
+                                            }
+                                        }
+                                    }
+                                }
                             }
+
+
                         }
 
-                    }
-                }
-            }
 
-
-        }
 
 
 
@@ -114,7 +137,6 @@ fun PokemonDetailsScreen(
 fun PokemonHeader(
     pokemon: PokemonModel, containerHeight : Dp)
 {
-
     // Im pretty sure is a major performance sink because all the images are loaded at once
 
     var urls = pokemon.sprites!!.getListOfUrls()
@@ -158,8 +180,8 @@ fun PokemonHeader(
 
 }
 @Composable
-fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel>, navigateToPokemon: (id: Int) -> Unit
-                  // abilities: List<PokemonAbilityModel>
+fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel>, navigateToPokemon: (id: Int) -> Unit,
+                   abilities: List<PokemonAbilityModel>
 )
 {
     Title(pokemon = pokemon)
@@ -168,7 +190,7 @@ fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel
     PokemonProperty(label = "Base experience gained:", value = pokemon.base_experience.toString() + " exp")
     PokemonProperty(label = "Height", value = pokemon.getHeightInCentimeters().toString() + " cm")
     PokemonProperty(label = "Weight", value =pokemon.getWeightInKilograms().toString() +" kg")
-    //PokemonAbilityList(abilities = abilities)
+    PokemonAbilityList(abilities = abilities)
     if(!pokemon.isMega())
     {
         PokemonEvolutionChain(evolutions, pokemon.id, navigateToPokemon)
@@ -179,7 +201,7 @@ fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel
 fun Title(pokemon: PokemonModel)
 {
     Column(modifier = Modifier.padding(all = 16.dp)) {
-        Text(text = Utility.firstToUpper(pokemon.name),
+        Text(text = pokemon.getFormattedName(),
         style = MaterialTheme.typography.h5,
         fontWeight = FontWeight.Bold)
         

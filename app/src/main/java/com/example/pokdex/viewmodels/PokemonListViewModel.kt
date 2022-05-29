@@ -23,6 +23,9 @@ class PokemonListViewModel : ViewModel()
         emit(retrievedList)
     }
 
+
+
+
     var showSearchBar = mutableStateOf(false)
     var searchText = mutableStateOf("")
 }
