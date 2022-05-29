@@ -60,33 +60,43 @@ fun PokemonDetailsScreen(
                 PokedexTheme {
         val scrollState = rememberScrollState()
 
+                    Scaffold(topBar = { PokemonDetailsTopAppBar()
 
-                    Column(modifier = Modifier
-                            .fillMaxSize(), )
+                    })
+                    {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(it),
+                        )
                         {
-                            BoxWithConstraints{
-                                Surface{
-                                    Column(modifier = Modifier
-                                        .fillMaxSize()
-                                        .verticalScroll(scrollState)) {
-                                        if(!pokemonLoaded.value)
-                                        {
+                            BoxWithConstraints {
+                                Surface {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .verticalScroll(scrollState)
+                                    ) {
+                                        if (!pokemonLoaded.value) {
                                             LottieLoadingAnimation()
 
                                         }
                                         if ((evolutionChain != null) && (pokemon1 != null)) {
-                                            if(pokemon1.value != null && evolutionChain.value!=null)
-                                            {
-                                                var ids = remember{pokemon1.value!!.getListOfAbilityIds()}
+                                            if ((pokemon1.value != null) && (evolutionChain.value != null)) {
+                                                var ids =
+                                                    remember { pokemon1.value!!.getListOfAbilityIds() }
 
-                                                    pokemonLoaded.value = true
-                                                    PokemonHeader(pokemon = pokemon1.value!!, containerHeight = this@BoxWithConstraints.maxHeight)
-                                                    PokemonContent(
-                                                        pokemon = pokemon1.value!!,
-                                                        evolutionChain.value!!.getListOfPokemonNames(),
-                                                        navigateToPokemon,
-                                                        ids, viewModelState
-                                                    )
+                                                pokemonLoaded.value = true
+                                                PokemonHeader(
+                                                    pokemon = pokemon1.value!!,
+                                                    containerHeight = this@BoxWithConstraints.maxHeight
+                                                )
+                                                PokemonContent(
+                                                    pokemon = pokemon1.value!!,
+                                                    evolutionChain.value!!.getListOfPokemonNames(),
+                                                    navigateToPokemon,
+                                                    ids, viewModelState
+                                                )
 
                                             }
                                         }
@@ -96,7 +106,7 @@ fun PokemonDetailsScreen(
 
 
                         }
-
+                    }
 
 
 
@@ -106,7 +116,15 @@ fun PokemonDetailsScreen(
 
 }
 
-
+@Composable
+fun PokemonDetailsTopAppBar()
+{
+    TopAppBar(title = {
+        Row() {
+            Text("Pokedex")
+        }
+    })
+}
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun PokemonHeader(
