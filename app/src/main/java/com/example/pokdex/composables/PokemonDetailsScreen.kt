@@ -1,6 +1,5 @@
 package com.example.pokdex.composables
 
-import android.os.Handler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -9,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -18,7 +16,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
@@ -32,7 +29,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-import kotlin.random.Random
 
 
 @Composable
@@ -64,7 +60,6 @@ fun PokemonDetailsScreen(
 
 
     var pokemonLoaded = remember { mutableStateOf(false, neverEqualPolicy()) }
-    var abilities by remember{mutableStateOf(mutableListOf<PokemonAbilityModel>(), neverEqualPolicy())}
 
 
 
@@ -90,31 +85,13 @@ fun PokemonDetailsScreen(
                                             {
                                                 var ids = remember{pokemon1.value!!.getListOfAbilityIds()}
 
-
-                                                if(!pokemonLoaded.value)
-                                                {
-                                                    for(id in ids) {
-                                                        viewModel.getPokemonAbility(id)
-                                                            .observeAsState().value?.let {
-                                                            val tempList = abilities
-                                                            tempList.add(it)
-                                                            abilities = tempList
-                                                        }
-                                                    }
-                                                }
-
-
-
-
-
-                                                if(abilities.size == ids.size)
                                                     pokemonLoaded.value = true
                                                     PokemonHeader(pokemon = pokemon1.value!!, containerHeight = this@BoxWithConstraints.maxHeight)
                                                     PokemonContent(
                                                         pokemon = pokemon1.value!!,
                                                         evolutionChain.value!!.getListOfPokemonNames(),
                                                         navigateToPokemon,
-                                                        abilities
+                                                        ids, viewModelState
                                                     )
 
                                             }
@@ -184,8 +161,9 @@ fun PokemonHeader(
 
 }
 @Composable
-fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel>, navigateToPokemon: (id: Int) -> Unit,
-                   abilities: List<PokemonAbilityModel>
+fun PokemonContent(
+    pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel>, navigateToPokemon: (id: Int) -> Unit,
+    abilitiesIds: List<Int>, viewModelState: MutableState<PokemonDetailsViewModel>
 )
 {
     Title(pokemon = pokemon)
@@ -194,7 +172,7 @@ fun PokemonContent(pokemon: PokemonModel, evolutions: List<EvolutionSpeciesModel
     PokemonProperty(label = "Base experience gained:", value = pokemon.base_experience.toString() + " exp")
     PokemonProperty(label = "Height", value = pokemon.getHeightInCentimeters().toString() + " cm")
     PokemonProperty(label = "Weight", value =pokemon.getWeightInKilograms().toString() +" kg")
-    PokemonAbilityList(abilities = abilities)
+    PokemonAbilityList(abilitiesIds = abilitiesIds, viewModelState)
     if(!pokemon.isMega())
     {
         PokemonEvolutionChain(evolutions, pokemon.id, navigateToPokemon)
@@ -265,8 +243,9 @@ fun PokemonProperty(label: String, value: String)
     }
 }
 @Composable
-fun PokemonAbilityList(abilities: List<PokemonAbilityModel>)
+fun PokemonAbilityList(abilitiesIds: List<Int>, viewModelState: MutableState<PokemonDetailsViewModel>)
 {
+
 
     Column(modifier = Modifier.padding(top = 8.dp, bottom = 4.dp, start =16.dp, end = 16.dp)) 
     {
@@ -279,57 +258,66 @@ fun PokemonAbilityList(abilities: List<PokemonAbilityModel>)
             Modifier
                 .wrapContentSize()
                 .horizontalScroll(rememberScrollState())){
-            abilities.forEach {
-                    PokemonAbility(it, Modifier.padding(end = 10.dp))
+            abilitiesIds.forEach {
+
+                    PokemonAbility(
+                        it,viewModelState , modifier =  Modifier.padding(end = 10.dp))
+                }
             }
             
         }
             
-    }
+
 }
 
 @Composable
-fun PokemonAbility(pokemonAbility: PokemonAbilityModel, modifier: Modifier = Modifier)
+fun PokemonAbility(abilityId: Int, viewModelState: MutableState<PokemonDetailsViewModel>, modifier: Modifier = Modifier)
 {
     var isExpanded by remember{ mutableStateOf(false)}
-    val  context = LocalContext.current
-    Card(
-        elevation = 50.dp,
-        backgroundColor = graySurface,
-        shape = RoundedCornerShape(16.dp),
-        modifier = modifier
-            .widthIn(0.dp, 300.dp)
-            .clickable { //Toast.makeText(context, pokemonAbility.effect_entries[1].effect, Toast.LENGTH_LONG).show()
-                isExpanded = !isExpanded
-            },
-    ) {
-        Column {
+
+    var pokemonAbility = viewModelState.value.getPokemonAbility(abilityId).observeAsState()
 
 
-            Text(
-                modifier = Modifier
-                    .padding(vertical = 2.dp)
-                    .padding(horizontal = 8.dp),
-                text = Utility.firstToUpper(pokemonAbility.name),
-                style = MaterialTheme.typography.body1,
-                overflow = TextOverflow.Visible
+    pokemonAbility.value?.let {
+        Card(
+            elevation = 50.dp,
+            backgroundColor = graySurface,
+            shape = RoundedCornerShape(16.dp),
+            modifier = modifier
+                .widthIn(0.dp, 300.dp)
+                .clickable { //Toast.makeText(context, pokemonAbility.effect_entries[1].effect, Toast.LENGTH_LONG).show()
+                    isExpanded = !isExpanded
+                },
+        ) {
+            Column {
 
-            )
-            if (isExpanded) {
+
                 Text(
                     modifier = Modifier
                         .padding(vertical = 2.dp)
                         .padding(horizontal = 8.dp),
-                    text = pokemonAbility.getEnglishVersion().effect,
+                    text = Utility.firstToUpper(pokemonAbility.value!!.name),
                     style = MaterialTheme.typography.body1,
                     overflow = TextOverflow.Visible
 
                 )
+                if (isExpanded) {
+                    Text(
+                        modifier = Modifier
+                            .padding(vertical = 2.dp)
+                            .padding(horizontal = 8.dp),
+                        text = pokemonAbility.value!!.getEnglishVersion().effect,
+                        style = MaterialTheme.typography.body1,
+                        overflow = TextOverflow.Visible
+
+                    )
+                }
             }
         }
-        }
 
 
+
+    }
 
 
 }
