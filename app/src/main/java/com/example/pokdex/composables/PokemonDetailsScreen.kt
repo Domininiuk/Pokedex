@@ -64,6 +64,7 @@ fun PokemonDetailsScreen(
 
 
     var pokemonLoaded = remember { mutableStateOf(false, neverEqualPolicy()) }
+    var abilities by remember{mutableStateOf(mutableListOf<PokemonAbilityModel>(), neverEqualPolicy())}
 
 
 
@@ -87,23 +88,26 @@ fun PokemonDetailsScreen(
                                         if ((evolutionChain != null) && (pokemon1 != null)) {
                                             if(pokemon1.value != null && evolutionChain.value!=null)
                                             {
-                                                var abilities by remember{mutableStateOf(mutableListOf<PokemonAbilityModel>(), neverEqualPolicy())}
-                                                var ids = pokemon1.value!!.getListOfAbilityIds()
-                                                if(abilities.size != ids.size)
+                                                var ids = remember{pokemon1.value!!.getListOfAbilityIds()}
+
+
+                                                if(!pokemonLoaded.value)
                                                 {
                                                     for(id in ids) {
-                                                        viewModel.getPokemonAbility(id).observeAsState().value?.let {
+                                                        viewModel.getPokemonAbility(id)
+                                                            .observeAsState().value?.let {
                                                             val tempList = abilities
                                                             tempList.add(it)
-                                                            abilities= tempList
+                                                            abilities = tempList
                                                         }
                                                     }
                                                 }
 
 
 
-                                                if(ids.size == abilities.size)
-                                                    // This works when it is run outside the if statement
+
+
+                                                if(abilities.size == ids.size)
                                                     pokemonLoaded.value = true
                                                     PokemonHeader(pokemon = pokemon1.value!!, containerHeight = this@BoxWithConstraints.maxHeight)
                                                     PokemonContent(
