@@ -44,8 +44,7 @@ fun PokemonDetailsScreen(
     var viewModelState = remember {
         mutableStateOf(viewModel)
     }
-    var screenState: PokemonDetailsScreenState
-   var pokemon1=  viewModelState.component1().getPokemon(pokemonId).observeAsState()
+    var pokemon1=  viewModelState.component1().getPokemon(pokemonId).observeAsState()
     if(pokemonId > 10000)
     {
         pokemonId -= 9600
@@ -56,12 +55,7 @@ fun PokemonDetailsScreen(
     }
 
 
-
-
-
     var pokemonLoaded = remember { mutableStateOf(false, neverEqualPolicy()) }
-
-
 
                 PokedexTheme {
         val scrollState = rememberScrollState()
@@ -374,7 +368,7 @@ fun PokemonEvolution(
         )
         Text(modifier = Modifier
             .padding(end = 4.dp)
-            .align(Alignment.CenterHorizontally), text = Utility.firstToUpper(evolution.name), style = MaterialTheme.typography.body1, overflow = TextOverflow.Visible)
+            .align(Alignment.CenterHorizontally), text = Utility.formatName(evolution.name), style = MaterialTheme.typography.body1, overflow = TextOverflow.Visible)
         //Text(text = "" + "Lorem ipsum, testing how a description would look like")
 
     }}

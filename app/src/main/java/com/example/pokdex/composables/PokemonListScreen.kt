@@ -54,12 +54,12 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
         pokemonListState.value?.let {
             var listState = mutableStateOf(pokemonListState.value, neverEqualPolicy())
 
-            var listVal = listState.value?.results
+            //var listVal = listState.value?.results
             Scaffold(
-                bottomBar = {
-               PokedexBottomAppBar { navigateToPokemon(listState.value!!.results[Random.nextInt(
-                   listVal!!.size)].id) }
-            },
+              //  bottomBar = {
+            //   PokedexBottomAppBar { navigateToPokemon(listState.value!!.results[Random.nextInt(
+          //         listVal!!.size)].id) }
+       //     },
                 topBar = {
             PokemonListTopAppBar(searchForPokemon = {
                 val tempList =  pokemonListState.value!!

@@ -19,5 +19,33 @@ object Utility
         return string
     }
 
+    fun formatName(name : String) : String
+    {
+        var tempNameSplit = name.split('-').reversed()
+        var tempName = ""
+        if(tempNameSplit.size > 1)
+        {
+            for(string in tempNameSplit)
+            {
+                if(string == "m")
+                {
+                    tempName += "Male "
+                }
+                else if(string == "f")
+                {
+                    tempName += "Female "
+                }
+                else
+                {
+                    tempName += firstToUpper(string) + " "
+                }
+            }
+        }
+        else
+        {
+            return firstToUpper(name)
+        }
 
+        return tempName
+    }
 }
