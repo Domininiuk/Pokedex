@@ -31,6 +31,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 @Composable
@@ -63,6 +65,19 @@ fun PokemonDetailsScreen(
                     })
                     {
                         Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        )
+                        {
+                            if (!pokemonLoaded.value) {
+                                LottieLoadingAnimation()
+                            }
+                        }
+
+                        if ((evolutionChain != null) && (pokemon1 != null)) {
+                            if ((pokemon1.value != null) && (evolutionChain.value != null)) {
+
+                        Column(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(it),
@@ -75,16 +90,11 @@ fun PokemonDetailsScreen(
                                             .fillMaxSize()
                                             .verticalScroll(scrollState)
                                     ) {
-                                        if (!pokemonLoaded.value) {
-                                            LottieLoadingAnimation()
 
-                                        }
-                                        if ((evolutionChain != null) && (pokemon1 != null)) {
-                                            if ((pokemon1.value != null) && (evolutionChain.value != null)) {
                                                 var ids =
                                                     remember { pokemon1.value!!.getListOfAbilityIds() }
 
-                                                pokemonLoaded.value = true
+                                            pokemonLoaded.value = true
                                                 PokemonHeader(
                                                     pokemon = pokemon1.value!!,
                                                     containerHeight = this@BoxWithConstraints.maxHeight
@@ -95,15 +105,10 @@ fun PokemonDetailsScreen(
                                                     navigateToPokemon,
                                                     ids, viewModelState
                                                 )
-
-                                            }
-                                        }
                                     }
                                 }
                             }
-
-
-                        }
+                        }}}
                     }
 
 
@@ -122,7 +127,9 @@ fun PokemonDetailsTopAppBar(onBackButtonPressed: () -> Unit)
             Text("Pokedex")
         }
     },
-    navigationIcon = { Icon(modifier = Modifier.padding(10.dp).clickable { onBackButtonPressed() }, imageVector = Icons.Default.ArrowBack, contentDescription =null) })
+    navigationIcon = { Icon(modifier = Modifier
+        .padding(10.dp)
+        .clickable { onBackButtonPressed() }, imageVector = Icons.Default.ArrowBack, contentDescription =null) })
 }
 @OptIn(ExperimentalPagerApi::class)
 @Composable
