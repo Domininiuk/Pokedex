@@ -35,10 +35,6 @@ import com.google.accompanist.pager.rememberPagerState
 
 @Composable
 fun PokemonDetailsScreen(
-    //pokemon: PokemonModel,
-   // evolution: List<EvolutionSpeciesModel>,
-  //  navController: NavController,
-  //  abilities: List<PokemonAbilityModel>,
     viewModel: PokemonDetailsViewModel = hiltViewModel(), pokemonIdParam: Int, navigateToPokemon: (id: Int) -> Unit,
     onBackButtonPressed: () ->Unit)
 {

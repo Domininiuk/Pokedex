@@ -36,11 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.pokdex.R
-import com.example.pokdex.compose.PokedexTheme
 import com.example.pokdex.compose.PokemonColors
 import com.example.pokdex.models.PokemonModel
 import com.example.pokdex.viewmodels.PokemonListViewModel
-import kotlin.random.Random
 
 
 @Composable
@@ -54,12 +52,8 @@ fun PokemonListScreen(viewModel: PokemonListViewModel = hiltViewModel(), navigat
         pokemonListState.value?.let {
             var listState = mutableStateOf(pokemonListState.value, neverEqualPolicy())
 
-            //var listVal = listState.value?.results
             Scaffold(
-              //  bottomBar = {
-            //   PokedexBottomAppBar { navigateToPokemon(listState.value!!.results[Random.nextInt(
-          //         listVal!!.size)].id) }
-       //     },
+
                 topBar = {
             PokemonListTopAppBar(searchForPokemon = {
                 val tempList =  pokemonListState.value!!
@@ -108,13 +102,12 @@ fun PokemonListTopAppBar(sortBy: (String) ->Unit, searchForPokemon: (String) -> 
                     onSearchTextChanged = {
                         searchText = it
                         searchForPokemon(it)
-                                          },
-                    onClearClick = {searchText = ""
-                                   showSearchBar = !showSearchBar
-                                   cancelSearch()}
-                    ,
-                    onNavigateBack = {}
-                )
+                                          }
+                ) {
+                    searchText = ""
+                    showSearchBar = !showSearchBar
+                    cancelSearch()
+                }
 
             }
             IconButton(onClick = {showSearchBar =  !showSearchBar}) {
@@ -157,8 +150,7 @@ fun SearchBar(
     searchText: String,
     placeholderText: String = "",
     onSearchTextChanged: (String) -> Unit = {},
-    onClearClick: () -> Unit = {},
-    onNavigateBack: () -> Unit = {}
+    onClearClick: () -> Unit = {}
 ) {
     var showClearButton by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
