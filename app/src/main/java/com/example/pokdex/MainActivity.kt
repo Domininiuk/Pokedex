@@ -71,6 +71,11 @@ fun MainScreen()
                 }
                 PokemonDetailsScreen(pokemonIdParam = pokemonId!!.toInt(), navigateToPokemon = {id ->
                     navController.navigate("PokemonDetails/$id")
+                }, onBackButtonPressed = {navController.navigate("PokemonList"){
+                    popUpTo("PokemonList"){
+                        inclusive
+                    }
+                }
                 })
             }
 

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -37,8 +39,8 @@ fun PokemonDetailsScreen(
    // evolution: List<EvolutionSpeciesModel>,
   //  navController: NavController,
   //  abilities: List<PokemonAbilityModel>,
-    viewModel: PokemonDetailsViewModel = hiltViewModel(), pokemonIdParam: Int, navigateToPokemon: (id: Int) -> Unit
-)
+    viewModel: PokemonDetailsViewModel = hiltViewModel(), pokemonIdParam: Int, navigateToPokemon: (id: Int) -> Unit,
+    onBackButtonPressed: () ->Unit)
 {
     var pokemonId = pokemonIdParam
     var viewModelState = remember {
@@ -60,7 +62,7 @@ fun PokemonDetailsScreen(
                 PokedexTheme {
         val scrollState = rememberScrollState()
 
-                    Scaffold(topBar = { PokemonDetailsTopAppBar()
+                    Scaffold(topBar = { PokemonDetailsTopAppBar(onBackButtonPressed)
 
                     })
                     {
@@ -117,13 +119,14 @@ fun PokemonDetailsScreen(
 }
 
 @Composable
-fun PokemonDetailsTopAppBar()
+fun PokemonDetailsTopAppBar(onBackButtonPressed: () -> Unit)
 {
     TopAppBar(title = {
         Row() {
             Text("Pokedex")
         }
-    })
+    },
+    navigationIcon = { Icon(modifier = Modifier.padding(10.dp).clickable { onBackButtonPressed() }, imageVector = Icons.Default.ArrowBack, contentDescription =null) })
 }
 @OptIn(ExperimentalPagerApi::class)
 @Composable
